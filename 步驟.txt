@@ -1,0 +1,20 @@
+一、 系統架構設計 (System Architecture)在實盤中，我們通常採用 「事件驅動（Event-Driven）」 的架構，而非回測時常用的向量化計算。
+一個穩健的交易機器人通常包含以下五個核心模組：
+Data Module (數據層)：負責接收幣安的即時行情（透過 WebSocket 接收 Tick/K線數據）。
+Strategy Engine (策略引擎)：你的核心邏輯。接收數據 計算指標  產生訊號（Signal）。
+Risk Management (風控層)：最重要的一環。在下單前檢查是否超過曝險、資金是否足夠、是否觸發止損。
+Execution Module (執行層)：透過 API 發送訂單（Order），並追蹤訂單狀態（Open, Filled, Canceled）。
+Logging & Notification (監控與通知)：記錄所有動作到 Log 文件，並透過 Line/Telegram 發送即時通知。
+二、 實作步驟流程圖 (Implementation Roadmap)請依序完成以下階段，不要跳過，特別是模擬交易階段。
+Phase 1: 基礎建設與連接 (Infrastructure)
+	Step 1: 申請 API Key在幣安申請 API Key & Secret。關鍵點：權限設定（初期先開「讀取」與「現貨交易」，千萬不要開「提現」權限）。
+	Step 2: 選擇連接庫 (Library)推薦使用 ccxt (通用性高，支援多交易所) 或 binance-connector-python (官方維護，功能最全)。建立一個簡單的 Python script 測試連線（讀取帳戶餘額）。
+Phase 2: 代碼重構 (Refactoring for Live)
+	Step 3: 數據流轉接 (Data Feed)從「讀取 CSV」改為「訂閱 WebSocket」。實作 on_message 函數，即時更新最新的 K 線或價格。
+	Step 4: 訊號生成 (Signal Generation)將你的回測邏輯封裝成一個 next() 或 on_bar() 函數。確保計算指標（如 RSI, MACD）的數據長度足夠且即時更新。
+Phase 3: 交易執行與風控 (Execution & Risk)
+	Step 5: 訂單管理系統 (OMS)撰寫下單函數：市價單 (Market) vs 限價單 (Limit)。處理「掛單未成交」的情況（要撤單重發還是等待？）。
+	Step 6: 加入防呆與風控機制網路異常處理：如果斷線怎麼辦？（重連機制）。資金風控：單筆最大虧損限制、每日最大交易次數限制。緊急停止開關 (Kill Switch)：設定一個變數或外部檔案，能讓你一鍵停止程式下單。Phase 4: 部署與監控 (Deployment)
+	Step 7: 模擬環境測試 (Paper Trading)強烈建議：先使用 Binance Testnet (測試網) 跑至少 1-2 週。驗證邏輯是否與回測一致？是否有滑價 (Slippage) 問題？
+	Step 8: 雲端部署 (Cloud Hosting)將程式搬到雲端伺服器 (AWS EC2 / GCP / DigitalOcean) 或使用 Docker。確保 24/7 運行不中斷。
+	Step 9: 實盤上線 (Go Live)從小資金開始（例如 100 USDT），觀察日誌 (Log) 與報價的延遲。

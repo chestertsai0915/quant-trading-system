@@ -1,0 +1,163 @@
+2026-01-07 02:19:22,481 [INFO] 設定檔載入成功: config.json
+2026-01-07 02:19:23,074 [INFO]  數據源連線成功 (Real Market)
+2026-01-07 02:19:23,075 [WARNING] [MODE] 啟動 Testnet 測試網模式
+2026-01-07 02:19:23,077 [INFO]  已載入策略: ['TEST_LOOP']
+2026-01-07 02:19:24,414 [INFO]  同步交易所槓桿: 5x
+2026-01-07 02:19:24,839 [INFO]  [CONFIG] 成功設定 BTCUSDT 槓桿為 5x
+2026-01-07 02:19:24,840 [INFO]  開始策略熱機 (Warm-up)...
+2026-01-07 02:19:25,286 [INFO]  熱機完成
+2026-01-07 02:19:25,286 [INFO] ----------------------------------------------------
+2026-01-07 02:19:25,413 [INFO]  [SIGNAL] TEST_LOOP | LONG | 強制測試 [開倉] 訊號
+2026-01-07 02:19:25,556 [INFO] 📋 [ORDER] 發送訂單 | BUY BTCUSDT | Qty: 0.005
+2026-01-07 02:19:25,691 [INFO]  訂單已送出 (ID: 11437949059)，等待撮合...
+2026-01-07 02:19:28,760 [INFO]  [DB] 交易已儲存: LONG 0.005 BTCUSDT
+2026-01-07 02:19:30,109 [INFO]  [VERIFIED] 訂單確認完成 | 均價: 91786.72
+2026-01-07 02:19:33,180 [WARNING]  用戶手動停止
+2026-01-07 02:24:57,273 [INFO] 設定檔載入成功: config.json
+2026-01-07 02:24:57,925 [INFO]  數據源連線成功 (Real Market)
+2026-01-07 02:24:57,927 [WARNING] [MODE] 啟動 Testnet 測試網模式
+2026-01-07 02:24:57,929 [INFO]  已載入策略: ['TEST_LOOP']
+2026-01-07 02:24:59,289 [INFO]  同步交易所槓桿: 5x
+2026-01-07 02:24:59,992 [INFO]  [CONFIG] 成功設定 BTCUSDT 槓桿為 5x
+2026-01-07 02:24:59,992 [INFO]  開始策略熱機 (Warm-up)...
+2026-01-07 02:25:00,459 [INFO]  熱機完成
+2026-01-07 02:25:00,459 [INFO] ----------------------------------------------------
+2026-01-07 02:25:00,630 [INFO]  [SIGNAL] TEST_LOOP | LONG | 強制測試 [開倉] 訊號
+2026-01-07 02:25:00,761 [INFO] 📋 [ORDER] 發送訂單 | BUY BTCUSDT | Qty: 0.005
+2026-01-07 02:25:00,886 [INFO]  訂單已送出 (ID: 11438046009)，等待撮合...
+2026-01-07 02:25:04,017 [INFO]  [DB] 交易已儲存: LONG 0.005 BTCUSDT
+2026-01-07 02:25:05,496 [INFO]  [VERIFIED] 訂單確認完成 | 均價: 91822.29999999999
+2026-01-07 02:25:15,498 [INFO] ----------------------------------------------------
+2026-01-07 02:25:15,623 [INFO]  [SNAPSHOT] BTCUSDT | 持倉: 0.005 | 均價: 91822.3 | PnL: 0.03843831 U
+2026-01-07 02:25:15,623 [INFO]  [SIGNAL] TEST_LOOP | CLOSE | 強制測試 [平倉] 訊號
+2026-01-07 02:25:15,628 [INFO] 📋 [ORDER] 發送訂單 | SELL BTCUSDT | Qty: 0.005
+2026-01-07 02:25:15,685 [INFO]  訂單已送出 (ID: 11438053059)，等待撮合...
+2026-01-07 02:25:18,828 [INFO]  [DB] 交易已儲存: CLOSE 0.005 BTCUSDT
+2026-01-07 02:25:20,294 [INFO]  [VERIFIED] 訂單確認完成 | 均價: 91824.01999999999
+2026-01-07 02:25:30,294 [INFO] ----------------------------------------------------
+2026-01-07 02:25:30,577 [INFO]  [SIGNAL] TEST_LOOP | LONG | 強制測試 [開倉] 訊號
+2026-01-07 02:25:30,583 [INFO] 📋 [ORDER] 發送訂單 | BUY BTCUSDT | Qty: 0.005
+2026-01-07 02:25:30,701 [INFO]  訂單已送出 (ID: 11438059543)，等待撮合...
+2026-01-07 02:25:33,762 [INFO]  [DB] 交易已儲存: LONG 0.005 BTCUSDT
+2026-01-07 02:25:35,312 [INFO]  [VERIFIED] 訂單確認完成 | 均價: 91866.5
+2026-01-07 02:25:45,313 [INFO] ----------------------------------------------------
+2026-01-07 02:25:45,466 [INFO]  [SNAPSHOT] BTCUSDT | 持倉: 0.005 | 均價: 91866.5 | PnL: -0.03508288 U
+2026-01-07 02:25:45,467 [INFO]  [SIGNAL] TEST_LOOP | CLOSE | 強制測試 [平倉] 訊號
+2026-01-07 02:25:45,476 [INFO] 📋 [ORDER] 發送訂單 | SELL BTCUSDT | Qty: 0.005
+2026-01-07 02:25:45,533 [INFO]  訂單已送出 (ID: 11438061404)，等待撮合...
+2026-01-07 02:25:48,598 [INFO]  [DB] 交易已儲存: CLOSE 0.005 BTCUSDT
+2026-01-07 02:25:50,163 [INFO]  [VERIFIED] 訂單確認完成 | 均價: 91863.3
+2026-01-07 02:26:00,164 [INFO] ----------------------------------------------------
+2026-01-07 02:26:00,290 [INFO]  [SIGNAL] TEST_LOOP | LONG | 強制測試 [開倉] 訊號
+2026-01-07 02:26:00,295 [INFO] 📋 [ORDER] 發送訂單 | BUY BTCUSDT | Qty: 0.005
+2026-01-07 02:26:00,355 [INFO]  訂單已送出 (ID: 11438065472)，等待撮合...
+2026-01-07 02:26:03,417 [INFO]  [DB] 交易已儲存: LONG 0.005 BTCUSDT
+2026-01-07 02:26:05,089 [INFO]  [VERIFIED] 訂單確認完成 | 均價: 91872.79999999999
+2026-01-07 02:26:15,090 [INFO] ----------------------------------------------------
+2026-01-07 02:26:15,223 [INFO]  [SNAPSHOT] BTCUSDT | 持倉: 0.005 | 均價: 91872.8 | PnL: -0.01447545 U
+2026-01-07 02:26:15,225 [INFO]  [SIGNAL] TEST_LOOP | CLOSE | 強制測試 [平倉] 訊號
+2026-01-07 02:26:15,231 [INFO] 📋 [ORDER] 發送訂單 | SELL BTCUSDT | Qty: 0.005
+2026-01-07 02:26:15,288 [INFO]  訂單已送出 (ID: 11438071562)，等待撮合...
+2026-01-07 02:26:18,350 [INFO]  [DB] 交易已儲存: CLOSE 0.005 BTCUSDT
+2026-01-07 02:26:19,906 [INFO]  [VERIFIED] 訂單確認完成 | 均價: 91868.4
+2026-01-07 02:26:29,907 [INFO] ----------------------------------------------------
+2026-01-07 02:26:30,034 [INFO]  [SIGNAL] TEST_LOOP | LONG | 強制測試 [開倉] 訊號
+2026-01-07 02:26:30,040 [INFO] 📋 [ORDER] 發送訂單 | BUY BTCUSDT | Qty: 0.005
+2026-01-07 02:26:30,096 [INFO]  訂單已送出 (ID: 11438076951)，等待撮合...
+2026-01-07 02:26:33,159 [INFO]  [DB] 交易已儲存: LONG 0.005 BTCUSDT
+2026-01-07 02:26:34,643 [INFO]  [VERIFIED] 訂單確認完成 | 均價: 91879.42
+2026-01-07 02:26:44,643 [INFO] ----------------------------------------------------
+2026-01-07 02:26:44,778 [INFO]  [SNAPSHOT] BTCUSDT | 持倉: 0.005 | 均價: 91879.42 | PnL: -0.13282445 U
+2026-01-07 02:26:44,778 [INFO]  [SIGNAL] TEST_LOOP | CLOSE | 強制測試 [平倉] 訊號
+2026-01-07 02:26:44,784 [INFO] 📋 [ORDER] 發送訂單 | SELL BTCUSDT | Qty: 0.005
+2026-01-07 02:26:44,840 [INFO]  訂單已送出 (ID: 11438079793)，等待撮合...
+2026-01-07 02:26:47,904 [INFO]  [DB] 交易已儲存: CLOSE 0.005 BTCUSDT
+2026-01-07 02:26:49,407 [INFO]  [VERIFIED] 訂單確認完成 | 均價: 91866.5
+2026-01-07 02:26:59,408 [INFO] ----------------------------------------------------
+2026-01-07 02:26:59,536 [INFO]  [SIGNAL] TEST_LOOP | LONG | 強制測試 [開倉] 訊號
+2026-01-07 02:26:59,541 [INFO] 📋 [ORDER] 發送訂單 | BUY BTCUSDT | Qty: 0.005
+2026-01-07 02:26:59,599 [INFO]  訂單已送出 (ID: 11438083014)，等待撮合...
+2026-01-07 02:27:02,674 [INFO]  [DB] 交易已儲存: LONG 0.005 BTCUSDT
+2026-01-07 02:27:04,207 [INFO]  [VERIFIED] 訂單確認完成 | 均價: 91881.1
+2026-01-07 02:27:14,208 [INFO] ----------------------------------------------------
+2026-01-07 02:27:14,334 [INFO]  [SNAPSHOT] BTCUSDT | 持倉: 0.005 | 均價: 91881.1 | PnL: 0.2225 U
+2026-01-07 02:27:14,334 [INFO]  [SIGNAL] TEST_LOOP | CLOSE | 強制測試 [平倉] 訊號
+2026-01-07 02:27:14,337 [INFO] 📋 [ORDER] 發送訂單 | SELL BTCUSDT | Qty: 0.005
+2026-01-07 02:27:14,390 [INFO]  訂單已送出 (ID: 11438089644)，等待撮合...
+2026-01-07 02:27:16,190 [WARNING]  用戶手動停止
+2026-01-26 16:56:35,189 [INFO] 設定檔載入成功: config.json
+2026-01-26 16:56:36,503 [INFO]  數據源連線成功 (Real Market)
+2026-01-26 16:56:36,507 [WARNING] [MODE] 啟動 Testnet 測試網模式
+2026-01-26 16:56:36,510 [INFO]  已載入策略: ['TEST_LOOP']
+2026-01-26 16:56:39,159 [INFO]  同步交易所槓桿: 5x
+2026-01-26 16:56:40,379 [INFO]  [CONFIG] 成功設定 BTCUSDT 槓桿為 5x
+2026-01-26 16:56:40,379 [INFO]  開始策略熱機 (Warm-up)...
+2026-01-26 16:56:42,122 [INFO]  熱機完成
+2026-01-26 16:56:42,122 [INFO] ----------------------------------------------------
+2026-01-26 16:56:42,409 [WARNING]  查詢持倉詳情失敗 (可能是 API 缺欄位): (400, -1021, "Timestamp for this request was 1000ms ahead of the server's time.", {'Content-Type': 'application/json', 'Content-Length': '88', 'Connection': 'keep-alive', 'Date': 'Mon, 26 Jan 2026 08:56:41 GMT', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 'Server': 'Bengine', 'x-mbx-used-weight-1m': '203', 'x-response-time': '2ms', 'Access-Control-Allow-Origin': '*', 'X-Cache': 'Error from cloudfront', 'Via': '1.1 c3c63b7b4690e3ae5dc81c1d1c3ca24e.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'TPE54-P2', 'X-Amz-Cf-Id': '9YVDf7K72jjQ3dRutAEwetZg8wv21NdQY5KtRXihSfrb08KCYsKhtw=='})
+2026-01-26 16:56:42,410 [INFO]  [SIGNAL] TEST_LOOP | LONG | 強制測試 [開倉] 訊號
+2026-01-26 16:56:42,654 [INFO]  [ORDER] 發送訂單 | BUY BTCUSDT | Qty: 0.005
+2026-01-26 16:56:42,731 [ERROR] 下單失敗: (400, -1021, "Timestamp for this request was 1000ms ahead of the server's time.", {'Content-Type': 'application/json', 'Content-Length': '88', 'Connection': 'keep-alive', 'Date': 'Mon, 26 Jan 2026 08:56:41 GMT', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 'Server': 'Bengine', 'x-mbx-used-weight-1m': '-1', 'x-response-time': '2ms', 'Access-Control-Allow-Origin': '*', 'X-Cache': 'Error from cloudfront', 'Via': '1.1 c3c63b7b4690e3ae5dc81c1d1c3ca24e.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'TPE54-P2', 'X-Amz-Cf-Id': '5LtWtOFTYmd3ZGIHRYk4xxng4XiZcHWqbmxPR_NpDfBVLBgi9nyKKw=='})
+2026-01-26 16:56:52,732 [INFO] ----------------------------------------------------
+2026-01-26 16:56:53,081 [WARNING]  查詢持倉詳情失敗 (可能是 API 缺欄位): (400, -1021, "Timestamp for this request was 1000ms ahead of the server's time.", {'Content-Type': 'application/json', 'Content-Length': '88', 'Connection': 'keep-alive', 'Date': 'Mon, 26 Jan 2026 08:56:51 GMT', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 'Server': 'Bengine', 'x-mbx-used-weight-1m': '284', 'x-response-time': '2ms', 'Access-Control-Allow-Origin': '*', 'X-Cache': 'Error from cloudfront', 'Via': '1.1 c3c63b7b4690e3ae5dc81c1d1c3ca24e.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'TPE54-P2', 'X-Amz-Cf-Id': 'Dn2Bb7ugxkwBaGQyM4Kl9vucVNq1EYWthPFG_mVsK9O2iHqkUHHilw=='})
+2026-01-26 16:56:53,083 [INFO]  [SIGNAL] TEST_LOOP | CLOSE | 強制測試 [平倉] 訊號
+2026-01-26 16:57:03,088 [INFO] ----------------------------------------------------
+2026-01-26 16:57:05,978 [WARNING]  查詢持倉詳情失敗 (可能是 API 缺欄位): (400, -1021, "Timestamp for this request was 1000ms ahead of the server's time.", {'Content-Type': 'application/json', 'Content-Length': '88', 'Connection': 'keep-alive', 'Date': 'Mon, 26 Jan 2026 08:57:04 GMT', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 'Server': 'Bengine', 'x-mbx-used-weight-1m': '75', 'x-response-time': '0ms', 'Access-Control-Allow-Origin': '*', 'X-Cache': 'Error from cloudfront', 'Via': '1.1 c3c63b7b4690e3ae5dc81c1d1c3ca24e.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'TPE54-P2', 'X-Amz-Cf-Id': '0jWNOnGc3OcS1GmbRncxvn0f6Whra40kCfq-Vo1f_bwonUA52qF0Hg=='})
+2026-01-26 16:57:05,978 [INFO]  [SIGNAL] TEST_LOOP | LONG | 強制測試 [開倉] 訊號
+2026-01-26 16:57:05,983 [INFO]  [ORDER] 發送訂單 | BUY BTCUSDT | Qty: 0.005
+2026-01-26 16:57:06,085 [ERROR] 下單失敗: (400, -1021, "Timestamp for this request was 1000ms ahead of the server's time.", {'Content-Type': 'application/json', 'Content-Length': '88', 'Connection': 'keep-alive', 'Date': 'Mon, 26 Jan 2026 08:57:04 GMT', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 'Server': 'Bengine', 'x-mbx-used-weight-1m': '-1', 'x-response-time': '2ms', 'Access-Control-Allow-Origin': '*', 'X-Cache': 'Error from cloudfront', 'Via': '1.1 c3c63b7b4690e3ae5dc81c1d1c3ca24e.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'TPE54-P2', 'X-Amz-Cf-Id': 'zJyl1XheMOk_ZvSaj_sghC0fbfHQnbE1npbkCgm1vQUQUtcD4xX3rg=='})
+2026-01-26 16:57:16,085 [INFO] ----------------------------------------------------
+2026-01-26 16:57:16,317 [WARNING]  查詢持倉詳情失敗 (可能是 API 缺欄位): (400, -1021, "Timestamp for this request was 1000ms ahead of the server's time.", {'Content-Type': 'application/json', 'Content-Length': '88', 'Connection': 'keep-alive', 'Date': 'Mon, 26 Jan 2026 08:57:15 GMT', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 'Server': 'Bengine', 'x-mbx-used-weight-1m': '66', 'x-response-time': '0ms', 'Access-Control-Allow-Origin': '*', 'X-Cache': 'Error from cloudfront', 'Via': '1.1 c3c63b7b4690e3ae5dc81c1d1c3ca24e.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'TPE54-P2', 'X-Amz-Cf-Id': 'ez3SHRIT3nXyF1eNitzjdhRYggvtskzoSFq-01Wq5rmbVmT1T04MBA=='})
+2026-01-26 16:57:16,318 [INFO]  [SIGNAL] TEST_LOOP | CLOSE | 強制測試 [平倉] 訊號
+2026-01-26 16:57:26,324 [INFO] ----------------------------------------------------
+2026-01-26 16:57:26,559 [WARNING]  查詢持倉詳情失敗 (可能是 API 缺欄位): (400, -1021, "Timestamp for this request was 1000ms ahead of the server's time.", {'Content-Type': 'application/json', 'Content-Length': '88', 'Connection': 'keep-alive', 'Date': 'Mon, 26 Jan 2026 08:57:25 GMT', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 'Server': 'Bengine', 'x-mbx-used-weight-1m': '123', 'x-response-time': '0ms', 'Access-Control-Allow-Origin': '*', 'X-Cache': 'Error from cloudfront', 'Via': '1.1 c3c63b7b4690e3ae5dc81c1d1c3ca24e.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'TPE54-P2', 'X-Amz-Cf-Id': '841H6BbR76t1UTy6yrOyObZbT1LdHGvRy7iVZKXWImcoWBhmg3DAfg=='})
+2026-01-26 16:57:26,560 [INFO]  [SIGNAL] TEST_LOOP | LONG | 強制測試 [開倉] 訊號
+2026-01-26 16:57:26,563 [INFO]  [ORDER] 發送訂單 | BUY BTCUSDT | Qty: 0.005
+2026-01-26 16:57:26,652 [ERROR] 下單失敗: (400, -1021, "Timestamp for this request was 1000ms ahead of the server's time.", {'Content-Type': 'application/json', 'Content-Length': '88', 'Connection': 'keep-alive', 'Date': 'Mon, 26 Jan 2026 08:57:25 GMT', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 'Server': 'Bengine', 'x-mbx-used-weight-1m': '-1', 'x-response-time': '0ms', 'Access-Control-Allow-Origin': '*', 'X-Cache': 'Error from cloudfront', 'Via': '1.1 c3c63b7b4690e3ae5dc81c1d1c3ca24e.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'TPE54-P2', 'X-Amz-Cf-Id': '-2NMQxDCUgghbNe4Ttd628ipvM5SGrM26WkKhNVKFSzg55Cnw29CVg=='})
+2026-01-26 16:57:36,653 [INFO] ----------------------------------------------------
+2026-01-26 16:57:36,918 [WARNING]  查詢持倉詳情失敗 (可能是 API 缺欄位): (400, -1021, "Timestamp for this request was 1000ms ahead of the server's time.", {'Content-Type': 'application/json', 'Content-Length': '88', 'Connection': 'keep-alive', 'Date': 'Mon, 26 Jan 2026 08:57:35 GMT', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 'Server': 'Bengine', 'x-mbx-used-weight-1m': '191', 'x-response-time': '0ms', 'Access-Control-Allow-Origin': '*', 'X-Cache': 'Error from cloudfront', 'Via': '1.1 c3c63b7b4690e3ae5dc81c1d1c3ca24e.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'TPE54-P2', 'X-Amz-Cf-Id': '_jklAToCWQxLC_gTt2QpUjQ3gPfB-9xWwVhcX-8v3FWhQCCch9jpCw=='})
+2026-01-26 16:57:36,919 [INFO]  [SIGNAL] TEST_LOOP | CLOSE | 強制測試 [平倉] 訊號
+2026-01-26 16:57:46,924 [INFO] ----------------------------------------------------
+2026-01-26 16:57:47,164 [WARNING]  用戶手動停止
+2026-01-26 16:57:50,755 [INFO] 設定檔載入成功: config.json
+2026-01-26 16:57:51,514 [INFO]  數據源連線成功 (Real Market)
+2026-01-26 16:57:51,517 [WARNING] [MODE] 啟動 Testnet 測試網模式
+2026-01-26 16:57:51,519 [INFO]  已載入策略: ['TEST_LOOP']
+2026-01-26 16:57:52,994 [INFO]  同步交易所槓桿: 5x
+2026-01-26 16:57:53,513 [INFO]  [CONFIG] 成功設定 BTCUSDT 槓桿為 5x
+2026-01-26 16:57:53,513 [INFO]  開始策略熱機 (Warm-up)...
+2026-01-26 16:57:54,203 [INFO]  熱機完成
+2026-01-26 16:57:54,204 [INFO] ----------------------------------------------------
+2026-01-26 16:57:54,381 [WARNING]  查詢持倉詳情失敗 (可能是 API 缺欄位): (400, -1021, "Timestamp for this request was 1000ms ahead of the server's time.", {'Content-Type': 'application/json', 'Content-Length': '88', 'Connection': 'keep-alive', 'Date': 'Mon, 26 Jan 2026 08:57:53 GMT', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 'Server': 'Bengine', 'x-mbx-used-weight-1m': '311', 'x-response-time': '0ms', 'Access-Control-Allow-Origin': '*', 'X-Cache': 'Error from cloudfront', 'Via': '1.1 11e1b249c3f4c3cf7a6b973723c70d64.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'TPE54-P2', 'X-Amz-Cf-Id': 'nSd17juZHCVJBHY4GRBpUhsUNIFy-iqPMGHV-3LZIQjXrEwBdpYBtQ=='})
+2026-01-26 16:57:54,382 [INFO]  [SIGNAL] TEST_LOOP | LONG | 強制測試 [開倉] 訊號
+2026-01-26 16:57:54,633 [INFO]  [ORDER] 發送訂單 | BUY BTCUSDT | Qty: 0.005
+2026-01-26 16:57:54,721 [ERROR] 下單失敗: (400, -1021, "Timestamp for this request was 1000ms ahead of the server's time.", {'Content-Type': 'application/json', 'Content-Length': '88', 'Connection': 'keep-alive', 'Date': 'Mon, 26 Jan 2026 08:57:53 GMT', 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', 'Server': 'Bengine', 'x-mbx-used-weight-1m': '-1', 'x-response-time': '0ms', 'Access-Control-Allow-Origin': '*', 'X-Cache': 'Error from cloudfront', 'Via': '1.1 11e1b249c3f4c3cf7a6b973723c70d64.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'TPE54-P2', 'X-Amz-Cf-Id': '-qHsZm7GcPmkUZ8EVyXAeOisaK-AUQ0_zRT57xG-ruPuLxStEZOm4A=='})
+2026-01-26 16:58:02,998 [WARNING]  用戶手動停止
+2026-01-26 17:01:27,716 [INFO] 設定檔載入成功: config.json
+2026-01-26 17:01:28,404 [INFO]  數據源連線成功 (Real Market)
+2026-01-26 17:01:28,406 [WARNING] [MODE] 啟動 Testnet 測試網模式
+2026-01-26 17:01:28,408 [INFO]  已載入策略: ['TEST_LOOP']
+2026-01-26 17:01:29,774 [INFO]  同步交易所槓桿: 5x
+2026-01-26 17:01:30,283 [INFO]  [CONFIG] 成功設定 BTCUSDT 槓桿為 5x
+2026-01-26 17:01:30,283 [INFO]  開始策略熱機 (Warm-up)...
+2026-01-26 17:01:30,823 [INFO]  熱機完成
+2026-01-26 17:01:30,823 [INFO] ----------------------------------------------------
+2026-01-26 17:01:30,937 [INFO]  [SIGNAL] TEST_LOOP | LONG | 強制測試 [開倉] 訊號
+2026-01-26 17:01:31,062 [INFO]  [ORDER] 發送訂單 | BUY BTCUSDT | Qty: 0.005
+2026-01-26 17:01:31,117 [INFO]  訂單已送出 (ID: 11972649822)，等待撮合...
+2026-01-26 17:01:34,195 [INFO]  [DB] 交易已儲存: LONG 0.005 BTCUSDT
+2026-01-26 17:01:35,498 [INFO]  [VERIFIED] 訂單確認完成 | 均價: 87937.9
+2026-01-26 17:01:45,500 [INFO] ----------------------------------------------------
+2026-01-26 17:01:45,624 [INFO]  [SNAPSHOT] BTCUSDT | 持倉: 0.005 | 均價: 87937.9 | PnL: -0.26827336 U
+2026-01-26 17:01:45,625 [INFO]  [SIGNAL] TEST_LOOP | CLOSE | 強制測試 [平倉] 訊號
+2026-01-26 17:01:45,631 [INFO]  [ORDER] 發送訂單 | SELL BTCUSDT | Qty: 0.005
+2026-01-26 17:01:45,686 [INFO]  訂單已送出 (ID: 11972653973)，等待撮合...
+2026-01-26 17:01:48,756 [INFO]  [DB] 交易已儲存: CLOSE 0.005 BTCUSDT
+2026-01-26 17:01:50,084 [INFO]  [VERIFIED] 訂單確認完成 | 均價: 87924.84
+2026-01-26 17:02:00,086 [INFO] ----------------------------------------------------
+2026-01-26 17:02:00,222 [INFO]  [SIGNAL] TEST_LOOP | LONG | 強制測試 [開倉] 訊號
+2026-01-26 17:02:00,227 [INFO]  [ORDER] 發送訂單 | BUY BTCUSDT | Qty: 0.005
+2026-01-26 17:02:00,289 [INFO]  訂單已送出 (ID: 11972657851)，等待撮合...
+2026-01-26 17:02:03,359 [INFO]  [DB] 交易已儲存: LONG 0.005 BTCUSDT
+2026-01-26 17:02:04,647 [INFO]  [VERIFIED] 訂單確認完成 | 均價: 87884.1
+2026-01-26 17:02:07,312 [WARNING]  用戶手動停止

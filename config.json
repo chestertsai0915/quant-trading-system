@@ -1,0 +1,17 @@
+{
+    "system": {
+        "mode": "TESTNET", 
+        "paper_trading": false,
+        "log_level": "INFO"
+    },
+    "trading": {
+        "symbol": "BTCUSDT",
+        "interval": "1h",
+        "strategies": ["TestStrategy", "PriceVolume2","TestStrategy2"]
+    },
+    "risk": {
+        "leverage": 5,
+        "fixed_amount": 100,
+        "max_open_positions": 1
+    }
+}

@@ -1,0 +1,9 @@
+1，將每個策略呼叫新計算indicatior的步驟獨立
+2預防數據跳掉的問題-備用數據
+3除裡時間問題 QQQ與 binance
+4處理斷線重連 (Reconnection)、心跳包 (Heartbeat) (不一定有)
+5 系統出錯會導致 移植重複動作(沒有check)
+6確認持倉與否才動作(不然會無限疊加)
+7fee問題
+#處理external data
+#把資料放dbzz
