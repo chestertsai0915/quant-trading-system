@@ -1,7 +1,8 @@
 # env
 .env
 .env.*
-
+# BUT allow example template
+!.env.example
 # data
 data/raw/
 *.csv

@@ -7,3 +7,4 @@
 7fee問題
 #處理external data
 #把資料放dbzz
+8時間不同步問題
