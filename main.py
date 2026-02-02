@@ -207,17 +207,36 @@ class TradingBot:
             try:
                 logging.info("----------------------------------------------------")
                 
-                # A. 數據更新
-                df = self.data_loader.get_binance_klines(self.symbol, self.interval, limit=200)
-                current_price = df['close'].iloc[-1]
+                # ==========================================
+                # A. 數據工程 (Data Engineering)
+                # ==========================================
+                
+                # 1. 從 API 抓取最新數據 (Extract)
+                raw_df = self.data_loader.get_binance_klines(self.symbol, self.interval, limit=200)
+                
+                # 2. 存入資料庫 (Load)
+                self.db.save_market_data(self.symbol, self.interval, raw_df)
+                
+                # 3. 從資料庫讀取數據給策略用 (Read)
+                # 這樣確保策略用到的一定是已經持久化的數據
+                strategy_df = self.db.load_market_data(self.symbol, self.interval, limit=200)
+
+                if strategy_df.empty:
+                    logging.warning("⚠️ 資料庫無數據，跳過本次循環")
+                    time.sleep(10)
+                    continue
+
+                current_price = strategy_df['close'].iloc[-1]
                 external_data = {}
 
-                # B. 資產快照與持倉檢查
+                # ==========================================
+                # B. 資產快照與策略 (後面邏輯不變，但要把 df 改成 strategy_df)
+                # ==========================================
                 current_pos_amt = self.log_snapshot(current_price)
 
                 # C. 策略遍歷
                 for strategy in self.strategies:
-                    strategy.update_data(df, external_data)
+                    strategy.update_data(strategy_df, external_data)
                     signal = strategy.generate_signal()
 
                     if signal:
