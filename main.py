@@ -24,6 +24,9 @@ from strategies.price_volume2 import PriceVolume2
 from strategies.test_strategy import TestStrategy
 from strategies.test_stratey2 import TestStrategy2
 
+
+from data_sources.registry import get_all_fetchers
+
 IS_PAPER_TRADING = False  # 全域變數，標示是否為模擬盤
 
 
@@ -53,13 +56,19 @@ class TradingBot:
         leverage = self.config_loader.get("risk", "leverage", 1)
         fixed_amount = self.config_loader.get("risk", "fixed_amount", 20)
         
-        # 2. 初始化連線
-        self._init_clients()
         
-        # 3. 初始化模組
+        
+        
+        
         self.risk_manager = RiskManager(fixed_usdt_amount=fixed_amount, leverage=leverage)
         self.db = DatabaseHandler("trading_data.db")
+        self._init_clients()
+        self.fetchers = get_all_fetchers()
         
+        logging.info(f"載入外部數據源: {list(self.fetchers.keys())}")
+
+        
+
         # 根據 Config 決定執行器
         if self.is_paper:
             self.executor = MockExecutor()
@@ -81,12 +90,13 @@ class TradingBot:
         try:
             # Data Client (永遠連真實主網)
             self.data_client = UMFutures(key=real_key, secret=real_secret)
-            self.data_loader = DataLoader(self.data_client)
+            self.data_loader = DataLoader(self.data_client, db=self.db)
             logging.info(" 數據源連線成功 (Real Market)")
         except Exception as e:
             logging.error(f" 數據源連線失敗: {e}")
             raise e
 
+        
         # Trade Client (根據設定選擇)
         if self.mode == "TESTNET":
             self.trade_client = UMFutures(
@@ -103,9 +113,10 @@ class TradingBot:
         ]
         logging.info(f" 已載入策略: {[s.name for s in self.strategies]}")
 
+
     def initialize(self):
         """ 啟動前的準備工作：設定槓桿、Warm-up """
-        send_tg_msg(f" **機器人啟動**\n監控: `{self.symbol}`\n模式: {'Testnet' if self.mode == 'TESTNET' else 'Real'}")
+        send_tg_msg(f" **啟動**\n監控: `{self.symbol}`\n模式: {'Testnet' if self.mode == 'TESTNET' else 'Real'}")
         
         # 1. 設定槓桿
         
@@ -114,7 +125,7 @@ class TradingBot:
         self.executor.set_leverage(self.symbol, leverage)
         
         # 2. 策略熱機
-        logging.info(" 開始策略熱機 (Warm-up)...")
+        logging.info(" 開始策略熱機 ...")
         try:
             history_df = self.data_loader.get_binance_klines(self.symbol, self.interval, limit=1500)
             if not history_df.empty:
@@ -125,6 +136,29 @@ class TradingBot:
                 logging.warning(" 熱機失敗：無歷史數據")
         except Exception as e:
             logging.error(f" 熱機錯誤: {e}")
+
+    def _update_external_data(self):
+        """ 統一更新邏輯 (完全不用改) """
+        logging.info(" 開始更新外部數據...")
+        
+        # 直接遍歷 Registry 產生的實例
+        for name, fetcher in self.fetchers.items():
+            try:
+                # 執行多型調用
+                df = fetcher.fetch_data()
+                
+                if df.empty: continue
+
+                # 特殊處理 (如果是 QQQ 這種 K 線)
+                if name == 'us_stock_qqq':
+                    self.db.save_market_data(symbol='QQQ', interval='1d', df=df)
+                else:
+                    self.db.save_generic_external_data(df)
+                    
+                logging.info(f"[{name}] 更新完成")
+                
+            except Exception as e:
+                logging.error(f" [{name}] 失敗: {e}")
 
     def log_snapshot(self, price):
         """ 紀錄資產快照 """
@@ -222,7 +256,7 @@ class TradingBot:
                 strategy_df = self.db.load_market_data(self.symbol, self.interval, limit=200)
 
                 if strategy_df.empty:
-                    logging.warning("⚠️ 資料庫無數據，跳過本次循環")
+                    logging.warning("資料庫無數據，跳過本次循環")
                     time.sleep(10)
                     continue
 

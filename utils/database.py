@@ -60,7 +60,7 @@ class DatabaseHandler:
         
        
 
-        # 4. 🔥 新增：市場數據表 (Market Data)
+        # 4. 市場數據表 (Market Data)
         # 使用複合主鍵 (symbol + interval + open_time) 確保唯一性
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS market_data (
@@ -74,6 +74,19 @@ class DatabaseHandler:
                 volume REAL,
                 close_time INTEGER,
                 PRIMARY KEY (symbol, interval, open_time)
+            )
+        ''')
+        
+        # 5. 新增外部數據表 (External Data)
+        # 設計成通用格式 (Generic Schema)，任何數據都能存
+        # metric: 數據名稱 (e.g., 'funding_rate', 'long_short_ratio', 'fear_greed')
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS external_data (
+                timestamp INTEGER,
+                symbol TEXT,
+                metric TEXT,
+                value REAL,
+                PRIMARY KEY (timestamp, symbol, metric)
             )
         ''')
         
@@ -147,53 +160,47 @@ class DatabaseHandler:
             df_to_save.rename(columns=rename_map, inplace=True)
 
             data_to_insert = []
-            for _, row in df_to_save.iterrows():
+            # 確保 open_time 是 datetime 型態
+            if not pd.api.types.is_datetime64_any_dtype(df_to_save['open_time']):
+                df_to_save['open_time'] = pd.to_datetime(df_to_save['open_time'])
 
-                raw_open_time = row['open_time']
-                if hasattr(raw_open_time, 'timestamp'):
-                    # 如果是 Timestamp 物件 -> 轉成毫秒 (整數)
-                    open_time_val = int(raw_open_time.timestamp() * 1000)
-                else:
-                    # 如果原本就是數字 -> 直接轉 int
-                    open_time_val = int(raw_open_time)
+            # 將 datetime64[ns] (奈秒) 轉成 int64 (奈秒)，再除以 1,000,000 變成 毫秒
+            #這行指令會瞬間把整欄轉成乾淨的整數 (int)
+            df_to_save['open_time'] = df_to_save['open_time'].astype('int64') // 10**6
 
-                # 🔥 處理 close_time (同理)
-                close_time_val = 0
-                if 'close_time' in row:
-                    raw_close_time = row['close_time']
-                    if hasattr(raw_close_time, 'timestamp'):
-                        close_time_val = int(raw_close_time.timestamp() * 1000)
-                    else:
-                        close_time_val = int(raw_close_time)
+            # 處理 close_time (如果有)
+            if 'close_time' in df_to_save.columns:
+                 if not pd.api.types.is_datetime64_any_dtype(df_to_save['close_time']):
+                    df_to_save['close_time'] = pd.to_datetime(df_to_save['close_time'])
+                 df_to_save['close_time'] = df_to_save['close_time'].astype('int64') // 10**6
+            else:
+                df_to_save['close_time'] = 0
 
-                data_to_insert.append((
-                    symbol,
-                    interval,
-                    open_time_val,
-                    float(row['open']),
-                    float(row['high']),
-                    float(row['low']),
-                    float(row['close']),
-                    float(row['vol']),
-                    close_time_val
-                ))
+                data_to_insert = list(df_to_save[[
+                'open_time', 'open', 'high', 'low', 'close', 'volume', 'close_time'
+            ]].itertuples(index=False, name=None))
+            
+            # 注意：這裡的 tuple 順序要跟 data_to_insert 欄位順序一樣
+            # 我們需要把 symbol, interval 加進去
+            final_data = []
+            for row in data_to_insert:
+                # row 內容: (open_time, open, high, low, close, volume, close_time)
+                # 我們要加上 symbol 和 interval
+                final_data.append((symbol, interval) + row)
 
-            # 使用 INSERT OR REPLACE 來處理重複數據 (更新舊的，插入新的)
             cursor.executemany('''
                 INSERT OR REPLACE INTO market_data 
                 (symbol, interval, open_time, open, high, low, close, volume, close_time)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ''', data_to_insert)
+            ''', final_data)
 
             conn.commit()
             conn.close()
-            # logging.info(f"💾 [DB] 已儲存 {len(df)} 筆 K 線數據") 
-            # (這行建議註解掉，不然 log 會太吵)
             
         except Exception as e:
             logging.error(f"[DB ERROR] 寫入市場數據失敗: {e}")
 
-    # 👇 新增：讀取 K 線數據 (給策略用)
+    #  新增：讀取 K 線數據 (給策略用)
     def load_market_data(self, symbol, interval, limit=200):
         try:
             conn = self._connect()
@@ -224,4 +231,64 @@ class DatabaseHandler:
             
         except Exception as e:
             logging.error(f" [DB ERROR] 讀取市場數據失敗: {e}")
+            return pd.DataFrame()
+        
+    #  新增：儲存外部數據的方法
+    def save_generic_external_data(self, df):
+        """
+        通用的儲存函數
+        df 必須包含: ['open_time', 'symbol', 'metric', 'value']
+        """
+        if df.empty: return
+
+        try:
+            conn = self._connect()
+            cursor = conn.cursor()
+            
+            # 確保型態正確
+            # 時間轉 int
+            if not pd.api.types.is_integer_dtype(df['open_time']):
+                 # 如果是 timestamp object
+                if pd.api.types.is_datetime64_any_dtype(df['open_time']):
+                     df['open_time'] = df['open_time'].astype('int64') // 10**6
+                else:
+                     # 如果是 float 或 string
+                     df['open_time'] = df['open_time'].astype('int64')
+
+            # 準備數據 (轉成 list of tuples)
+            # 注意順序要對應 SQL
+            data_to_insert = list(df[['open_time', 'symbol', 'metric', 'value']].itertuples(index=False, name=None))
+
+            cursor.executemany('''
+                INSERT OR REPLACE INTO external_data 
+                (timestamp, symbol, metric, value)
+                VALUES (?, ?, ?, ?)
+            ''', data_to_insert)
+
+            conn.commit()
+            conn.close()
+            
+        except Exception as e:
+            logging.error(f" [DB ERROR] 儲存通用外部數據失敗: {e}")
+
+    # 新增：讀取外部數據
+    def load_external_data(self, symbol, metric, limit=200):
+        try:
+            conn = self._connect()
+            query = '''
+                SELECT timestamp as open_time, value 
+                FROM external_data
+                WHERE symbol = ? AND metric = ?
+                ORDER BY timestamp DESC
+                LIMIT ?
+            '''
+            df = pd.read_sql(query, conn, params=(symbol, metric, limit))
+            conn.close()
+            
+            if not df.empty:
+                df = df.sort_values('open_time').reset_index(drop=True)
+                
+            return df
+        except Exception as e:
+            logging.error(f" [DB ERROR] 讀取外部數據失敗: {e}")
             return pd.DataFrame()
