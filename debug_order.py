@@ -21,7 +21,7 @@ def debug_order_structure():
         key=key, 
         secret=secret, 
         base_url='https://testnet.binancefuture.com',
-        timeout=60  # 👈 允許等待 60 秒
+        timeout=60  #  允許等待 60 秒
     )
     symbol = 'BTCUSDT'
 
@@ -63,13 +63,13 @@ def debug_order_structure():
         # 這是找手續費的地方
         trades = client.get_account_trades(symbol=symbol, orderId=order_id)
         
-        # 🖨️ 印出漂亮的 JSON
+        #  印出漂亮的 JSON
         print(json.dumps(trades, indent=4))
         
         if trades:
             fee = trades[0].get('commission')
             asset = trades[0].get('commissionAsset')
-            print(f"\n💰 [找到手續費了]: {fee} {asset}")
+            print(f"\n [找到手續費了]: {fee} {asset}")
 
     except ClientError as error:
         print(f" 發生錯誤: {error.error_message}")

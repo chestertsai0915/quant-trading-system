@@ -34,7 +34,7 @@ class FredFetcher(BaseDataSource):
                 # 格式化
                 formatted_df = pd.DataFrame()
                 formatted_df['open_time'] = temp_df['date'].astype('int64') // 10**6
-                formatted_df['symbol'] = 'US_MACRO' # 使用統一的代號
+                formatted_df['symbol'] = 'US_MACRO'
                 formatted_df['metric'] = metric_name
                 formatted_df['value'] = temp_df['value'].astype(float)
                 

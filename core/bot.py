@@ -7,9 +7,7 @@ from utils.database import DatabaseHandler
 from utils.notifier import send_tg_msg
 
 # 引入三大經理
-from managers.data_manager import DataManager
-from managers.strategy_manager import StrategyManager
-from managers.trade_manager import TradeManager
+from managers import DataManager, StrategyManager, TradeManager
 
 class TradingBot:
     def __init__(self, config_loader):
