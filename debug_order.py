@@ -14,7 +14,7 @@ def debug_order_structure():
     secret = os.getenv('TESTNET_SECRET_KEY')
     
     if not key or not secret:
-        print("❌ 錯誤: 請在 .env 設定 TESTNET_API_KEY 與 SECRET")
+        print(" 錯誤: 請在 .env 設定 TESTNET_API_KEY 與 SECRET")
         return
 
     client = UMFutures(
@@ -38,10 +38,10 @@ def debug_order_structure():
             newClientOrderId=my_id
         )
         order_id = order_response['orderId']
-        print(f"✅ 下單成功! Order ID: {order_id}")
+        print(f" 下單成功! Order ID: {order_id}")
         
         # 稍等一下讓後端撮合與寫入資料庫
-        print("⏳ 等待 2 秒讓資料寫入...")
+        print("等待 2 秒讓資料寫入...")
         time.sleep(2)
 
         print("------------------------------------------------------")
@@ -52,11 +52,11 @@ def debug_order_structure():
         # 🖨️ 印出漂亮的 JSON
         print(json.dumps(order_info, indent=4))
 
-        print("\n🧐 [觀察重點]:")
+        print("\n [觀察重點]:")
         print(f"   - status: {order_info.get('status')}")
         print(f"   - executedQty (成交量): {order_info.get('executedQty')}")
         print(f"   - cumQuote (成交額): {order_info.get('cumQuote')}")
-        print(f"   - ⚠️ 找找看有沒有 'fee' 或 'commission'? (通常是沒有的)")
+        print(f"   -  找找看有沒有 'fee' 或 'commission'? (通常是沒有的)")
 
         print("------------------------------------------------------")
         print("3. 呼叫 get_account_trades (查詢成交明細)...")
@@ -72,9 +72,8 @@ def debug_order_structure():
             print(f"\n💰 [找到手續費了]: {fee} {asset}")
 
     except ClientError as error:
-        print(f"❌ 發生錯誤: {error.error_message}")
+        print(f" 發生錯誤: {error.error_message}")
     except Exception as e:
-        print(f"❌ 未知錯誤: {e}")
-
+        print(f" 未知錯誤: {e}")
 if __name__ == "__main__":
     debug_order_structure()

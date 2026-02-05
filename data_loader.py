@@ -24,7 +24,7 @@ class DataLoader:
             # 確保時間是整數 (API 回傳就是毫秒整數，不用動)
             return df
         except Exception as e:
-            print(f"❌ 幣安數據抓取失敗: {e}")
+            print(f"幣安數據抓取失敗: {e}")
             return pd.DataFrame()
 
     # ==========================================

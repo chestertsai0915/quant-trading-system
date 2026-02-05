@@ -18,7 +18,7 @@ class FundingRateFetcher(BaseDataSource):
         result_df = pd.DataFrame()
         result_df['open_time'] = df['fundingTime'] # 這裡已經是毫秒
         result_df['symbol'] = df['symbol']
-        result_df['metric'] = 'funding_rate'       # 🔥 定義 Metric 名稱
+        result_df['metric'] = 'funding_rate'       #  定義 Metric 名稱
         result_df['value'] = df['fundingRate'].astype(float)
         
         return result_df
