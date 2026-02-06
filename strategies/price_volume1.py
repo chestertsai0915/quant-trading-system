@@ -32,7 +32,7 @@ class PriceVolume1(BaseStrategy):
         low = df_with_time['low'].values
         
         # ==========================================
-        # 👇 因子計算
+        #  因子計算
         # ==========================================
 
         # A. 計算 MAD (使用 close, 預設 MA=10)
@@ -51,7 +51,7 @@ class PriceVolume1(BaseStrategy):
         bs_quantile = ind.AlphaLibrary.calc_rolling_quantile(bs_ratio, self.window, self.th2)
 
         # ==========================================
-        # 👇 獲取當前數值 (Current Step)
+        #  獲取當前數值 (Current Step)
         # ==========================================
         
         # 對應 shift(1).fillna(False) 的邏輯：
@@ -70,7 +70,7 @@ class PriceVolume1(BaseStrategy):
         # print(f"MAD:{curr_mad:.4f} (Th:{curr_mad_th:.4f}) | BS:{curr_bs:.2f} (Th:{curr_bs_th:.2f}) | Time:{is_trade_time}")
 
         # ==========================================
-        # 👇 進出場條件 (Logic)
+        #  進出場條件 (Logic)
         # ==========================================
 
         # data['long_signal'] = (mad > mad_th) & (bs > bs_th) & (time==True)

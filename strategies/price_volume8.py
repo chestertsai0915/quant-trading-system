@@ -26,7 +26,7 @@ class PriceVolume8(BaseStrategy):
         low = self.kline_data['low'].values
         
         # ==========================================
-        # 👇 因子計算
+        #  因子計算
         # ==========================================
 
         # A. 計算 MAD (價格偏離度)
@@ -43,7 +43,7 @@ class PriceVolume8(BaseStrategy):
         bs_th = ind.AlphaLibrary.calc_rolling_quantile(bs_ratio, self.window, self.th2)
 
         # ==========================================
-        # 👇 獲取當前數值
+        #  獲取當前數值
         # ==========================================
         
         curr_mad = mad[-1]
@@ -56,7 +56,7 @@ class PriceVolume8(BaseStrategy):
         # print(f"[{self.name}] MAD:{curr_mad:.4f}(>{curr_mad_th:.4f}) | BS:{curr_bs:.2f}(>{curr_bs_th:.2f})")
 
         # ==========================================
-        # 👇 進出場邏輯
+        #  進出場邏輯
         # ==========================================
 
         # 進場: MAD > 70% AND BS_Ratio > 90%

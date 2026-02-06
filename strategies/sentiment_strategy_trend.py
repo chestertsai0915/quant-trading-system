@@ -33,7 +33,7 @@ class SentimentStrategyV3(BaseStrategy):
         if crypto_vol == 0: crypto_vol = 1 
         
         # ==========================================
-        # 👇 因子計算
+        # 因子計算
         # ==========================================
 
         # A. 計算 BTC Ratio (當前值)
@@ -51,7 +51,7 @@ class SentimentStrategyV3(BaseStrategy):
         z_score_series = ind.AlphaLibrary.calc_z_score(close, self.z_window)
         
         # ==========================================
-        # 👇 計算滾動分位數 (Thresholds)
+        #  計算滾動分位數 (Thresholds)
         # ==========================================
         
         # 1. BTC Ratio 的 80% 分位數
@@ -67,7 +67,7 @@ class SentimentStrategyV3(BaseStrategy):
         z_score_th_series = ind.AlphaLibrary.calc_rolling_quantile(z_score_series, self.rolling_window, self.z_score_th)
         
         # ==========================================
-        # 👇 獲取當前數值
+        #  獲取當前數值
         # ==========================================
         
         curr_z_score = z_score_series[-1]
@@ -77,7 +77,7 @@ class SentimentStrategyV3(BaseStrategy):
         # print(f"[{self.name}] Ratio:{current_ratio:.2f}(>{ratio_quantile_val:.2f}) | Z:{curr_z_score:.2f}(>{curr_z_th:.2f})")
 
         # ==========================================
-        # 👇 進出場邏輯
+        #  進出場邏輯
         # ==========================================
 
         # 進場: Ratio > 80% Quantile AND Z-Score > 70% Quantile

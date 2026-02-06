@@ -27,7 +27,7 @@ class PriceVolume4(BaseStrategy):
         volume = self.kline_data['vol'].values
         
         # ==========================================
-        # 👇 因子計算
+        #  因子計算
         # ==========================================
 
         # A. 計算 OBV (使用平滑版)
@@ -44,7 +44,7 @@ class PriceVolume4(BaseStrategy):
         vroc_th = ind.AlphaLibrary.calc_rolling_quantile(vroc, self.window, self.th2)
 
         # ==========================================
-        # 👇 獲取當前數值
+        #  獲取當前數值
         # ==========================================
         
         curr_obv = obv[-1]
@@ -57,7 +57,7 @@ class PriceVolume4(BaseStrategy):
         # print(f"[{self.name}] OBV:{curr_obv:.0f}(>{curr_obv_th:.0f}) | VROC:{curr_vroc:.2f}(>{curr_vroc_th:.2f})")
 
         # ==========================================
-        # 👇 進出場邏輯 (Logic)
+        #  進出場邏輯 (Logic)
         # ==========================================
 
         # 進場: (OBV > 80% Quantile) & (VROC > 80% Quantile)

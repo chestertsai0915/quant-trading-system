@@ -102,13 +102,13 @@ class DataManager:
             ext_df = self.db.load_external_data(
                 symbol='GLOBAL' if metric != 'funding_rate' else self.symbol, 
                 metric=metric, 
-                start_time=start_time
+                start_time=start_time   
             )
             
             if not ext_df.empty:
                 ext_df = ext_df.sort_values('open_time')
                 
-                # B. 🔥 核心動作：merge_asof (向後查找)
+                # B. 核心動作：merge_asof (向後查找)
                 # 這就是在做 "Forward Fill"
                 # 它會幫 df 的每一行，找到 ext_df 裡 open_time <= df.open_time 的最新一筆
                 df = pd.merge_asof(

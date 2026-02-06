@@ -160,6 +160,9 @@ class DatabaseHandler:
             df_to_save.rename(columns=rename_map, inplace=True)
 
             data_to_insert = []
+
+            if pd.api.types.is_numeric_dtype(df_to_save['open_time']):
+                df_to_save['open_time'] = pd.to_datetime(df_to_save['open_time'], unit='ms')
             # 確保 open_time 是 datetime 型態
             if not pd.api.types.is_datetime64_any_dtype(df_to_save['open_time']):
                 df_to_save['open_time'] = pd.to_datetime(df_to_save['open_time'])
@@ -170,6 +173,8 @@ class DatabaseHandler:
 
             # 處理 close_time (如果有)
             if 'close_time' in df_to_save.columns:
+                 if pd.api.types.is_numeric_dtype(df_to_save['close_time']):
+                     df_to_save['close_time'] = pd.to_datetime(df_to_save['close_time'], unit='ms')
                  if not pd.api.types.is_datetime64_any_dtype(df_to_save['close_time']):
                     df_to_save['close_time'] = pd.to_datetime(df_to_save['close_time'])
                  df_to_save['close_time'] = df_to_save['close_time'].astype('int64') // 10**6
@@ -272,23 +277,58 @@ class DatabaseHandler:
             logging.error(f" [DB ERROR] 儲存通用外部數據失敗: {e}")
 
     # 新增：讀取外部數據
-    def load_external_data(self, symbol, metric, limit=200):
+    def load_external_data(self, symbol, metric, start_time=None, limit=200):
+        """
+        讀取外部數據 (智慧對齊版)
+        :param start_time: K 線的起始時間。函數會自動抓取該時間點「前一筆」數據，確保 merge_asof 在第一行就有值。
+        """
         try:
             conn = self._connect()
-            query = '''
-                SELECT timestamp as open_time, value 
-                FROM external_data
-                WHERE symbol = ? AND metric = ?
-                ORDER BY timestamp DESC
-                LIMIT ?
-            '''
-            df = pd.read_sql(query, conn, params=(symbol, metric, limit))
+            cursor = conn.cursor()
+            
+            if start_time is not None:
+                # --- 步驟 1: 尋找「前一筆」的時間點 ---
+                # 我們不盲目減去固定時間，而是精準找出「比 start_time 小的最新一筆數據」是何時
+                query_prev = '''
+                    SELECT MAX(timestamp) 
+                    FROM external_data
+                    WHERE symbol = ? AND metric = ? AND timestamp < ?
+                '''
+                cursor.execute(query_prev, (symbol, metric, start_time))
+                result = cursor.fetchone()
+                
+                # 如果找得到前一筆，我們就從那一筆的時間開始抓 (包含那一筆)
+                # 如果找不到 (代表 start_time 之前完全沒數據)，就維持原本的 start_time
+                actual_start_time = result[0] if result and result[0] is not None else start_time
+                
+                # --- 步驟 2: 抓取範圍內的數據 ---
+                query = '''
+                    SELECT timestamp as open_time, value 
+                    FROM external_data
+                    WHERE symbol = ? AND metric = ? AND timestamp >= ?
+                    ORDER BY timestamp ASC
+                '''
+                df = pd.read_sql(query, conn, params=(symbol, metric, actual_start_time))
+            
+            else:
+                # 模式 B: 簡單模式 (Legacy Mode) - 只抓最新的 N 筆
+                query = '''
+                    SELECT timestamp as open_time, value 
+                    FROM external_data
+                    WHERE symbol = ? AND metric = ?
+                    ORDER BY timestamp DESC
+                    LIMIT ?
+                '''
+                df = pd.read_sql(query, conn, params=(symbol, metric, limit))
+            
             conn.close()
             
             if not df.empty:
+                # 確保按時間由舊到新排序
                 df = df.sort_values('open_time').reset_index(drop=True)
                 
             return df
+            
         except Exception as e:
             logging.error(f" [DB ERROR] 讀取外部數據失敗: {e}")
             return pd.DataFrame()

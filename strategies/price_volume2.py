@@ -25,7 +25,7 @@ class PriceVolume2(BaseStrategy):
         volume = self.kline_data['vol'].values
 
         # ==========================================
-        # 👇 呼叫共用因子庫 (核心改變)
+        #  呼叫共用因子庫 (核心改變)
         # ==========================================
         
         # 呼叫自定義 ATR
@@ -35,7 +35,7 @@ class PriceVolume2(BaseStrategy):
         my_obv = ind.AlphaLibrary.calc_smooth_obv(close, volume, self.obv_window)
 
         # ==========================================
-        # 👇 計算進出場訊號線
+        #  計算進出場訊號線
         # ==========================================
         
         # 計算訊號判斷用的 MA (OBV 的 5日均線, ATR 的 30日均線)
@@ -53,7 +53,7 @@ class PriceVolume2(BaseStrategy):
         # print(f"[{self.name}] OBV:{curr_obv:.2f} vs MA:{curr_obv_ma:.2f} | ATR:{curr_atr:.4f} vs MA:{curr_atr_ma:.4f}")
 
         # ==========================================
-        # 👇 決策邏輯 (Logic)
+        #  決策邏輯 (Logic)
         # ==========================================
 
         # 進場條件: (OBV > OBV_MA) & (ATR > ATR_MA)

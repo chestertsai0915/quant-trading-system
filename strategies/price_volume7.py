@@ -26,7 +26,7 @@ class PriceVolume7(BaseStrategy):
         close = self.kline_data['close'].values
         
         # ==========================================
-        # 👇 因子計算
+        #  因子計算
         # ==========================================
 
         # A. 計算 Momentum (平滑版)
@@ -45,7 +45,7 @@ class PriceVolume7(BaseStrategy):
         mad_low_th = ind.AlphaLibrary.calc_rolling_quantile(mad, self.window, self.th2)
 
         # ==========================================
-        # 👇 獲取當前數值
+        #  獲取當前數值
         # ==========================================
         
         curr_mom = momentum[-1]
@@ -58,7 +58,7 @@ class PriceVolume7(BaseStrategy):
         # print(f"[{self.name}] MOM:{curr_mom:.2f}(>{curr_mom_th:.2f}) | MAD:{curr_mad:.4f}(>{curr_mad_th:.4f})")
 
         # ==========================================
-        # 👇 進出場邏輯
+        #  進出場邏輯
         # ==========================================
 
         # 進場: Momentum > 70% AND MAD > 10%

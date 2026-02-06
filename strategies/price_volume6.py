@@ -29,7 +29,7 @@ class PriceVolume6(BaseStrategy):
         volume = self.kline_data['vol'].values
         
         # ==========================================
-        # 👇 因子計算
+        #  因子計算
         # ==========================================
 
         # A. 計算 ATR (自定義版)
@@ -46,7 +46,7 @@ class PriceVolume6(BaseStrategy):
         obv_th = ind.AlphaLibrary.calc_rolling_quantile(obv, self.window, self.th2)
 
         # ==========================================
-        # 👇 獲取當前數值
+        #  獲取當前數值
         # ==========================================
         
         curr_atr = atr[-1]
@@ -59,7 +59,7 @@ class PriceVolume6(BaseStrategy):
         # print(f"[{self.name}] ATR:{curr_atr:.2f}(>{curr_atr_th:.2f}) | OBV:{curr_obv:.0f}(>{curr_obv_th:.0f})")
 
         # ==========================================
-        # 👇 進出場邏輯
+        #  進出場邏輯
         # ==========================================
 
         # 進場: ATR > 90% AND OBV > 90%

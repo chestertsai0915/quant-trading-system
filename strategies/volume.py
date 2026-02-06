@@ -32,7 +32,7 @@ class PriceVolume10(BaseStrategy):
         volume = df_with_time['vol'].values
         
         # ==========================================
-        # 👇 因子計算
+        #  因子計算
         # ==========================================
 
         # A. 計算 feature1_mean (成交量 15 MA)
@@ -51,7 +51,7 @@ class PriceVolume10(BaseStrategy):
         lower_th = ind.AlphaLibrary.calc_rolling_quantile(feature1_diff, self.lower_window, self.lower_q)
 
         # ==========================================
-        # 👇 獲取當前數值
+        #  獲取當前數值
         # ==========================================
         
         curr_diff = feature1_diff[-1]
@@ -62,7 +62,7 @@ class PriceVolume10(BaseStrategy):
         # print(f"[{self.name}] Diff:{curr_diff:.2f} | Low:{curr_lower:.2f} | Up:{curr_upper:.2f} | US_Time:{is_trade_time}")
 
         # ==========================================
-        # 👇 進出場邏輯
+        #  進出場邏輯
         # ==========================================
 
         # 條件: is_trade_time == False (非美股時間)

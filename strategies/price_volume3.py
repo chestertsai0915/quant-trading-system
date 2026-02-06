@@ -26,7 +26,7 @@ class PriceVolume3(BaseStrategy):
         volume = self.kline_data['vol'].values
         
         # ==========================================
-        # 👇 因子計算
+        #  因子計算
         # ==========================================
 
         # A. 計算 MAD
@@ -43,7 +43,7 @@ class PriceVolume3(BaseStrategy):
         obv_low_th = ind.AlphaLibrary.calc_rolling_quantile(obv, self.window, self.th2)
 
         # ==========================================
-        # 👇 獲取當前數值 (Current Step)
+        #  獲取當前數值 (Current Step)
         # ==========================================
         
         curr_mad = mad[-1]
@@ -56,7 +56,7 @@ class PriceVolume3(BaseStrategy):
         # print(f"[{self.name}] MAD:{curr_mad:.4f}(>{curr_mad_th:.4f}) | OBV:{curr_obv:.0f}(>{curr_obv_th:.0f})")
 
         # ==========================================
-        # 👇 進出場邏輯 (Logic)
+        #  進出場邏輯 (Logic)
         # ==========================================
 
         # 進場: (MAD > 90% Quantile) & (OBV > 30% Quantile)

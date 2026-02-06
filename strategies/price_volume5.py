@@ -30,7 +30,7 @@ class PriceVolume5(BaseStrategy):
         low = self.kline_data['low'].values
         
         # ==========================================
-        # 👇 因子計算
+        #  因子計算
         # ==========================================
 
         # A. 計算 ATR (自定義版: TR -> SMA)
@@ -47,7 +47,7 @@ class PriceVolume5(BaseStrategy):
         mom_th = ind.AlphaLibrary.calc_rolling_quantile(momentum, self.window, self.th2)
 
         # ==========================================
-        # 👇 獲取當前數值
+        #  獲取當前數值
         # ==========================================
         
         curr_atr = atr[-1]
@@ -60,7 +60,7 @@ class PriceVolume5(BaseStrategy):
         # print(f"[{self.name}] ATR:{curr_atr:.2f}(>{curr_atr_th:.2f}) | MOM:{curr_mom:.2f}(>{curr_mom_th:.2f})")
 
         # ==========================================
-        # 👇 進出場邏輯
+        #  進出場邏輯
         # ==========================================
 
         # 進場: ATR > 90% Quantile AND Momentum > 70% Quantile
