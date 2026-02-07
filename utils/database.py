@@ -150,14 +150,20 @@ class DatabaseHandler:
             # 3. 欄位名稱標準化 (Mapping)
             # 你的 DataLoader 可能把時間叫做 'timestamp', 'date', 'Date', 'index' 等等
             # 我們統一改成 'open_time'
-            rename_map = {
-                'timestamp': 'open_time',
-                'Date': 'open_time',
-                'date': 'open_time',
-                'index': 'open_time',
-                'Close time': 'close_time' # 有些 loader 會這樣命名
-            }
-            df_to_save.rename(columns=rename_map, inplace=True)
+            if 'open_time' not in df_to_save.columns:
+                rename_map = {
+                    'timestamp': 'open_time',
+                    'Date': 'open_time',
+                    'date': 'open_time',
+                    'index': 'open_time',
+                    'Close time': 'close_time'
+                }
+                df_to_save.rename(columns=rename_map, inplace=True)
+            else:
+                # 即使有 open_time，也要確保 close_time 被正確更名
+                if 'Close time' in df_to_save.columns:
+                    df_to_save.rename(columns={'Close time': 'close_time'}, inplace=True)
+            
 
             data_to_insert = []
 
@@ -181,7 +187,7 @@ class DatabaseHandler:
             else:
                 df_to_save['close_time'] = 0
 
-                data_to_insert = list(df_to_save[[
+            data_to_insert = list(df_to_save[[
                 'open_time', 'open', 'high', 'low', 'close', 'volume', 'close_time'
             ]].itertuples(index=False, name=None))
             

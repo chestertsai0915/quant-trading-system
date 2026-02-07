@@ -24,7 +24,7 @@ class BaseStrategy(ABC):
         機器人啟動時的熱機動作
         目的：讓 rolling(window) 等指標有足夠的歷史數據可以計算
         """
-        print(f"🔥 [{self.name}] 正在熱機... (載入 {len(historical_kline)} 筆 K 線)")
+        print(f"[{self.name}] 正在熱機... (載入 {len(historical_kline)} 筆 K 線)")
         
         # 將歷史數據直接設為當前數據
         self.kline_data = historical_kline

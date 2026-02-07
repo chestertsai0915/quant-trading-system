@@ -2,7 +2,10 @@ import logging
 from dotenv import load_dotenv
 from utils.config_loader import ConfigLoader
 from core.bot import TradingBot
+import warnings
 
+# 過濾掉 pytrends 引發的 FutureWarning
+warnings.filterwarnings("ignore", category=FutureWarning, module="pytrends")
 # 設定 Logging
 logging.basicConfig(
     level=logging.INFO,
