@@ -23,6 +23,7 @@ def main():
     # 2. 載入設定
     config = ConfigLoader("config.json")
     
+
     # 3. 實例化機器人
     bot = TradingBot(config)
     

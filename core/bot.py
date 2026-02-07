@@ -20,10 +20,11 @@ class TradingBot:
         # 1. 初始化基礎設施
         self.db = DatabaseHandler("trading_data.db")
         self.data_client, self.trade_client = self._init_clients()
+        strategy_names = self.config.get('trading','strategies', [])
         
         # 2. 初始化三大經理
         self.data_manager = DataManager(self.data_client, self.db, self.symbol, self.interval)
-        self.strategy_manager = StrategyManager()
+        self.strategy_manager = StrategyManager(strategy_names)
         self.trade_manager = TradeManager(self.trade_client, self.db, self.config, self.symbol, self.is_paper)
         
         # 3. 策略熱機
