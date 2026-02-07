@@ -13,6 +13,6 @@ trading_data.db
 # python
 __pycache__/
 .ipynb_checkpoints/
-
+test.ipynb
 # logs
 logs/
