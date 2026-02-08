@@ -19,62 +19,83 @@ class TradeManager:
             self.executor = BinanceExecutor(self.client)
             
         # 初始化風控
-        leverage = config.get("risk", "leverage", 1)
-        fixed_amount = config.get("risk", "fixed_amount", 20)
-        self.risk_manager = RiskManager(fixed_usdt_amount=fixed_amount, leverage=leverage)
+        # 1. 讀取風控設定
+        self.leverage = config.get("risk", "leverage", 1)
         
-        # 設定槓桿
+        # 2. 讀取資金分配設定
+        self.default_amount = config.get("risk", "default_amount", 100)
+        self.allocations = config.get("risk", "strategy_allocations", {})
+        
+        self.risk_manager = RiskManager(leverage=self.leverage)
+        
+        # 設定交易所槓桿 (只需設一次)
         if not self.is_paper:
-            self.executor.set_leverage(self.symbol, leverage)
+            self.executor.set_leverage(self.symbol, self.leverage)
+    
+    def _get_strategy_amount(self, strategy_name):
+        """ 取得該策略分配的金額 """
+        return self.allocations.get(strategy_name, self.default_amount)
 
     def log_snapshot(self, current_price):
-        """ 資產快照 """
+        """ 
+        [修改] 這裡顯示的是「交易所總持倉」，但也要加上「策略持倉分布」
+        """
         details = self.executor.get_position_details(self.symbol)
-        amt = details['amt'] if details else 0.0
+        total_amt = details['amt'] if details else 0.0
         
-        if abs(amt) > 0:
-            logging.info(f"[SNAPSHOT] 持倉: {amt} | PnL: {details['unRealizedProfit']} U")
-        else:
-            logging.info(f"[SNAPSHOT] 空手 | 現價: {current_price}")
-        
-        return amt
+        logging.info(f"[SNAPSHOT] 交易所總持倉: {total_amt} BTC | 現價: {current_price}")
+        return total_amt
 
     def process_signal(self, signal_data, current_pos_amt):
-        """ 處理單一策略訊號 """
+        """ 
+        [核心修改] 
+        不再看 current_pos_amt (總持倉)，
+        而是去 DB 查這個策略自己有沒有持倉 
+        """
         strategy_name = signal_data['strategy_name']
         action = signal_data['action']
         reason = signal_data['reason']
         ref_price = signal_data['ref_price']
 
-        # 紀錄訊號到 DB
-        logging.info(f"[SIGNAL] {strategy_name} | {action} | {reason}")
+        # 1. 查詢該策略目前的「虛擬持倉」
+        strat_pos_qty, strat_entry_price = self.db.get_strategy_position(strategy_name, self.symbol)
+        
+        logging.info(f"[SIGNAL] {strategy_name} ({strat_pos_qty} BTC) | {action} | {reason}")
         self.db.log_signal(strategy_name, self.symbol, action, ref_price, reason)
 
-        # 計算下單量
         target_qty = 0
         should_trade = False
 
         if action == 'LONG':
-            if current_pos_amt > 0:
-                logging.info(f"[SKIP] {strategy_name} 喊多但已有持倉")
+            # 策略自己沒倉位才能開 (忽略別的策略有沒有單)
+            if strat_pos_qty > 0:
+                logging.info(f"[SKIP] {strategy_name} 已有持倉 {strat_pos_qty}，跳過開倉")
             else:
-                target_qty = self.risk_manager.calculate_quantity(ref_price)
+                # 取得該策略分配的金額
+                amount = self._get_strategy_amount(strategy_name)
+                # 計算下單量
+                target_qty = self.risk_manager.calculate_quantity(ref_price, amount)
                 should_trade = True
         
         elif action == 'CLOSE':
-            if current_pos_amt > 0:
-                target_qty = abs(current_pos_amt)
+            # 策略自己有倉位才能平
+            if strat_pos_qty > 0:
+                # 平倉數量 = 該策略持有的數量 (確保一一對應)
+                target_qty = strat_pos_qty
                 should_trade = True
+            else:
+                logging.info(f"[SKIP] {strategy_name} 目前空手，無法平倉")
         
         # 執行交易
         if should_trade and target_qty > 0:
             self._execute_order(strategy_name, action, target_qty, ref_price)
 
     def _execute_order(self, strategy_name, action, quantity, market_price):
-        """ 底層下單邏輯 """
+        """ 底層下單邏輯 (不變) """
         side = 'BUY' if action == 'LONG' else 'SELL'
         is_reduce = (action == 'CLOSE')
         
+        # 這裡發送給幣安的是「淨操作」
         response = self.executor.execute_order(
             self.symbol, side, quantity, reduce_only=is_reduce, market_price=market_price
         )
@@ -82,13 +103,14 @@ class TradeManager:
         if not response: return
 
         order_id = response.get('orderId')
-        logging.info(f"訂單已發送 ID: {order_id}，等待撮合...")
-        time.sleep(3) # 等待成交
+        logging.info(f"[{strategy_name}] 訂單已發送 ID: {order_id}")
+        time.sleep(3) 
 
         # 查證訂單
         final_record = self._verify_order(order_id, response)
         
         if final_record and final_record['executedQty'] > 0:
+            # 這裡 DB 寫入時已經有 strategy_name 了，所以紀錄是分開的
             self._log_trade_success(strategy_name, action, final_record, order_id)
         else:
             logging.warning(f"訂單 {order_id} 未完全成交")

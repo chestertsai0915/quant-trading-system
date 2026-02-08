@@ -547,3 +547,143 @@ AttributeError: 'DatabaseHandler' object has no attribute 'save_market_data'
 2026-02-09 02:00:09,021 [INFO] [SIGNAL] Price_Volume2 | CLOSE | Exit: OBV(-588680.2)<MA or ATR<MA
 2026-02-09 02:00:09,024 [INFO] 本週期結束，等待下一次收盤...
 2026-02-09 02:17:52,840 [WARNING] 停止運行
+2026-02-09 02:51:55,706 [INFO] 設定檔載入成功: config.json
+2026-02-09 02:51:56,130 [INFO] [BG-TASK] 開始背景更新外部數據...
+2026-02-09 02:51:56,130 [INFO]  外部數據背景更新
+2026-02-09 02:51:56,132 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-09 02:51:56,137 [INFO]  策略已掛載: PriceVolume2
+2026-02-09 02:51:56,138 [INFO] 目前運行策略列表: ['Price_Volume2']
+2026-02-09 02:51:56,549 [INFO]  [CONFIG] 成功設定 BTCUSDT 槓桿為 5x
+2026-02-09 02:51:57,159 [INFO] 開始為 1 個策略熱機...
+2026-02-09 02:51:57,159 [INFO] 熱機完成
+2026-02-09 02:51:58,565 [INFO] 監控 1h K 線...
+2026-02-09 02:51:58,632 [INFO] [ETL] 處理新 K 線: 2026-02-08 17:00:00
+2026-02-09 02:52:01,041 [INFO] [BG-TASK] 所有外部數據更新完成 (耗時 4.91s)
+2026-02-09 02:52:02,877 [INFO] [SNAPSHOT] 空手 | 現價: 70754.5
+2026-02-09 02:52:02,880 [INFO] [SIGNAL] Price_Volume2 | CLOSE | Exit: OBV(-588680.2)<MA or ATR<MA
+2026-02-09 02:52:02,882 [INFO] 本週期結束，等待下一次收盤...
+2026-02-09 03:00:03,135 [INFO] [ETL] 處理新 K 線: 2026-02-08 18:00:00
+2026-02-09 03:19:46,623 [INFO] [SNAPSHOT] 空手 | 現價: 71103.1
+2026-02-09 03:19:46,624 [INFO] [SIGNAL] Price_Volume2 | CLOSE | Exit: OBV(-597246.1)<MA or ATR<MA
+2026-02-09 03:19:46,626 [INFO] 本週期結束，等待下一次收盤...
+2026-02-09 03:20:24,785 [WARNING] 停止運行
+2026-02-09 03:21:52,322 [INFO] 設定檔載入成功: config.json
+2026-02-09 03:21:52,907 [INFO] [BG-TASK] 開始背景更新外部數據...
+2026-02-09 03:21:52,907 [INFO]  外部數據背景更新
+2026-02-09 03:21:52,907 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-09 03:21:52,911 [INFO]  策略已掛載: PriceVolume2
+2026-02-09 03:21:52,911 [INFO]  策略已掛載: PriceVolume3
+2026-02-09 03:21:52,912 [INFO] 目前運行策略列表: ['Price_Volume2', 'Strategy3_MAD_OBV_Quantile']
+2026-02-09 03:25:42,944 [INFO] 設定檔載入成功: config.json
+2026-02-09 03:25:43,594 [INFO] [BG-TASK] 開始背景更新外部數據...
+2026-02-09 03:25:43,595 [INFO]  外部數據背景更新
+2026-02-09 03:25:43,595 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-09 03:25:43,598 [INFO]  策略已掛載: PriceVolume2
+2026-02-09 03:25:43,599 [INFO]  策略已掛載: PriceVolume3
+2026-02-09 03:25:43,599 [INFO] 目前運行策略列表: ['Price_Volume2', 'Strategy3_MAD_OBV_Quantile']
+2026-02-09 03:25:44,086 [INFO]  [CONFIG] 成功設定 BTCUSDT 槓桿為 5x
+2026-02-09 03:25:44,623 [INFO] 開始為 2 個策略熱機...
+2026-02-09 03:25:44,623 [INFO] 熱機完成
+2026-02-09 03:25:46,211 [INFO] 監控 1h K 線...
+2026-02-09 03:25:46,271 [INFO] [ETL] 處理新 K 線: 2026-02-08 18:00:00
+2026-02-09 03:25:49,068 [INFO] [BG-TASK] 所有外部數據更新完成 (耗時 5.47s)
+2026-02-09 03:25:50,301 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 71103.1
+2026-02-09 03:25:50,305 [INFO] [SIGNAL] Price_Volume2 (0.0 BTC) | CLOSE | Exit: OBV(-597246.1)<MA or ATR<MA
+2026-02-09 03:25:50,313 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉
+2026-02-09 03:25:50,314 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (0.0 BTC) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-09 03:25:50,318 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉
+2026-02-09 03:25:50,318 [INFO] 本週期結束，等待下一次收盤...
+2026-02-09 03:31:39,217 [WARNING] 停止運行
+2026-02-09 03:35:14,493 [INFO] 設定檔載入成功: config.json
+2026-02-09 03:35:35,958 [INFO] 設定檔載入成功: config.json
+2026-02-09 03:35:36,654 [INFO] [BG-TASK] 開始背景更新外部數據...
+2026-02-09 03:35:36,654 [INFO]  外部數據背景更新
+2026-02-09 03:35:36,655 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-09 03:35:36,658 [INFO]  策略已掛載: PriceVolume2
+2026-02-09 03:35:36,658 [INFO]  策略已掛載: PriceVolume3
+2026-02-09 03:35:36,658 [INFO] 目前運行策略列表: ['Price_Volume2', 'Strategy3_MAD_OBV_Quantile']
+2026-02-09 03:35:37,122 [INFO]  [CONFIG] 成功設定 BTCUSDT 槓桿為 5x
+2026-02-09 03:35:37,684 [ERROR]  [DB ERROR] 儲存通用外部數據失敗: 'DatabaseHandler' object has no attribute '_connect'
+2026-02-09 03:35:37,722 [INFO] 開始為 2 個策略熱機...
+2026-02-09 03:35:37,723 [INFO] 熱機完成
+2026-02-09 03:35:39,029 [ERROR]  [DB ERROR] 儲存通用外部數據失敗: 'DatabaseHandler' object has no attribute '_connect'
+2026-02-09 03:35:39,055 [INFO] 監控 1h K 線...
+2026-02-09 03:35:39,113 [INFO] [ETL] 處理新 K 線: 2026-02-08 18:00:00
+2026-02-09 03:35:39,113 [ERROR] [DB ERROR] 寫入市場數據失敗: 'DatabaseHandler' object has no attribute '_connect'
+2026-02-09 03:35:39,964 [ERROR]  [DB ERROR] 儲存通用外部數據失敗: 'DatabaseHandler' object has no attribute '_connect'
+2026-02-09 03:35:40,905 [ERROR]  [DB ERROR] 儲存通用外部數據失敗: 'DatabaseHandler' object has no attribute '_connect'
+2026-02-09 03:35:41,003 [ERROR]  [DB ERROR] 儲存通用外部數據失敗: 'DatabaseHandler' object has no attribute '_connect'
+2026-02-09 03:35:41,634 [ERROR] [DB ERROR] 寫入市場數據失敗: 'DatabaseHandler' object has no attribute '_connect'
+2026-02-09 03:35:41,635 [INFO] [BG-TASK] 所有外部數據更新完成 (耗時 4.98s)
+2026-02-09 03:35:41,994 [ERROR]  [DB ERROR] 儲存通用外部數據失敗: 'DatabaseHandler' object has no attribute '_connect'
+2026-02-09 03:35:42,681 [ERROR] [DB ERROR] 寫入市場數據失敗: 'DatabaseHandler' object has no attribute '_connect'
+2026-02-09 03:35:42,682 [ERROR]  [DB ERROR] 讀取市場數據失敗: 'DatabaseHandler' object has no attribute '_connect'
+2026-02-09 03:35:42,682 [INFO] 本週期結束，等待下一次收盤...
+2026-02-09 03:35:49,290 [WARNING] 停止運行
+2026-02-09 03:41:59,275 [INFO] 設定檔載入成功: config.json
+2026-02-09 03:41:59,931 [INFO] [BG-TASK] 開始背景更新外部數據...
+2026-02-09 03:41:59,931 [INFO]  外部數據背景更新
+2026-02-09 03:41:59,933 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-09 03:41:59,935 [INFO]  策略已掛載: PriceVolume2
+2026-02-09 03:41:59,936 [INFO]  策略已掛載: PriceVolume3
+2026-02-09 03:41:59,936 [INFO] 目前運行策略列表: ['Price_Volume2', 'Strategy3_MAD_OBV_Quantile']
+2026-02-09 03:42:00,344 [INFO]  [CONFIG] 成功設定 BTCUSDT 槓桿為 5x
+2026-02-09 03:42:00,870 [INFO] 開始為 2 個策略熱機...
+2026-02-09 03:42:00,870 [INFO] 熱機完成
+2026-02-09 03:42:02,267 [INFO] 監控 1h K 線...
+2026-02-09 03:42:02,324 [INFO] [ETL] 處理新 K 線: 2026-02-08 18:00:00
+2026-02-09 03:42:04,698 [INFO] [BG-TASK] 所有外部數據更新完成 (耗時 4.77s)
+2026-02-09 03:42:06,257 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 71103.1
+2026-02-09 03:42:06,259 [INFO] [SIGNAL] Price_Volume2 (0.0 BTC) | CLOSE | Exit: OBV(-597246.1)<MA or ATR<MA
+2026-02-09 03:42:06,260 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉
+2026-02-09 03:42:06,260 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (0.0 BTC) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-09 03:42:06,261 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉
+2026-02-09 03:42:06,262 [INFO] 本週期結束，等待下一次收盤...
+2026-02-09 04:00:01,606 [INFO] [ETL] 處理新 K 線: 2026-02-08 19:00:00
+2026-02-09 04:00:06,472 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 71381.0
+2026-02-09 04:00:06,474 [INFO] [SIGNAL] Price_Volume2 (0.0 BTC) | CLOSE | Exit: OBV(-585637.9)<MA or ATR<MA
+2026-02-09 04:00:06,476 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉
+2026-02-09 04:00:06,477 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (0.0 BTC) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-09 04:00:06,478 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉
+2026-02-09 04:00:06,478 [INFO] 本週期結束，等待下一次收盤...
+2026-02-09 04:07:08,412 [WARNING] 停止運行
+2026-02-09 04:08:53,425 [INFO] 設定檔載入成功: config.json
+2026-02-09 04:08:54,096 [INFO] [BG-TASK] 開始背景更新外部數據...
+2026-02-09 04:08:54,096 [INFO]  外部數據背景更新
+2026-02-09 04:08:54,097 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-09 04:08:54,100 [INFO]  策略已掛載: PriceVolume1
+2026-02-09 04:08:54,101 [INFO]  策略已掛載: PriceVolume2
+2026-02-09 04:08:54,101 [INFO]  策略已掛載: PriceVolume3
+2026-02-09 04:08:54,102 [INFO]  策略已掛載: PriceVolume4
+2026-02-09 04:08:54,102 [INFO]  策略已掛載: PriceVolume5
+2026-02-09 04:08:54,102 [INFO]  策略已掛載: PriceVolume6
+2026-02-09 04:08:54,103 [INFO]  策略已掛載: PriceVolume7
+2026-02-09 04:08:54,103 [INFO]  策略已掛載: PriceVolume8
+2026-02-09 04:08:54,103 [INFO]  策略已掛載: PriceVolume9
+2026-02-09 04:08:54,103 [INFO]  策略已掛載: SentimentStrategyV3
+2026-02-09 04:08:54,104 [INFO]  策略已掛載: SentimentStrategyV2
+2026-02-09 04:08:54,104 [INFO]  策略已掛載: PriceVolume10
+2026-02-09 04:08:54,104 [INFO]  策略已掛載: QQQ_price
+2026-02-09 04:08:54,104 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-09 04:08:54,498 [INFO]  [CONFIG] 成功設定 BTCUSDT 槓桿為 5x
+2026-02-09 04:08:55,027 [INFO] 開始為 13 個策略熱機...
+2026-02-09 04:08:55,032 [INFO] 熱機完成
+2026-02-09 04:08:56,408 [INFO] 監控 1h K 線...
+2026-02-09 04:08:56,476 [INFO] [ETL] 處理新 K 線: 2026-02-08 19:00:00
+2026-02-09 04:08:58,845 [INFO] [BG-TASK] 所有外部數據更新完成 (耗時 4.75s)
+2026-02-09 04:09:00,633 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 71381.0
+2026-02-09 04:09:00,634 [ERROR] 策略 Strategy1_MAD_BSR 產生訊號時發生錯誤: 'timestamp'
+2026-02-09 04:09:00,637 [ERROR] 策略 Strategy6_Climax_Momentum 產生訊號時發生錯誤: 'volumeㄋ'
+2026-02-09 04:09:00,639 [ERROR] 策略 Strategy12_GnF_Yield_Ratio 產生訊號時發生錯誤: 'vol'
+2026-02-09 04:09:00,640 [ERROR] 策略 Strategy10_Volume_Diff_Reversion 產生訊號時發生錯誤: 'timestamp'
+2026-02-09 04:09:00,641 [INFO] [SIGNAL] Price_Volume2 (0.0 BTC) | CLOSE | Exit: OBV(-585637.9)<MA or ATR<MA
+2026-02-09 04:09:00,642 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉
+2026-02-09 04:09:00,642 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (0.0 BTC) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-09 04:09:00,643 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉
+2026-02-09 04:09:00,643 [INFO] [SIGNAL] Strategy7_Mom_LowVolFilter (0.0 BTC) | LONG | Mom_Strong & Not_Dead_Fish
+2026-02-09 04:09:00,885 [INFO]  [ORDER] 發送訂單 | BUY BTCUSDT | Qty: 0.007
+2026-02-09 04:09:00,960 [INFO] [Strategy7_Mom_LowVolFilter] 訂單已發送 ID: 12154069880
+2026-02-09 04:09:04,241 [INFO]  [DB] 交易已儲存: LONG 0.007 BTCUSDT
+2026-02-09 04:09:05,671 [INFO] [VERIFIED] 成交確認 | 均價: 71078.29999999999
+2026-02-09 04:09:05,671 [INFO] 本週期結束，等待下一次收盤...
+2026-02-09 04:10:19,284 [WARNING] 停止運行

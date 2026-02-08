@@ -5,105 +5,110 @@ import logging
 import pandas as pd 
 
 class DatabaseHandler:
-    def __init__(self, db_name="trading_data.db"):
-        self.db_name = db_name
+    def __init__(self, db_path="trading_data.db"):
+        self.db_path = db_path
+        
+        # =建立持久連線，並允許跨執行緒存取
+        self.conn = sqlite3.connect(self.db_path, check_same_thread=False)
+        
+        # 為了保險起見，開啟 WAL 模式 (Write-Ahead Logging)，提升併發讀寫效能
+        self.conn.execute("PRAGMA journal_mode=WAL;")
+        
         self._init_tables()
 
-    def _connect(self):
-        return sqlite3.connect(self.db_name)
 
     def _init_tables(self):
         """ 初始化資料庫表結構 """
-        conn = self._connect()
-        cursor = conn.cursor()
-        
-        # 1. 交易紀錄表 (Trades)
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS trades (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                timestamp DATETIME,
-                symbol TEXT,
-                strategy TEXT,
-                side TEXT,
-                price REAL,
-                quantity REAL,
-                notional REAL,
-                order_id TEXT,
-                fee REAL DEFAULT 0
-            )
-        ''')
+        try:
+            cursor = self.conn.cursor()
+            
+            # 1. 交易紀錄表 (Trades)
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS trades (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    timestamp DATETIME,
+                    symbol TEXT,
+                    strategy TEXT,
+                    side TEXT,
+                    price REAL,
+                    quantity REAL,
+                    notional REAL,
+                    order_id TEXT,
+                    fee REAL DEFAULT 0
+                )
+            ''')
 
-        # 2. 訊號紀錄表 (Signals) - 用於分析策略準度
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS signals (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                timestamp DATETIME,
-                strategy TEXT,
-                symbol TEXT,
-                action TEXT,
-                signal_price REAL,
-                reason TEXT
-            )
-        ''')
+            # 2. 訊號紀錄表 (Signals) - 用於分析策略準度
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS signals (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    timestamp DATETIME,
+                    strategy TEXT,
+                    symbol TEXT,
+                    action TEXT,
+                    signal_price REAL,
+                    reason TEXT
+                )
+            ''')
 
-        # 3. 資產快照表 (Snapshots) - 用於畫資金曲線
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS snapshots (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                timestamp DATETIME,
-                total_balance REAL,
-                unrealized_pnl REAL,
-                btc_price REAL,
-                positions_json TEXT
-            )
-        ''')
+            # 3. 資產快照表 (Snapshots) - 用於畫資金曲線
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS snapshots (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    timestamp DATETIME,
+                    total_balance REAL,
+                    unrealized_pnl REAL,
+                    btc_price REAL,
+                    positions_json TEXT
+                )
+            ''')
+            
         
-       
 
-        # 4. 市場數據表 (Market Data)
-        # 使用複合主鍵 (symbol + interval + open_time) 確保唯一性
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS market_data (
-                symbol TEXT,
-                interval TEXT,
-                open_time INTEGER,
-                open REAL,
-                high REAL,
-                low REAL,
-                close REAL,
-                volume REAL,
-                close_time INTEGER,
-                PRIMARY KEY (symbol, interval, open_time)
-            )
-        ''')
-        
-        # 5. 新增外部數據表 (External Data)
-        # 設計成通用格式 (Generic Schema)，任何數據都能存
-        # metric: 數據名稱 (e.g., 'funding_rate', 'long_short_ratio', 'fear_greed')
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS external_data (
-                timestamp INTEGER,
-                symbol TEXT,
-                metric TEXT,
-                value REAL,
-                PRIMARY KEY (timestamp, symbol, metric)
-            )
-        ''')
-        
-        conn.commit()
-        conn.close()
+            # 4. 市場數據表 (Market Data)
+            # 使用複合主鍵 (symbol + interval + open_time) 確保唯一性
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS market_data (
+                    symbol TEXT,
+                    interval TEXT,
+                    open_time INTEGER,
+                    open REAL,
+                    high REAL,
+                    low REAL,
+                    close REAL,
+                    volume REAL,
+                    close_time INTEGER,
+                    PRIMARY KEY (symbol, interval, open_time)
+                )
+            ''')
+            
+            # 5. 新增外部數據表 (External Data)
+            # 設計成通用格式 (Generic Schema)，任何數據都能存
+            # metric: 數據名稱 (e.g., 'funding_rate', 'long_short_ratio', 'fear_greed')
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS external_data (
+                    timestamp INTEGER,
+                    symbol TEXT,
+                    metric TEXT,
+                    value REAL,
+                    PRIMARY KEY (timestamp, symbol, metric)
+                )
+            ''')
+            
+            self.conn.commit()
+        except Exception as e:
+            logging.error(f" [DB ERROR] 初始化資料庫表失敗: {e}")
 
     def log_trade(self, strategy, symbol, side, price, quantity, order_id, notional):
         """ 紀錄一筆成交 """
         try:
-            conn = self._connect()
-            cursor = conn.cursor()
+            cursor = self.conn.cursor()
             cursor.execute('''
                 INSERT INTO trades (timestamp, symbol, strategy, side, price, quantity, notional, order_id)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             ''', (datetime.now(), symbol, strategy, side, price, quantity, notional, order_id))
-            conn.commit()
-            conn.close()
+            self.conn.commit()
+            
             logging.info(f" [DB] 交易已儲存: {side} {quantity} {symbol}")
         except Exception as e:
             logging.error(f" [DB ERROR] 寫入交易失敗: {e}")
@@ -111,28 +116,26 @@ class DatabaseHandler:
     def log_signal(self, strategy, symbol, action, price, reason):
         """ 紀錄策略訊號 """
         try:
-            conn = self._connect()
-            cursor = conn.cursor()
+            cursor = self.conn.cursor()
             cursor.execute('''
                 INSERT INTO signals (timestamp, strategy, symbol, action, signal_price, reason)
                 VALUES (?, ?, ?, ?, ?, ?)
             ''', (datetime.now(), strategy, symbol, action, price, reason))
-            conn.commit()
-            conn.close()
+            self.conn.commit()
+            
         except Exception as e:
             logging.error(f" [DB ERROR] 寫入訊號失敗: {e}")
 
     def log_snapshot(self, balance, unrealized_pnl, btc_price, positions):
         """ 紀錄資產快照 """
         try:
-            conn = self._connect()
-            cursor = conn.cursor()
+            cursor = self.conn.cursor()
             cursor.execute('''
                 INSERT INTO snapshots (timestamp, total_balance, unrealized_pnl, btc_price, positions_json)
                 VALUES (?, ?, ?, ?, ?)
             ''', (datetime.now(), balance, unrealized_pnl, btc_price, json.dumps(positions)))
-            conn.commit()
-            conn.close()
+            self.conn.commit()
+            
         except Exception as e:
             logging.error(f" [DB ERROR] 寫入快照失敗: {e}")
 
@@ -141,8 +144,7 @@ class DatabaseHandler:
         if df.empty: return
 
         try:
-            conn = self._connect()
-            cursor = conn.cursor()
+            cursor = self.conn.cursor()
             df_to_save = df.copy()
             # 將 DataFrame 轉為 list of tuples，準備寫入
             # 假設 df 的欄位順序是: open_time, open, high, low, close, volume, close_time
@@ -205,18 +207,17 @@ class DatabaseHandler:
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             ''', final_data)
 
-            conn.commit()
-            conn.close()
+            self.conn.commit()
+            
             
         except Exception as e:
             logging.error(f"[DB ERROR] 寫入市場數據失敗: {e}")
 
     #  新增：讀取 K 線數據 (給策略用)
     def load_market_data(self, symbol, interval, limit=200):
+        """ 讀取 K 線數據 """
         try:
-            conn = self._connect()
             
-            # 讀取最近的 N 筆數據
             query = f'''
                 SELECT open_time, open, high, low, close, volume, close_time
                 FROM market_data
@@ -225,16 +226,15 @@ class DatabaseHandler:
                 LIMIT ?
             '''
             
-            df = pd.read_sql(query, conn, params=(symbol, interval, limit))
-            conn.close()
+            df = pd.read_sql(query, self.conn, params=(symbol, interval, limit))
             
             if df.empty:
                 return pd.DataFrame()
 
-            # 排序回來 (因為 SQL 是 DESC，為了策略運算我們要由舊到新 ASC)
+            # 排序回來 (ASC)
             df = df.sort_values('open_time').reset_index(drop=True)
             
-            # 確保型別正確 (從 DB 讀出來有時會跑掉)
+            # 確保數值型別
             numeric_cols = ['open', 'high', 'low', 'close', 'volume']
             df[numeric_cols] = df[numeric_cols].astype(float)
             
@@ -253,8 +253,8 @@ class DatabaseHandler:
         if df.empty: return
 
         try:
-            conn = self._connect()
-            cursor = conn.cursor()
+        
+            cursor= self.conn.cursor()
             
             # 確保型態正確
             # 時間轉 int
@@ -276,25 +276,20 @@ class DatabaseHandler:
                 VALUES (?, ?, ?, ?)
             ''', data_to_insert)
 
-            conn.commit()
-            conn.close()
+            self.conn.commit()
+            
             
         except Exception as e:
             logging.error(f" [DB ERROR] 儲存通用外部數據失敗: {e}")
 
     # 新增：讀取外部數據
     def load_external_data(self, symbol, metric, start_time=None, limit=200):
-        """
-        讀取外部數據 (智慧對齊版)
-        :param start_time: K 線的起始時間。函數會自動抓取該時間點「前一筆」數據，確保 merge_asof 在第一行就有值。
-        """
+        """ 讀取外部數據 (對齊版) """
         try:
-            conn = self._connect()
-            cursor = conn.cursor()
+            cursor = self.conn.cursor()
             
             if start_time is not None:
-                # --- 步驟 1: 尋找「前一筆」的時間點 ---
-                # 我們不盲目減去固定時間，而是精準找出「比 start_time 小的最新一筆數據」是何時
+                # 找 start_time 之前的最新一筆
                 query_prev = '''
                     SELECT MAX(timestamp) 
                     FROM external_data
@@ -303,21 +298,17 @@ class DatabaseHandler:
                 cursor.execute(query_prev, (symbol, metric, start_time))
                 result = cursor.fetchone()
                 
-                # 如果找得到前一筆，我們就從那一筆的時間開始抓 (包含那一筆)
-                # 如果找不到 (代表 start_time 之前完全沒數據)，就維持原本的 start_time
                 actual_start_time = result[0] if result and result[0] is not None else start_time
                 
-                # --- 步驟 2: 抓取範圍內的數據 ---
                 query = '''
                     SELECT timestamp as open_time, value 
                     FROM external_data
                     WHERE symbol = ? AND metric = ? AND timestamp >= ?
                     ORDER BY timestamp ASC
                 '''
-                df = pd.read_sql(query, conn, params=(symbol, metric, actual_start_time))
+                df = pd.read_sql(query, self.conn, params=(symbol, metric, actual_start_time))
             
             else:
-                # 模式 B: 簡單模式 (Legacy Mode) - 只抓最新的 N 筆
                 query = '''
                     SELECT timestamp as open_time, value 
                     FROM external_data
@@ -325,12 +316,9 @@ class DatabaseHandler:
                     ORDER BY timestamp DESC
                     LIMIT ?
                 '''
-                df = pd.read_sql(query, conn, params=(symbol, metric, limit))
-            
-            conn.close()
+                df = pd.read_sql(query, self.conn, params=(symbol, metric, limit))
             
             if not df.empty:
-                # 確保按時間由舊到新排序
                 df = df.sort_values('open_time').reset_index(drop=True)
                 
             return df
@@ -338,3 +326,37 @@ class DatabaseHandler:
         except Exception as e:
             logging.error(f" [DB ERROR] 讀取外部數據失敗: {e}")
             return pd.DataFrame()
+    
+    def get_strategy_position(self, strategy_name, symbol):
+        """
+        查詢特定策略目前的持倉狀態
+        回傳: (quantity, avg_price) 如果沒持倉則回傳 (0, 0)
+        """
+        query = """
+        SELECT side, quantity, price 
+        FROM trades 
+        WHERE strategy = ? AND symbol = ? 
+        ORDER BY timestamp DESC 
+        LIMIT 1
+        """
+        try:
+            # 使用我們剛才建立的 self.conn
+            cursor = self.conn.cursor()
+            cursor.execute(query, (strategy_name, symbol))
+            row = cursor.fetchone()
+            
+            if row:
+                side, qty, price = row
+                # 如果最後動作是 LONG，代表現在持有這個數量的倉位
+                if side == 'LONG':
+                    return float(qty), float(price)
+            
+            return 0.0, 0.0
+            
+        except Exception as e:
+            logging.error(f"[DB Error] 查詢策略持倉失敗: {e}")
+            return 0.0, 0.0
+        
+    def close(self):
+        if self.conn:
+            self.conn.close()

@@ -7,11 +7,15 @@
     "trading": {
         "symbol": "BTCUSDT",
         "interval": "1h",
-        "strategies": ["PriceVolume2"]
+        "strategies": ["PriceVolume1","PriceVolume2","PriceVolume3","PriceVolume4","PriceVolume5","PriceVolume6","PriceVolume7","PriceVolume8","PriceVolume9","SentimentStrategyV3","SentimentStrategyV2","PriceVolume10","QQQ_price"]
     },
     "risk": {
         "leverage": 5,
-        "fixed_amount": 100,
-        "max_open_positions": 1
+        "max_open_positions": 5,
+        "default_amount": 100, 
+        "strategy_allocations": {
+            "PriceVolume2": 100, 
+            "PriceVolume3": 100
+        }
     }
 }
