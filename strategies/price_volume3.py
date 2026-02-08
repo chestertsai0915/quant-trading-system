@@ -23,7 +23,7 @@ class PriceVolume3(BaseStrategy):
 
         # 2. 準備數據
         close = self.kline_data['close'].values
-        volume = self.kline_data['vol'].values
+        volume = self.kline_data['volume'].values
         
         # ==========================================
         #  因子計算

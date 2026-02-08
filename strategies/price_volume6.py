@@ -26,7 +26,7 @@ class PriceVolume6(BaseStrategy):
         close = self.kline_data['close'].values
         high = self.kline_data['high'].values
         low = self.kline_data['low'].values
-        volume = self.kline_data['vol'].values
+        volume = self.kline_data['volumeㄋ'].values
         
         # ==========================================
         #  因子計算

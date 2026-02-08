@@ -7,7 +7,7 @@
     "trading": {
         "symbol": "BTCUSDT",
         "interval": "1h",
-        "strategies": ["TestStrategy2"]
+        "strategies": ["PriceVolume2"]
     },
     "risk": {
         "leverage": 5,
