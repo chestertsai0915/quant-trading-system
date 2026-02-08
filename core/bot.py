@@ -58,6 +58,21 @@ class TradingBot:
         
         while True:
             try:
+                # --- [優化] 智慧睡眠邏輯 ---
+                # 取得現在的秒數
+                current_time = time.time()
+                time_struct = time.localtime(current_time)
+                seconds = time_struct.tm_sec
+                
+                # 如果接近整點 (例如 55秒 ~ 05秒)，縮短檢查頻率為 0.5 秒，搶快！
+                if seconds >= 55 or seconds <= 5:
+                    sleep_time = 0.5
+                else:
+                    # 平常時間不用那麼累，睡 10 秒 (或更久)
+                    sleep_time = 10
+                
+                # ---------------------------
+                
                 # 1. 詢問 Data Manager：有新 K 線嗎？
                 is_new, closed_time, df_to_save = self.data_manager.check_new_candle()
                 
@@ -80,7 +95,7 @@ class TradingBot:
                     
                     logging.info("本週期結束，等待下一次收盤...")
                 
-                time.sleep(10)
+                time.sleep(sleep_time)
 
             except KeyboardInterrupt:
                 logging.warning("停止運行")

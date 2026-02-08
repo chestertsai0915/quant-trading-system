@@ -513,3 +513,37 @@ AttributeError: 'DatabaseHandler' object has no attribute 'save_market_data'
 2026-02-08 15:10:15,605 [INFO] [SIGNAL] Price_Volume2 | CLOSE | Exit: OBV(-587009.6)<MA or ATR<MA
 2026-02-08 15:10:15,609 [INFO] 本週期結束，等待下一次收盤...
 2026-02-08 15:10:24,740 [WARNING] 停止運行
+2026-02-09 00:52:08,935 [INFO] 設定檔載入成功: config.json
+2026-02-09 00:52:09,413 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-09 00:52:09,417 [INFO]  策略已掛載: PriceVolume2
+2026-02-09 00:52:09,417 [INFO] 目前運行策略列表: ['Price_Volume2']
+2026-02-09 00:52:09,794 [INFO]  [CONFIG] 成功設定 BTCUSDT 槓桿為 5x
+2026-02-09 00:52:10,305 [INFO] 開始為 1 個策略熱機...
+2026-02-09 00:52:10,305 [INFO] 熱機完成
+2026-02-09 00:52:11,651 [INFO] 監控 1h K 線...
+2026-02-09 00:52:11,713 [INFO] [ETL] 處理新 K 線: 2026-02-08 15:00:00
+2026-02-09 00:52:16,372 [INFO] [SNAPSHOT] 空手 | 現價: 71152.6
+2026-02-09 00:52:16,373 [INFO] [SIGNAL] Price_Volume2 | CLOSE | Exit: OBV(-595686.4)<MA or ATR<MA
+2026-02-09 00:52:16,377 [INFO] 本週期結束，等待下一次收盤...
+2026-02-09 00:57:28,335 [WARNING] 停止運行
+2026-02-09 00:57:30,679 [INFO] 設定檔載入成功: config.json
+2026-02-09 00:57:31,425 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-09 00:57:31,428 [INFO]  策略已掛載: PriceVolume2
+2026-02-09 00:57:31,428 [INFO] 目前運行策略列表: ['Price_Volume2']
+2026-02-09 00:57:31,824 [INFO]  [CONFIG] 成功設定 BTCUSDT 槓桿為 5x
+2026-02-09 00:57:32,293 [INFO] 開始為 1 個策略熱機...
+2026-02-09 00:57:32,294 [INFO] 熱機完成
+2026-02-09 00:57:33,709 [INFO] 監控 1h K 線...
+2026-02-09 00:57:33,766 [INFO] [ETL] 處理新 K 線: 2026-02-08 15:00:00
+2026-02-09 00:57:38,499 [INFO] [SNAPSHOT] 空手 | 現價: 71152.6
+2026-02-09 00:57:38,500 [INFO] [SIGNAL] Price_Volume2 | CLOSE | Exit: OBV(-595686.4)<MA or ATR<MA
+2026-02-09 00:57:38,502 [INFO] 本週期結束，等待下一次收盤...
+2026-02-09 01:00:01,751 [INFO] [ETL] 處理新 K 線: 2026-02-08 16:00:00
+2026-02-09 01:00:08,038 [INFO] [SNAPSHOT] 空手 | 現價: 70388.7
+2026-02-09 01:00:08,039 [INFO] [SIGNAL] Price_Volume2 | CLOSE | Exit: OBV(-592915.8)<MA or ATR<MA
+2026-02-09 01:00:08,042 [INFO] 本週期結束，等待下一次收盤...
+2026-02-09 02:00:04,125 [INFO] [ETL] 處理新 K 線: 2026-02-08 17:00:00
+2026-02-09 02:00:09,020 [INFO] [SNAPSHOT] 空手 | 現價: 70754.5
+2026-02-09 02:00:09,021 [INFO] [SIGNAL] Price_Volume2 | CLOSE | Exit: OBV(-588680.2)<MA or ATR<MA
+2026-02-09 02:00:09,024 [INFO] 本週期結束，等待下一次收盤...
+2026-02-09 02:17:52,840 [WARNING] 停止運行
