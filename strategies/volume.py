@@ -29,7 +29,7 @@ class PriceVolume10(BaseStrategy):
         # 3. 準備數據
         # 你的邏輯: feature1 = np.round(data['volume'], 0)
         # 其實 volume 本身就是數值，round 只是取整，對趨勢沒影響，直接用 vol 即可
-        volume = df_with_time['vol'].values
+        volume = df_with_time['volume'].values
         
         # ==========================================
         #  因子計算

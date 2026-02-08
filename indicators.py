@@ -144,14 +144,14 @@ class AlphaLibrary:
     def add_us_market_open_flag(df_input):
         """
         時間因子: 判斷是否為美股開盤時間
-        輸入: 含有 'timestamp' (datetime object) 的 DataFrame
+        輸入: 含有 'open_time' (datetime object) 的 DataFrame
         輸出: 新增 'is_trade_time' column 的 DataFrame
         """
         df = df_input.copy()
         
-        # 確保 timestamp 是 datetime 格式 (如果是 int/str 需轉換)
-        if not pd.api.types.is_datetime64_any_dtype(df['timestamp']):
-             df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
+        # 確保 open_time 是 datetime 格式 (如果是 int/str 需轉換)
+        if not pd.api.types.is_datetime64_any_dtype(df['open_time']):
+             df['open_time'] = pd.to_datetime(df['open_time'], unit='ms')
 
         eastern = pytz.timezone('US/Eastern')
         market_open = dt_time(9, 0)
@@ -171,7 +171,7 @@ class AlphaLibrary:
             # 判斷時間
             return int(market_open <= us_time.time() <= market_close)
 
-        df['is_trade_time'] = df['timestamp'].apply(is_open)
+        df['is_trade_time'] = df['open_time'].apply(is_open)
         return df
     # ============================
     # 4. 總經運算 (Macro)

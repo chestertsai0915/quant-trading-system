@@ -35,7 +35,7 @@ class SentimentStrategyV2(BaseStrategy):
         yield_10y = self.external_data.get('GS10', 0)
         
         # 成交量 (取最新一根收盤的 Volume)
-        current_volume = self.kline_data['vol'].iloc[-1]
+        current_volume = self.kline_data['volume'].iloc[-1]
 
         # 簡單的防呆 (避免數據還沒抓到)
         if current_volume == 0 or yield_10y == 0:
