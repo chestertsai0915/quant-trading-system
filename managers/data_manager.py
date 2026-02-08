@@ -1,4 +1,6 @@
+from datetime import datetime
 import logging
+import threading
 import pandas as pd
 import time
 from data_sources.registry import get_all_fetchers
@@ -13,6 +15,13 @@ class DataManager:
         self.loader = DataLoader(self.client, self.db)
         self.fetchers = get_all_fetchers()
         self.last_processed_time = 0
+        # ---   快取機制 ---
+        self._external_cache = {}  # 存放外部數據的快取箱
+        self._cache_lock = threading.Lock() # 確保讀寫安全
+        self._is_running = True # 控制背景執行緒開關
+        
+        # 啟動背景預抓小精靈
+        self._start_background_scheduler()
         
         logging.info(f"載入外部數據源: {list(self.fetchers.keys())}")
 
@@ -40,6 +49,63 @@ class DataManager:
             return True, closed_time, raw_df.iloc[:-1] # 回傳排除未收盤的數據
         
         return False, 0, None
+
+    def _start_background_scheduler(self):
+        """ 啟動背景執行緒，定期抓取外部數據 """
+        thread = threading.Thread(target=self._update_cache_worker, daemon=True)
+        thread.start()
+        logging.info(" 外部數據背景更新") 
+
+    def _update_cache_worker(self):
+        """ 
+        背景核心工作 
+        1. 遍歷所有 Fetchers
+        2. 抓取數據 (耗時操作)
+        3. 存入 DB (保留歷史)
+        4. 更新記憶體 Cache (供即時查詢)
+        """
+        while self._is_running:
+            logging.info("[BG-TASK] 開始背景更新外部數據...")
+            t_start = time.time()
+            
+            # 遍歷所有已註冊的數據源
+            for name, fetcher in self.fetchers.items():
+                try:
+                    # A. 抓取數據 (這裡是耗時的 API 請求)
+                    df = fetcher.fetch_data()
+                    
+                    if df is None or df.empty:
+                        continue
+
+                    # B. 存入資料庫 (Persistence)
+                    if name == 'us_stock_qqq':
+                        self.db.save_market_data(symbol='QQQ', interval='1d', df=df)
+                    else:
+                        self.db.save_generic_external_data(df)
+                    
+                    # C. 更新記憶體快取 (In-Memory Cache)
+                    # 取最新的一筆資料放入快取
+                    latest_record = df.iloc[-1].to_dict()
+                    with self._cache_lock:
+                        self._external_cache[name] = latest_record
+                        
+                    # logging.debug(f"[BG-TASK] {name} 更新成功")
+
+                except Exception as e:
+                    logging.error(f"[BG-TASK] 外部數據 {name} 更新失敗: {e}")
+
+            elapsed = time.time() - t_start
+            logging.info(f"[BG-TASK] 所有外部數據更新完成 (耗時 {elapsed:.2f}s)")
+            
+            # --- 設定更新頻率 ---
+            # 外部數據不用每秒抓，設定 1 小時抓一次即可
+            # 如果失敗或成功都休息一樣久，避免 API Rate Limit
+            time.sleep(3600) 
+
+    def get_cached_external_data(self):
+        """ 主程式呼叫這個方法，0 秒取得數據  """
+        with self._cache_lock:
+            return self._external_cache.copy()
 
     def update_etl_process(self, closed_time, df_to_save):
         """ 執行標準 ETL 流程 """
