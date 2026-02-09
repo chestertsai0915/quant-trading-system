@@ -97,7 +97,7 @@ class AlphaLibrary:
         return np.divide(buy_pressure, (sell_pressure + 1e-9))
     
     # ============================
-    # 👇 新增：滾動分位數計算
+    #  新增：滾動分位數計算
     # ============================
     @staticmethod
     def calc_rolling_quantile(data, window, quantile):

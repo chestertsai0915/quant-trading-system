@@ -15,7 +15,7 @@ class TelegramNotifier:
     def send_message(self, message):
         """ 發送訊息到 Telegram """
         if not self.token or not self.chat_id:
-            logging.warning("⚠️ Telegram Token 或 Chat ID 未設定，無法發送通知。")
+            logging.warning(" Telegram Token 或 Chat ID 未設定，無法發送通知。")
             return
 
         try:
@@ -27,9 +27,9 @@ class TelegramNotifier:
             response = requests.post(self.base_url, json=payload, timeout=5)
             
             if response.status_code != 200:
-                logging.error(f"❌ Telegram 發送失敗: {response.text}")
+                logging.error(f" Telegram 發送失敗: {response.text}")
         except Exception as e:
-            logging.error(f"❌ Telegram 連線錯誤: {e}")
+            logging.error(f" Telegram 連線錯誤: {e}")
 
 # 方便外部直接調用
 notifier = TelegramNotifier()

@@ -82,22 +82,7 @@ class StrategyManager:
 
         logging.info(f"目前運行策略列表: {[s.name for s in self.strategies]}")
 
-    def warm_up_all(self, history_df):
-        """ 策略熱機 """
-        if history_df.empty:
-            logging.warning("無歷史數據，跳過熱機")
-            return
-
-        logging.info(f"開始為 {len(self.strategies)} 個策略熱機...")
-        # 排除最後一根未收盤的
-        history_closed = history_df.iloc[:-1]
-        
-        for strategy in self.strategies:
-            try:
-                strategy.warm_up(history_closed)
-            except Exception as e:
-                logging.error(f"策略 {strategy.name} 熱機失敗: {e}")
-        logging.info("熱機完成")
+    
 
     def generate_signals(self, strategy_df, external_data={}):
         """ 遍歷所有策略並產生訊號 """
@@ -107,7 +92,7 @@ class StrategyManager:
         for strategy in self.strategies:
             try:
                 # 1. 更新數據
-                strategy.update_data(strategy_df, external_data)
+                strategy.update_data(strategy_df)
                 
                 # 2. 產生訊號
                 signal = strategy.generate_signal()

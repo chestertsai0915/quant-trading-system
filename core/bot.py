@@ -27,9 +27,7 @@ class TradingBot:
         self.strategy_manager = StrategyManager(strategy_names)
         self.trade_manager = TradeManager(self.trade_client, self.db, self.config, self.symbol, self.is_paper)
         
-        # 3. 策略熱機
-        history_df = self.data_manager.get_history_klines()
-        self.strategy_manager.warm_up_all(history_df)
+        
         
         send_tg_msg(f"**機器人啟動**\nSymbol: {self.symbol}\nMode: {self.mode}\nPaper: {self.is_paper}")
 
@@ -81,8 +79,6 @@ class TradingBot:
                     strategy_df = self.data_manager.update_etl_process(closed_time, df_to_save)
                     
                     if not strategy_df.empty:
-                        
-                        
                         
                         # 3. Strategy Manager 計算訊號
                         signals = self.strategy_manager.generate_signals(strategy_df)

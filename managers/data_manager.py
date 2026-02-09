@@ -5,7 +5,7 @@ import pandas as pd
 import time
 from data_sources.registry import get_all_fetchers
 from data_loader import DataLoader
-
+from features.feature_engineer import FeatureEngineer
 class DataManager:
     def __init__(self, client, db, symbol, interval):
         self.client = client
@@ -22,7 +22,7 @@ class DataManager:
         
         # 啟動背景預抓小精靈
         self._start_background_scheduler()
-        
+        self.feature_engineer = FeatureEngineer()
         logging.info(f"載入外部數據源: {list(self.fetchers.keys())}")
 
     def get_history_klines(self, limit=1500):
@@ -119,7 +119,22 @@ class DataManager:
         
         # 3. 讀回給策略用的數據
         #strategy_df = self.db.load_market_data(self.symbol, self.interval, limit=200)
-        strategy_df = self.get_strategy_data(limit=200)
+        strategy_df = self.get_strategy_data(limit=1500)
+        qqq_df = self.db.load_market_data('QQQ', '1d', limit=600)
+        if not qqq_df.empty:
+            # A. 算出 QQQ 的小波特徵 (還是在日線層級)
+            qqq_df_featured = self.feature_engineer.add_qqq_wavelet_feature(
+                qqq_df, window=120
+            )
+            print(f"QQQ Wavelet Feature Added: {qqq_df_featured.tail(3)}")
+            # B. 將日線特徵合併進小時線 (Merge)
+            strategy_df = self.feature_engineer.merge_features(
+                main_df=strategy_df,
+                feature_df=qqq_df_featured,
+                feature_cols=['QQQ_Wavelet'], # 指定要合併的欄位
+                on='open_time'
+            )
+            
         # 更新內部狀態
         self.last_processed_time = closed_time
         
@@ -157,7 +172,7 @@ class DataManager:
 
         # 2. 準備外部數據列表
         # 這裡列出你想要合併的指標
-        external_metrics = ['fear_greed', 'funding_rate', 'fed_assets', 'google_trends']
+        external_metrics = ['fear_greed', 'yield_10y','yield_2y', 'fed_assets', 'google_trends_BTC', 'google_trends_crypto']
         
         # 取得 K 線的最早時間，我們只需要抓這之後的外部數據 (稍微多抓一點緩衝)
         start_time = int(df['open_time'].min()) - 86400000 # 多抓一天緩衝
