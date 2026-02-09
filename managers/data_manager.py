@@ -126,7 +126,7 @@ class DataManager:
             qqq_df_featured = self.feature_engineer.add_qqq_wavelet_feature(
                 qqq_df, window=120
             )
-            print(f"QQQ Wavelet Feature Added: {qqq_df_featured.tail(3)}")
+            
             # B. 將日線特徵合併進小時線 (Merge)
             strategy_df = self.feature_engineer.merge_features(
                 main_df=strategy_df,
