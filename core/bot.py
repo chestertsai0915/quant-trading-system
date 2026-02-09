@@ -58,15 +58,15 @@ class TradingBot:
         
         while True:
             try:
-                # --- [優化] 智慧睡眠邏輯 ---
+                # --- 智慧睡眠邏輯 ---
                 # 取得現在的秒數
                 current_time = time.time()
                 time_struct = time.localtime(current_time)
                 seconds = time_struct.tm_sec
                 
-                # 如果接近整點 (例如 55秒 ~ 05秒)，縮短檢查頻率為 0.5 秒，搶快！
-                if seconds >= 55 or seconds <= 5:
-                    sleep_time = 0.5
+                # 如果接近整點 (例如 55秒 ~ 03秒)，縮短檢查頻率為 0.5 秒，搶快！
+                if seconds >= 55 or seconds <= 3:
+                    sleep_time = 0.3
                 else:
                     # 平常時間不用那麼累，睡 10 秒 (或更久)
                     sleep_time = 10
@@ -81,17 +81,18 @@ class TradingBot:
                     strategy_df = self.data_manager.update_etl_process(closed_time, df_to_save)
                     
                     if not strategy_df.empty:
-                        # 3. Trade Manager 報告目前持倉
-                        # 使用上一根收盤價作為參考價
-                        ref_price = strategy_df['close'].iloc[-1]
-                        current_pos = self.trade_manager.log_snapshot(ref_price)
                         
-                        # 4. Strategy Manager 計算訊號
+                        
+                        
+                        # 3. Strategy Manager 計算訊號
                         signals = self.strategy_manager.generate_signals(strategy_df)
                         
-                        # 5. Trade Manager 執行交易
+                        # 4. Trade Manager 執行交易
                         for signal in signals:
-                            self.trade_manager.process_signal(signal, current_pos)
+                            self.trade_manager.process_signal(signal, current_pos_amt=0)
+
+                        ref_price = strategy_df['close'].iloc[-1]
+                        self.trade_manager.log_snapshot(ref_price)
                     
                     logging.info("本週期結束，等待下一次收盤...")
                 

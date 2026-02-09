@@ -687,3 +687,39 @@ AttributeError: 'DatabaseHandler' object has no attribute 'save_market_data'
 2026-02-09 04:09:05,671 [INFO] [VERIFIED] 成交確認 | 均價: 71078.29999999999
 2026-02-09 04:09:05,671 [INFO] 本週期結束，等待下一次收盤...
 2026-02-09 04:10:19,284 [WARNING] 停止運行
+2026-02-09 04:20:43,408 [INFO] 設定檔載入成功: config.json
+2026-02-09 04:20:44,136 [INFO] [BG-TASK] 開始背景更新外部數據...
+2026-02-09 04:20:44,136 [INFO]  外部數據背景更新
+2026-02-09 04:20:44,136 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-09 04:20:44,142 [INFO]  策略已掛載: PriceVolume1
+2026-02-09 04:20:44,143 [INFO]  策略已掛載: PriceVolume2
+2026-02-09 04:20:44,143 [INFO]  策略已掛載: PriceVolume3
+2026-02-09 04:20:44,144 [INFO]  策略已掛載: PriceVolume4
+2026-02-09 04:20:44,144 [INFO]  策略已掛載: PriceVolume5
+2026-02-09 04:20:44,145 [INFO]  策略已掛載: PriceVolume6
+2026-02-09 04:20:44,145 [INFO]  策略已掛載: PriceVolume7
+2026-02-09 04:20:44,145 [INFO]  策略已掛載: PriceVolume8
+2026-02-09 04:20:44,145 [INFO]  策略已掛載: PriceVolume9
+2026-02-09 04:20:44,146 [INFO]  策略已掛載: SentimentStrategyV3
+2026-02-09 04:20:44,146 [INFO]  策略已掛載: SentimentStrategyV2
+2026-02-09 04:20:44,146 [INFO]  策略已掛載: PriceVolume10
+2026-02-09 04:20:44,146 [INFO]  策略已掛載: QQQ_price
+2026-02-09 04:20:44,147 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-09 04:20:44,530 [INFO]  [CONFIG] 成功設定 BTCUSDT 槓桿為 5x
+2026-02-09 04:20:45,162 [INFO] 開始為 13 個策略熱機...
+2026-02-09 04:20:45,164 [INFO] 熱機完成
+2026-02-09 04:20:46,579 [INFO] 監控 1h K 線...
+2026-02-09 04:20:46,639 [INFO] [ETL] 處理新 K 線: 2026-02-08 19:00:00
+2026-02-09 04:20:49,040 [INFO] [BG-TASK] 所有外部數據更新完成 (耗時 4.90s)
+2026-02-09 04:20:50,707 [INFO] [SNAPSHOT] 交易所總持倉: 0.007 BTC | 現價: 71381.0
+2026-02-09 04:20:54,618 [ERROR] 策略 Strategy10_Volume_Diff_Reversion 產生訊號時發生錯誤: 'vol'
+2026-02-09 04:20:54,619 [INFO] [SIGNAL] Price_Volume2 (0.0 BTC) | CLOSE | Exit: OBV(-585637.9)<MA or ATR<MA
+2026-02-09 04:20:54,620 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉
+2026-02-09 04:20:54,620 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (0.0 BTC) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-09 04:20:54,621 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉
+2026-02-09 04:20:54,621 [INFO] [SIGNAL] Strategy6_Climax_Momentum (0.0 BTC) | CLOSE | Vol_CoolDown & OBV_Drop
+2026-02-09 04:20:54,622 [INFO] [SKIP] Strategy6_Climax_Momentum 目前空手，無法平倉
+2026-02-09 04:20:54,622 [INFO] [SIGNAL] Strategy7_Mom_LowVolFilter (0.007 BTC) | LONG | Mom_Strong & Not_Dead_Fish
+2026-02-09 04:20:54,623 [INFO] [SKIP] Strategy7_Mom_LowVolFilter 已有持倉 0.007，跳過開倉
+2026-02-09 04:20:54,623 [INFO] 本週期結束，等待下一次收盤...
+2026-02-09 04:22:02,520 [WARNING] 停止運行
