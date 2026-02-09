@@ -141,7 +141,7 @@ class DataManager:
 
     def get_strategy_data(self, limit=200):
         """
-        這是實盤與回測共用的數據準備邏輯
+        數據準備邏輯
         功能：
         1. 讀取 K 線 (主時間軸)
         2. 讀取各種外部數據 (不同時間軸)

@@ -18,3 +18,5 @@ crash 會自動重啟
 備用檔案源
 专业系统会有 position sizing、最大回撤控制、風險暴露限制等
 三方協作架構圖 (Local <-> GitHub <-> Azure VPS)
+
+!!!!!改external warm up  + 測試signal get

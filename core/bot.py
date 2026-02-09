@@ -64,8 +64,8 @@ class TradingBot:
                 time_struct = time.localtime(current_time)
                 seconds = time_struct.tm_sec
                 
-                # 如果接近整點 (例如 57秒 ~ 10秒)，縮短檢查頻率為 0.3 秒，搶快！
-                if seconds >= 57 or seconds <= 10:
+                # 如果接近整點 (例如 57秒 ~ 12秒)，縮短檢查頻率為 0.3 秒，搶快！
+                if seconds >= 57 or seconds <= 12:
                     sleep_time = 0.3
                 else:
                     # 平常時間不用那麼累，睡 10 秒 (或更久)

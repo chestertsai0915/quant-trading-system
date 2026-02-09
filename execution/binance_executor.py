@@ -38,7 +38,7 @@ class BinanceExecutor:
         rounded_qty = float(qty_decimal.quantize(step_decimal, rounding=ROUND_DOWN))
         return rounded_qty
 
-    # 👇 新增：獲取詳細持倉資訊 (給 Position Snapshot 用)
+    #  新增：獲取詳細持倉資訊 (給 Position Snapshot 用)
     def get_position_details(self, symbol):
         """
         回傳詳細持倉：數量、入場均價、未實現損益
@@ -51,7 +51,7 @@ class BinanceExecutor:
                         'amt': float(p['positionAmt']),
                         'entryPrice': float(p['entryPrice']),
                         'unRealizedProfit': float(p['unRealizedProfit']),
-                        # 👇 修改這裡：使用 .get() 加上預設值 1，避免 KeyError
+                        #  修改這裡：使用 .get() 加上預設值 1，避免 KeyError
                         'leverage': int(p.get('leverage', 1)) 
                     }
             return None
@@ -60,7 +60,7 @@ class BinanceExecutor:
             logging.warning(f" 查詢持倉詳情失敗 (可能是 API 缺欄位): {e}")
             return None
 
-    # 👇 修改：只回傳數量的簡化版 (給 main.py 邏輯判斷用)
+    #  修改：只回傳數量的簡化版 (給 main.py 邏輯判斷用)
     def get_current_position(self, symbol):
         details = self.get_position_details(symbol)
         if details:
