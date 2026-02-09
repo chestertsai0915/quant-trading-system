@@ -73,8 +73,8 @@ class USStockFetcher(BaseDataSource):
                 'Content-Type': 'application/json',
                 'Authorization': f'Token {self.tiingo_key}'
             }
-            # Tiingo API: sort=-date 表示從新到舊，resampleFreq=1day
-            url = f"https://api.tiingo.com/tiingo/daily/{symbol}/prices?resampleFreq=1day&sort=-date&token={self.tiingo_key}"
+            # Tiingo API: sort=-date 表示從新到舊，resampleFreq=daily
+            url = f"https://api.tiingo.com/tiingo/daily/{symbol}/prices?resampleFreq=daily&sort=-date&token={self.tiingo_key}"
             
             response = requests.get(url, headers=headers, timeout=10)
             if response.status_code != 200:
