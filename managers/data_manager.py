@@ -19,7 +19,7 @@ class DataManager:
         self._external_cache = {}  # 存放外部數據的快取箱
         self._cache_lock = threading.Lock() # 確保讀寫安全
         self._is_running = True # 控制背景執行緒開關
-        
+        self._auto_backfill() #啟動時自動計算並回補數據
         # 啟動背景預抓小精靈
         self._start_background_scheduler()
         self.feature_engineer = FeatureEngineer()
@@ -217,3 +217,87 @@ class DataManager:
                 df[metric] = 0
 
         return df
+    
+    def _auto_backfill(self):
+        """
+        [自動回補機制]
+        1. 查詢 DB 最後一筆 K 線時間
+        2. 取得現在 UTC 時間
+        3. 計算時間差 -> 換算成缺少的 K 線數量 (Limit)
+        4. 精準回補
+        """
+        logging.info(f"[BACKFILL] 正在檢查 {self.symbol} 數據完整性...")
+        
+        try:
+            # 1. 取得 DB 裡最新的一筆 K 線
+            last_df = self.db.load_market_data(self.symbol, self.interval, limit=1)
+            
+            fetch_limit = 1000 # 預設值 (如果是全新的 DB)
+
+            if not last_df.empty:
+                last_time_ms = int(last_df.iloc[-1]['open_time'])
+                current_time_ms = int(time.time() * 1000)
+                
+                # 2. 計算時間差 (毫秒)
+                time_diff = current_time_ms - last_time_ms
+                
+                # 3. 解析週期 (將 '1h', '15m' 轉為毫秒)
+                interval_ms = self._get_interval_ms(self.interval)
+                
+                if interval_ms > 0:
+                    # 算出缺了幾根 (無條件捨去)
+                    missing_candles = time_diff // interval_ms
+                    
+                    # 加一點緩衝 (Buffer) 確保最後一根未收盤的也能更新
+                    fetch_limit = int(missing_candles) + 2
+                    
+                    logging.info(f"[BACKFILL] 上次收盤: {pd.to_datetime(last_time_ms, unit='ms')} | "
+                                 f"現在時間: {pd.to_datetime(current_time_ms, unit='ms')} | "
+                                 f"缺少 K 線: {missing_candles} 根")
+                else:
+                    logging.warning(f"[BACKFILL] 無法解析週期 {self.interval}，使用預設值 1000")
+            
+            else:
+                logging.info("[BACKFILL] 資料庫為空，執行初始化下載 (1000根)...")
+
+            # 4. 執行回補 (設定上限以免 API 報錯)
+            # 幣安單次最多 1000 或 1500，我們保險設 1000
+            if fetch_limit > 1000:
+                fetch_limit = 1000
+                logging.warning("[BACKFILL] 缺失數據超過 1000 根，僅回補最近 1000 根。")
+            
+            if fetch_limit > 0:
+                logging.info(f"[BACKFILL] 開始回補 {fetch_limit} 根 K 線...")
+                df = self.loader.get_binance_klines(self.symbol, self.interval, limit=fetch_limit)
+                
+                if not df.empty:
+                    self.db.save_market_data(self.symbol, self.interval, df)
+                    logging.info(f"[BACKFILL] 成功寫入 {len(df)} 筆數據！斷層修復完成。")
+                else:
+                    logging.warning("[BACKFILL] 幣安 API 回傳空數據。")
+            else:
+                logging.info("[BACKFILL] 數據已是最新，無需回補。")
+
+        except Exception as e:
+            logging.error(f"[BACKFILL ERROR] 自動回補失敗: {e}")
+
+    def _get_interval_ms(self, interval):
+        """ 輔助函數：將 K 線週期字串轉為毫秒數 """
+        # 簡單映射表
+        mapping = {
+            '1m': 60 * 1000,
+            '3m': 3 * 60 * 1000,
+            '5m': 5 * 60 * 1000,
+            '15m': 15 * 60 * 1000,
+            '30m': 30 * 60 * 1000,
+            '1h': 60 * 60 * 1000,
+            '2h': 2 * 60 * 60 * 1000,
+            '4h': 4 * 60 * 60 * 1000,
+            '6h': 6 * 60 * 60 * 1000,
+            '8h': 8 * 60 * 60 * 1000,
+            '12h': 12 * 60 * 60 * 1000,
+            '1d': 24 * 60 * 60 * 1000,
+            '3d': 3 * 24 * 60 * 60 * 1000,
+            '1w': 7 * 24 * 60 * 60 * 1000,
+        }
+        return mapping.get(interval, 0)
