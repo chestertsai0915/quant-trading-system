@@ -1,3 +1,6 @@
+import os
+import shutil
+import shutil
 import sqlite3
 import json
 from datetime import datetime
@@ -15,7 +18,7 @@ class DatabaseHandler:
         self.conn.execute("PRAGMA journal_mode=WAL;")
         
         self._init_tables()
-
+        self._backup_on_startup()
 
     def _init_tables(self):
         """ 初始化資料庫表結構 """
@@ -360,3 +363,31 @@ class DatabaseHandler:
     def close(self):
         if self.conn:
             self.conn.close()
+
+    def _backup_on_startup(self):
+        try:
+            if not os.path.exists(self.db_path):
+                return
+
+            backup_dir = "backups_startup"
+            if not os.path.exists(backup_dir):
+                os.makedirs(backup_dir)
+
+            # 檔名加上 startup 標記
+            timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+            backup_file = os.path.join(backup_dir, f"startup_backup_{timestamp}.db")
+            
+            # 使用 shutil 複製 (啟動當下通常還沒連線，直接複製是安全的)
+            shutil.copy2(self.db_path, backup_file)
+            print(f"[Backup] 啟動前備份完成: {backup_file}")
+            
+            # 簡單清理邏輯 (只留最近 3 個啟動備份)
+            files = sorted(
+                [os.path.join(backup_dir, f) for f in os.listdir(backup_dir) if f.endswith('.db')],
+                key=os.path.getmtime
+            )
+            while len(files) > 3:
+                os.remove(files.pop(0)) # 刪除最舊的
+                
+        except Exception as e:
+            print(f"[Backup Error] 啟動備份失敗: {e}")
