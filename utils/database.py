@@ -374,7 +374,7 @@ class DatabaseHandler:
                 os.makedirs(backup_dir)
 
             # 檔名加上 startup 標記
-            timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             backup_file = os.path.join(backup_dir, f"startup_backup_{timestamp}.db")
             
             # 使用 shutil 複製 (啟動當下通常還沒連線，直接複製是安全的)

@@ -18,41 +18,70 @@ class SentimentStrategyV2(BaseStrategy):
         self.yield_exit_q = 0.3     # 出場分位數
         
     def generate_signal(self):
-        # 1. 確保數據長度足夠 (至少要比最長的視窗大)
-        if len(self.kline_data) < max(self.gnf_window, self.yield_window):
+        # 1. 確保 DataBoard 存在
+        if self.data_board is None:
             return None
 
-        # 2. 複製數據 (避免汙染原始資料)
+        # 2. 準備基礎 K 線 (High Freq)
+        # BaseStrategy 已經把 main_kline 放在 self.kline_data
         df = self.kline_data.copy()
 
-        # 3. 確保外部數據欄位存在 (防呆)
-        # 檢查您 DataManager 存的名稱，假設是 'fear_greed' 和 'funding_rate' (或是 'GS10' 若有爬蟲)
-        # 根據您的舊代碼，您用的是 'fng_value' 和 'GS10'
-        required_cols = ['fear_greed', 'volume'] 
-        # 注意: 如果 GS10 (美債) 還沒實作爬蟲，這裡會報錯，建議先確認欄位名稱
-        # 假設您的 DataManager 已經把 fear_greed 合併進來了
+        # ==========================================
+        # 3. 【特徵工程】混合外部數據
+        # ==========================================
+
+        # A. 混合 Fear & Greed (單一指標，直接用 Helper)
+        df = self.enrich_data_with_external(
+            source_name='fear_greed',
+            feature_cols=['value'],
+            rename_map={'value': 'fear_greed'}
+        )
+
+        # B. 混合 US Yield 10Y (多指標數據，需手動處理)
+        # 從 DataBoard 取得 FRED 原始數據
+        fred_df = self.data_board.external_data.get('fred_macro')
         
-        for col in required_cols:
-            if col not in df.columns:
-                return None
+        if fred_df is not None and not fred_df.empty:
+            print('----------------------------------------------------------------',fred_df['metric'].unique())  # 印出有哪些指標，幫助調試
+            # [關鍵步驟] 先篩選出我們要的 'yield_10y'
+            # 因為 fred_macro 裡面混雜了 yield_2y, fed_assets 等
+            yield_source = fred_df[fred_df['metric'] == 'yield_10y']
+            
+            # 手動呼叫 FeatureEngineer 進行縫合
+            df = self.feature_engineer.attach_low_freq_feature(
+                high_freq_df=df,
+                low_freq_df=yield_source,
+                feature_cols=['value'],
+                rename_map={'value': 'yield_10y'}
+            )
 
+        print(df)
         # ==========================================
-        #  向量化計算 (Vectorization)
+        # 4. 數據檢查與計算 (邏輯保留)
         # ==========================================
+        
+        # 檢查 Fear Greed 是否存在
+        if 'fear_greed' not in df.columns:
+            return None
+            
+        # 檢查數據長度
+        if len(df) < max(self.gnf_window, self.yield_window):
+            return None
 
-        # A. 計算 GnF Ratio 序列 (整欄計算)
+        # A. 計算 GnF Ratio 序列
         # GnF = FearGreed / Volume
         # 使用 replace 避免除以 0
         gnf_ratio_series = df['fear_greed'] / np.log(df['volume'].replace(0, 1))
         
-        # B. 計算 GnF 的動態閾值 (Rolling Quantile)
+        # B. 計算 GnF 的動態閾值
         gnf_entry_th_series = gnf_ratio_series.rolling(window=self.gnf_window).quantile(self.gnf_entry_q)
         gnf_exit_th_series = gnf_ratio_series.rolling(window=self.gnf_window).quantile(self.gnf_exit_q)
 
-        # C. 處理 Yield (假設 'GS10' 或 'funding_rate' 在 df 裡)
-        # 如果您還沒實作美債爬蟲，這裡暫時用 funding_rate 代替演示，或者您確認有 'GS10'
-        target_yield_col = 'yield_10y' if 'yield_10y' in df.columns else 'funding_rate' # 自動切換
+        # C. 處理 Yield (Fallback 機制)
+        # 如果 yield_10y 成功抓到且有值，就用它；否則退而求其次用 funding_rate
+        target_yield_col = 'yield_10y' if 'yield_10y' in df.columns else 'funding_rate'
         
+        # 如果連 funding_rate 都沒有，那就真的沒戲唱了
         if target_yield_col not in df.columns:
             return None
             
@@ -63,7 +92,7 @@ class SentimentStrategyV2(BaseStrategy):
         yield_exit_th_series = yield_series.rolling(window=self.yield_window).quantile(self.yield_exit_q)
 
         # ==========================================
-        #  取出「當下」數值 (最後一筆)
+        # 5. 取出「當下」數值 & 產生訊號
         # ==========================================
         
         # 當前值
@@ -77,25 +106,19 @@ class SentimentStrategyV2(BaseStrategy):
         curr_yield_entry_th = yield_entry_th_series.iloc[-1]
         curr_yield_exit_th = yield_exit_th_series.iloc[-1]
 
-        # 檢查是否為 NaN (剛啟動資料不足時)
+        # 檢查是否為 NaN
         if np.isnan(curr_gnf_entry_th) or np.isnan(curr_yield_entry_th):
             return None
 
-        # ==========================================
-        #  進出場判斷
-        # ==========================================
-       
-        # 進場: GnF > Entry_TH (0.7) AND Yield > Entry_TH (0.7)
+        # 進出場判斷
         long_condition = (curr_gnf > curr_gnf_entry_th) and (curr_yield > curr_yield_entry_th)
-        
-        # 出場: GnF < Exit_TH (0.5) OR Yield < Exit_TH (0.3)
         exit_condition = (curr_gnf < curr_gnf_exit_th) or (curr_yield < curr_yield_exit_th)
 
         if long_condition:
             return {
                 'action': 'LONG',
                 'quantity': 0.005,
-                'reason': f'High_GnF({curr_gnf:.2e}) & High_Yield({curr_yield:.2f})'
+                'reason': f'High_GnF({curr_gnf:.2e}) & High_Yield({curr_yield:.2f}) [{target_yield_col}]'
             }
             
         elif exit_condition:

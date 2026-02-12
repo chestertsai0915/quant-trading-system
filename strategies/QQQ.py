@@ -8,26 +8,39 @@ class QQQ_price(BaseStrategy):
         super().__init__(name="Strategy13_QQQ_Wavelet_Trend")
         
         # --- 策略參數 ---
-        
-        self.lookback_window = 400  # 歷史分位數視窗
-        
+        self.lookback_window = 400  # 歷史分位數視窗 (注意：這是指 400 根 K 線)
         
         self.long_th = 0.7          # 進場分位數 (0.7)
         self.exit_th = 0.1          # 出場分位數 (0.1)
         
-        
 
     def generate_signal(self):
-        # 1. 檢查特徵是否存在 (防呆)
-        if 'QQQ_Wavelet' not in self.kline_data.columns:
+        # ==========================================
+        # 1. 【關鍵修改】主動混合外部特徵
+        # ==========================================
+        # 告訴系統：我要把 'us_stock_qqq' 資料源裡的 'QQQ_Wavelet' 欄位併進來
+        # 注意：這裡會回傳一個新的 df，包含了原始 K 線 + QQQ 資料
+        df = self.enrich_data_with_external(
+            source_name='us_stock_qqq',
+            feature_cols=['QQQ_Wavelet'] 
+        )
+        if 'QQQ_Wavelet' not in df.columns:
+            # logging.warning(f"策略 {self.name}: 缺少 QQQ_Wavelet 數據，跳過")
             return None
-            
-        # 2. 取出特徵序列
-        # 這已經是 DataManager 幫你 merge 好的 (小時線上的特徵)
-        wavelet_series = self.kline_data['QQQ_Wavelet']
+        # 檢查特徵是否存在 (防呆)
+        # 注意：現在要檢查的是 df，而不是 self.kline_data
+        if 'QQQ_Wavelet' not in df.columns:
+            return None
+        
+        # ==========================================
+        # 2. 以下邏輯與原本完全相同 (只改變數來源為 df)
+        # ==========================================
+        
+        # 取出特徵序列 (已經對齊到小時線了)
+        wavelet_series = df['QQQ_Wavelet']
        
         # 3. 計算動態閾值 (Rolling Quantile)
-        # 直接對 Series 操作，超快
+        # 這裡是對 "混合後的序列" 做 rolling，代表 "過去 400 個小時" 的分位數
         long_threshold_series = wavelet_series.rolling(self.lookback_window).quantile(self.long_th)
         exit_threshold_series = wavelet_series.rolling(self.lookback_window).quantile(self.exit_th)
         

@@ -5,8 +5,6 @@ import traceback
 from binance.um_futures import UMFutures
 from utils.database import DatabaseHandler
 from utils.notifier import send_tg_msg
-
-# 引入三大經理
 from managers import DataManager, StrategyManager, TradeManager
 
 class TradingBot:
@@ -27,19 +25,14 @@ class TradingBot:
         self.strategy_manager = StrategyManager(strategy_names)
         self.trade_manager = TradeManager(self.trade_client, self.db, self.config, self.symbol, self.is_paper)
         
-        
-        
-        send_tg_msg(f"**機器人啟動**\nSymbol: {self.symbol}\nMode: {self.mode}\nPaper: {self.is_paper}")
+        send_tg_msg(f"**機器人啟動**\nSymbol: {self.symbol}\nMode: {self.mode}")
 
     def _init_clients(self):
-        """ 建立 API 連線 """
         real_key = os.getenv('BINANCE_API_KEY')
         real_secret = os.getenv('BINANCE_SECRET_KEY')
         
-        # Data Client (永遠連實盤)
         data_client = UMFutures(key=real_key, secret=real_secret)
         
-        # Trade Client
         if self.mode == "TESTNET":
             trade_client = UMFutures(
                 key=os.getenv('TESTNET_API_KEY'), 
@@ -56,38 +49,28 @@ class TradingBot:
         
         while True:
             try:
-                # --- 智慧睡眠邏輯 ---
-                # 取得現在的秒數
+                # 智慧睡眠邏輯
                 current_time = time.time()
-                time_struct = time.localtime(current_time)
-                seconds = time_struct.tm_sec
+                seconds = time.localtime(current_time).tm_sec
+                sleep_time = 0.3 if (seconds >= 57 or seconds <= 12) else 10
                 
-                # 如果接近整點 (例如 57秒 ~ 12秒)，縮短檢查頻率為 0.3 秒，搶快！
-                if seconds >= 57 or seconds <= 12:
-                    sleep_time = 0.3
-                else:
-                    # 平常時間不用那麼累，睡 10 秒 (或更久)
-                    sleep_time = 10
-                
-                # ---------------------------
-                
-                # 1. 詢問 Data Manager：有新 K 線嗎？
+                # 1. 詢問 Data Manager
                 is_new, closed_time, df_to_save = self.data_manager.check_new_candle()
                 
                 if is_new:
-                    # 2. 執行 ETL 流程，並取得準備好的策略數據
-                    strategy_df = self.data_manager.update_etl_process(closed_time, df_to_save)
+                    # 2. ETL 流程 -> 取得 DataBoard (而非大表)
+                    data_board = self.data_manager.update_etl_process(closed_time, df_to_save)
                     
-                    if not strategy_df.empty:
+                    if data_board and not data_board.main_kline.empty:
                         
-                        # 3. Strategy Manager 計算訊號
-                        signals = self.strategy_manager.generate_signals(strategy_df)
+                        # 3. Strategy Manager 計算訊號 (傳入 data_board)
+                        signals = self.strategy_manager.generate_signals(data_board)
                         
                         # 4. Trade Manager 執行交易
                         for signal in signals:
                             self.trade_manager.process_signal(signal, current_pos_amt=0)
 
-                        ref_price = strategy_df['close'].iloc[-1]
+                        ref_price = data_board.main_kline['close'].iloc[-1]
                         self.trade_manager.log_snapshot(ref_price)
                     
                     logging.info("本週期結束，等待下一次收盤...")

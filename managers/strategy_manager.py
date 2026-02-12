@@ -23,7 +23,6 @@ class StrategyManager:
     def _scan_available_strategies(self):
         """ 自動掃描 strategies 資料夾下的所有策略類別 """
         # 取得 strategies 資料夾路徑
-        # 假設 strategy_manager.py 在 managers/ 資料夾，所以要往上一層找 strategies/
         current_dir = os.path.dirname(__file__)
         root_dir = os.path.dirname(current_dir)
         strategies_dir = os.path.join(root_dir, 'strategies')
@@ -61,8 +60,10 @@ class StrategyManager:
     def _register_strategies(self, active_names):
         """ 實例化指定的策略 """
         self.strategies = []
+        
+        # 如果設定檔沒有指定策略 (None 或 Empty List)，則預設不做任何事，或者你可以改成載入全部
         if not active_names:
-            logging.warning(" 未指定任何策略")
+            logging.warning("未指定任何策略，目前無策略運行中。")
             return
         
         target_names = active_names 
@@ -74,37 +75,43 @@ class StrategyManager:
                     # 實例化策略
                     strategy_instance = strategy_cls()
                     self.strategies.append(strategy_instance)
-                    logging.info(f" 策略已掛載: {name}")
+                    logging.info(f"策略已掛載: {name}")
                 except Exception as e:
-                    logging.error(f" 策略 {name} 實例化失敗: {e}")
+                    logging.error(f"策略 {name} 實例化失敗: {e}")
             else:
                 logging.warning(f"找不到名為 '{name}' 的策略類別，請檢查檔名或類別名稱。")
 
         logging.info(f"目前運行策略列表: {[s.name for s in self.strategies]}")
 
-    
-
-    def generate_signals(self, strategy_df, external_data={}):
-        """ 遍歷所有策略並產生訊號 """
-        # 未來必須改成多執行緒 (TODO)
+    def generate_signals(self, data_board):
+        """ 
+        遍歷所有策略並產生訊號 
+        Input: data_board (包含 main_kline 與 external_data)
+        """
         signals = []
         
         for strategy in self.strategies:
             try:
-                # 1. 更新數據
-                strategy.update_data(strategy_df)
+                # 1. 更新數據 (傳入 DataBoard)
+                # BaseStrategy 會負責把 main_kline 拆出來給 strategy.kline_data
+                strategy.update_data(data_board)
                 
                 # 2. 產生訊號
                 signal = strategy.generate_signal()
                 
                 if signal:
+                    # 取得目前參考價格 (用於日誌或計算)
+                    ref_price = 0
+                    if not data_board.main_kline.empty:
+                        ref_price = data_board.main_kline['close'].iloc[-1]
+
                     # 補充策略名稱資訊
                     signal_data = {
                         'strategy_name': strategy.name,
-                        'action': signal['action'],
-                        'reason': signal['reason'],
-                        'ref_price': strategy_df['close'].iloc[-1]
-                        # signal 裡面可能還有其他自定義欄位，這裡可以考慮 merge 進去
+                        'action': signal.get('action'),
+                        'quantity': signal.get('quantity', 0), # 支援部分策略回傳 quantity
+                        'reason': signal.get('reason', ''),
+                        'ref_price': ref_price
                     }
                     signals.append(signal_data)
                     

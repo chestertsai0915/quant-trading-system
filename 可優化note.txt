@@ -4,7 +4,7 @@
 5 系統出錯會導致 移植重複動作(沒有check)
 !!!下單失敗問題(會與DB紀錄矛盾)
 7fee問題
-!!!!!!!!!!!!!!!!!!DB備份
+!!!!!!!!!!!!!!!!!!DB備份,資料
 10管理數據源(維護名單)
 11Maker (掛單) 策略代替 Taker (吃單) #先不急
 !!!手動操作或是錯誤操作造成與DB出入
@@ -16,5 +16,5 @@ crash 會自動重啟
 #測試如果api壞掉 DB會怎樣
 专业系统会有 position sizing、最大回撤控制、風險暴露限制等
 三方協作架構圖 (Local <-> GitHub <-> Azure VPS)
-
+------>想法 -> 恢復固有尺度 不用合併 單獨去get signal  混頻數據當作feature engering
 !!!!!改external warm up  + 測試signal get

@@ -6,6 +6,35 @@ import time
 from data_sources.registry import get_all_fetchers
 from data_loader import DataLoader
 from features.feature_engineer import FeatureEngineer
+
+# --- 新增：數據儀表板 (Data Transfer Object) ---
+class DataBoard:
+    """
+    數據儀表板：
+    負責將「不同頻率」的數據封裝在一起傳遞給策略。
+    原則：
+    1. 不在這裡做 merge (Scale Separation)。
+    2. 提供原始數據供策略層自由取用。
+    """
+    def __init__(self, main_kline: pd.DataFrame, external_data: dict):
+        self.main_kline = main_kline        # 高頻主數據 (如 BTC 1h)
+        self.external_data = external_data  # 低頻數據字典 (如 QQQ, FearGreed...)
+
+    def get_latest_state(self, source_name: str, col_name: str = None):
+        """
+        查詢低頻數據的「最新狀態」 (Regime Filter 用)
+        """
+        df = self.external_data.get(source_name)
+        if df is None or df.empty:
+            return None
+        
+        # 取最後一筆 (代表最新已知的狀態)
+        latest = df.iloc[-1]
+        
+        if col_name:
+            return latest.get(col_name)
+        return latest
+
 class DataManager:
     def __init__(self, client, db, symbol, interval):
         self.client = client
@@ -15,209 +44,165 @@ class DataManager:
         self.loader = DataLoader(self.client, self.db)
         self.fetchers = get_all_fetchers()
         self.last_processed_time = 0
-        # ---   快取機制 ---
-        self._external_cache = {}  # 存放外部數據的快取箱
-        self._cache_lock = threading.Lock() # 確保讀寫安全
-        self._is_running = True # 控制背景執行緒開關
-        self._auto_backfill() #啟動時自動計算並回補數據
-        # 啟動背景預抓小精靈
-        self._start_background_scheduler()
+        self._external_cache = {}  # Key: source_name, Value: latest_record (dict)
+        # --- 多尺度架構修改 ---
+        # 獨立存儲各個尺度的數據，不進行合併
+        self._cache_lock = threading.Lock()
+        self._external_data_store = {} # Key: source_name, Value: DataFrame
+        
         self.feature_engineer = FeatureEngineer()
+        self._is_running = True
+        
+        self._auto_backfill()
+        self._start_background_scheduler()
         logging.info(f"載入外部數據源: {list(self.fetchers.keys())}")
 
     def get_history_klines(self, limit=1500):
-        """ 獲取歷史 K 線 (熱機用) """
         return self.loader.get_binance_klines(self.symbol, self.interval, limit=limit)
 
     def check_new_candle(self):
-        """ 
-        偵測是否有新收盤的 K 線 
-        Return: (bool, int, dataframe) -> (是否新K線, 收盤時間, 剛收盤的K線資料)
-        """
-        # 抓取最新的 2 根
+        """ 偵測新 K 線 """
         raw_df = self.loader.get_binance_klines(self.symbol, self.interval, limit=2)
-        
         if raw_df.empty:
             return False, 0, None
 
-        # 取得倒數第二根 (剛收盤的)
         latest_closed_kline = raw_df.iloc[-2]
         closed_time = int(latest_closed_kline['open_time'])
 
         if closed_time > self.last_processed_time:
-            # 這是新 K 線
-            return True, closed_time, raw_df.iloc[:-1] # 回傳排除未收盤的數據
+            return True, closed_time, raw_df.iloc[:-1]
         
         return False, 0, None
 
     def _start_background_scheduler(self):
-        """ 啟動背景執行緒，定期抓取外部數據 """
         thread = threading.Thread(target=self._update_cache_worker, daemon=True)
         thread.start()
-        logging.info(" 外部數據背景更新") 
+        logging.info(" 外部數據背景更新啟動") 
 
     def _update_cache_worker(self):
         """ 
-        背景核心工作 
-        1. 遍歷所有 Fetchers
-        2. 抓取數據 (耗時操作)
-        3. 存入 DB (保留歷史)
-        4. 更新記憶體 Cache (供即時查詢)
+        背景更新：各自獨立維護不同頻率的數據 (Scale Separation)
         """
         while self._is_running:
-            logging.info("[BG-TASK] 開始背景更新外部數據...")
-            t_start = time.time()
+            logging.info("[BG-TASK] 開始更新外部數據...")
             
-            # 遍歷所有已註冊的數據源
             for name, fetcher in self.fetchers.items():
                 try:
-                    # A. 抓取數據 (這裡是耗時的 API 請求)
                     df = fetcher.fetch_data()
-                    
-                    if df is None or df.empty:
-                        continue
+                    if df is None or df.empty: continue
 
-                    # B. 存入資料庫 (Persistence)
+                    
                     if name == 'us_stock_qqq':
                         self.db.save_market_data(symbol='QQQ', interval='1d', df=df)
                     else:
                         self.db.save_generic_external_data(df)
-                    
+ 
                     # C. 更新記憶體快取 (In-Memory Cache)
-                    # 取最新的一筆資料放入快取
-                    latest_record = df.iloc[-1].to_dict()
-                    with self._cache_lock:
-                        self._external_cache[name] = latest_record
-                        
-                    # logging.debug(f"[BG-TASK] {name} 更新成功")
-
+                        # 取最新的一筆資料放入快取
+                        latest_record = df.iloc[-1].to_dict()
+                        with self._cache_lock:
+                            self._external_cache[name] = latest_record 
                 except Exception as e:
-                    logging.error(f"[BG-TASK] 外部數據 {name} 更新失敗: {e}")
+                    logging.error(f"[BG-TASK] 更新失敗 {name}: {e}")
 
-            elapsed = time.time() - t_start
-            logging.info(f"[BG-TASK] 所有外部數據更新完成 (耗時 {elapsed:.2f}s)")
-            
-            # --- 設定更新頻率 ---
-            # 外部數據不用每秒抓，設定 1 小時抓一次即可
-            # 如果失敗或成功都休息一樣久，避免 API Rate Limit
             time.sleep(3600) 
-
     def get_cached_external_data(self):
         """ 主程式呼叫這個方法，0 秒取得數據  """
         with self._cache_lock:
             return self._external_cache.copy()
-
+        
     def update_etl_process(self, closed_time, df_to_save):
-        """ 執行標準 ETL 流程 """
+        """ 
+        ETL 流程:是打包 DataBoard
+        """
         logging.info(f"[ETL] 處理新 K 線: {pd.to_datetime(closed_time, unit='ms')}")
         
-        # 1. 存入 Market Data
+        # 1. 存入最新的 K 線
         self.db.save_market_data(self.symbol, self.interval, df_to_save)
         
-        # 2. 更新外部數據
-        self._update_external_data()
+        # 2. 讀取主頻率數據 (High Freq)
+        main_df = self.db.load_market_data(self.symbol, self.interval, limit=1500)
         
-        # 3. 讀回給策略用的數據
-        #strategy_df = self.db.load_market_data(self.symbol, self.interval, limit=200)
-        strategy_df = self.get_strategy_data(limit=1500)
-        qqq_df = self.db.load_market_data('QQQ', '1d', limit=600)
-        if not qqq_df.empty:
-            # A. 算出 QQQ 的小波特徵 (還是在日線層級)
-            qqq_df_featured = self.feature_engineer.add_qqq_wavelet_feature(
-                qqq_df, window=120
-            )
-            
-            # B. 將日線特徵合併進小時線 (Merge)
-            strategy_df = self.feature_engineer.merge_features(
-                main_df=strategy_df,
-                feature_df=qqq_df_featured,
-                feature_cols=['QQQ_Wavelet'], # 指定要合併的欄位
-                on='open_time'
-            )
-            
-        # 更新內部狀態
+        # 3. 計算 Start Time (用於撈取對應範圍的外部數據)
+        start_time = None
+        if not main_df.empty:
+            # 取主 K 線的第一筆時間作為起點
+            start_time = int(main_df['open_time'].min())
+        
+        # 4. 準備外部低頻數據 (Low Freq) - 從 DB 讀取
+        external_snapshot = self._load_all_external_data_from_db(start_time=start_time)
+
+        # 5. 打包成 DataBoard
+        data_board = DataBoard(main_kline=main_df, external_data=external_snapshot)
+        
         self.last_processed_time = closed_time
-        
-        return strategy_df
+        return data_board
 
-    def _update_external_data(self):
-        """ 抓取外部數據並存檔 """
-        for name, fetcher in self.fetchers.items():
+    def _load_all_external_data_from_db(self, start_time=None):
+        """
+        從資料庫載入所有已註冊的外部數據
+        參數:
+          start_time: 指定要撈取的起始時間 (通常是 main_df 的開始時間)
+        """
+        snapshot = {}
+        # 如果沒給 start_time，就用 limit 兜底
+        default_limit = 1000 
+        
+        # 定義 Source -> Metrics 的映射 (因為 DB 查詢需要 metric 名稱)
+        # 這裡建議把所有可能的 metric 都列出來
+        metrics_map = {
+            'fear_greed': ['fear_greed'],
+            'funding_rate': ['funding_rate'],
+            'google_trends': ['google_trends_BTC', 'google_trends_crypto', 'google_trends_Bitcoin'],
+            'fred_macro': ['yield_10y', 'yield_2y', 'fed_assets']
+        }
+
+        for source_name in self.fetchers.keys():
             try:
-                df = fetcher.fetch_data()
-                if df.empty: continue
+                # Case 1: 美股 QQQ (存放在 market_data 表)
+                # load_market_data 目前只支援 limit，不支援 start_time，所以維持原樣或給大一點的 limit
+                if source_name == 'us_stock_qqq':
+                    df = self.db.load_market_data('QQQ', '1d', limit=500)
+                    if not df.empty:
+                        df = self.feature_engineer.add_qqq_wavelet_feature(df)
+                        snapshot[source_name] = df
+                    continue
 
-                if name == 'us_stock_qqq':
-                    self.db.save_market_data(symbol='QQQ', interval='1d', df=df)
-                else:
-                    self.db.save_generic_external_data(df)
+                # Case 2: 通用外部數據 (存放在 external_data 表)
+                target_metrics = metrics_map.get(source_name)
+                if not target_metrics:
+                    continue
+
+                dfs = []
+                for metric in target_metrics:
+                    # 決定 symbol (Funding Rate 用幣種，其他用 GLOBAL)
+                    target_symbol = self.symbol if source_name == 'funding_rate' else 'GLOBAL'
+                    
+                    # 呼叫 database.py 的 load_external_data
+                    # 這裡會用到它原本的邏輯：如果有 start_time，就用時間篩選；否則用 limit
+                    df = self.db.load_external_data(
+                        symbol=target_symbol, 
+                        metric=metric, 
+                        start_time=start_time, # <--- 傳入 main_df 的第一根時間
+                        limit=default_limit
+                    )
+                    
+                    if not df.empty:
+                        # [關鍵修正] database.py 回傳的 df 沒有 'metric' 欄位，手動補上
+                        # 這樣後續 FeatureEngineer 才能識別
+                        df['metric'] = metric
+                        dfs.append(df)
+                
+                if dfs:
+                    # 合併並排序
+                    merged_df = pd.concat(dfs, ignore_index=True).sort_values('open_time')
+                    snapshot[source_name] = merged_df
+                
             except Exception as e:
-                logging.error(f"外部數據更新失敗 [{name}]: {e}")
-
-    def get_strategy_data(self, limit=200):
-        """
-        數據準備邏輯
-        功能：
-        1. 讀取 K 線 (主時間軸)
-        2. 讀取各種外部數據 (不同時間軸)
-        3. 用 merge_asof 進行對齊 (等同於 ffill)
-        """
+                logging.error(f"[ETL] 從 DB 讀取 {source_name} 失敗: {e}")
         
-        # 1. 讀取主 K 線 (你的 Time Anchor)
-        df = self.db.load_market_data(self.symbol, self.interval, limit=limit)
-        if df.empty: return pd.DataFrame()
+        return snapshot
         
-        # 確保按時間排序 (merge_asof 的要求)
-        df = df.sort_values('open_time')
-
-        # 2. 準備外部數據列表
-        # 這裡列出你想要合併的指標
-        external_metrics = ['fear_greed', 'yield_10y','yield_2y', 'fed_assets', 'google_trends_BTC', 'google_trends_crypto']
-        
-        # 取得 K 線的最早時間，我們只需要抓這之後的外部數據 (稍微多抓一點緩衝)
-        start_time = int(df['open_time'].min()) - 86400000 # 多抓一天緩衝
-
-        for metric in external_metrics:
-            # A. 讀取該指標的數據
-            # 注意：這裡可能回傳空 DataFrame (如果剛好這段時間沒數據)
-            ext_df = self.db.load_external_data(
-                symbol='GLOBAL' if metric != 'funding_rate' else self.symbol, 
-                metric=metric, 
-                start_time=start_time   
-            )
-            
-            if not ext_df.empty:
-                ext_df = ext_df.sort_values('open_time')
-                
-                # B. 核心動作：merge_asof (向後查找)
-                # 這就是在做 "Forward Fill"
-                # 它會幫 df 的每一行，找到 ext_df 裡 open_time <= df.open_time 的最新一筆
-                df = pd.merge_asof(
-                    df,
-                    ext_df[['open_time', 'value']], # 只取需要的欄位
-                    on='open_time',
-                    direction='backward', # 向後看 = 找過去最近的 = Last Known Value
-                    suffixes=('', f'_{metric}')
-                )
-                
-                # C. 欄位整理
-                # merge_asof 會產生 'value' 或 'value_fear_greed' 這樣的欄位
-                # 我們把它統一改成 metric 名稱
-                target_col = f'value_{metric}' if f'value_{metric}' in df.columns else 'value'
-                if target_col in df.columns:
-                    df.rename(columns={target_col: metric}, inplace=True)
-                
-                # D. 補漏 (Fail-safe)
-                # 如果 K 線最前面幾筆剛好沒有對應的外部數據 (因為 start_time 切太準)，會變成 NaN
-                # 這時候用 ffill 補齊，確保不會有空值
-                df[metric] = df[metric].ffill().fillna(0) # 真的都沒有就填 0
-            
-            else:
-                # 如果資料庫完全沒有這個指標的數據，填 0 避免報錯
-                df[metric] = 0
-
-        return df
-    
     def _auto_backfill(self):
         """
         [自動回補機制]
@@ -281,23 +266,7 @@ class DataManager:
         except Exception as e:
             logging.error(f"[BACKFILL ERROR] 自動回補失敗: {e}")
 
+
     def _get_interval_ms(self, interval):
-        """ 輔助函數：將 K 線週期字串轉為毫秒數 """
-        # 簡單映射表
-        mapping = {
-            '1m': 60 * 1000,
-            '3m': 3 * 60 * 1000,
-            '5m': 5 * 60 * 1000,
-            '15m': 15 * 60 * 1000,
-            '30m': 30 * 60 * 1000,
-            '1h': 60 * 60 * 1000,
-            '2h': 2 * 60 * 60 * 1000,
-            '4h': 4 * 60 * 60 * 1000,
-            '6h': 6 * 60 * 60 * 1000,
-            '8h': 8 * 60 * 60 * 1000,
-            '12h': 12 * 60 * 60 * 1000,
-            '1d': 24 * 60 * 60 * 1000,
-            '3d': 3 * 24 * 60 * 60 * 1000,
-            '1w': 7 * 24 * 60 * 60 * 1000,
-        }
-        return mapping.get(interval, 0)
+        mapping = {'1h': 3600000, '4h': 14400000, '15m': 900000, '1d': 86400000}
+        return mapping.get(interval, 3600000)
