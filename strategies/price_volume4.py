@@ -1,79 +1,73 @@
 from .base_strategy import BaseStrategy
-import indicators as ind
-import numpy as np
+import pandas as pd
 
 class PriceVolume4(BaseStrategy):
     def __init__(self):
         super().__init__(name="Strategy4_High_Momentum")
         
-        # --- 策略參數 (依照你的設定) ---
+        # --- 參數映射 ---
+        self.obv_smooth = 20   # OBV 平滑週期
+        self.vroc_period = 10  # VROC 計算週期
+        
         self.window = 250      # 滾動視窗 (長期統計)
         self.th1 = 0.8         # OBV 分位數閾值
         self.th2 = 0.8         # VROC 分位數閾值
-        
-        # 基礎指標參數
-        self.obv_smooth = 20   # OBV 平滑週期
-        self.vroc_period = 10  # VROC 計算週期 (Volume Rate of Change)
 
     def generate_signal(self):
-        # 1. 數據長度檢查
-        # 因為 window=250，加上 VROC(10)，至少需要 260 根
-        # 我們設定安全邊際為 300
-        if len(self.kline_data) < 300:
+        # ==========================================
+        # 1. 定義需要的特徵 ID
+        # ==========================================
+        
+        # A. 基礎指標數值
+        # 假設 VROC 基礎特徵 ID 是 vroc_{window}_v1 (需確認 feature_definitions 是否有 VROC_V1)
+        fid_vroc = f"vroc_{self.vroc_period}_v1" 
+        fid_obv = f"smooth_obv_{self.obv_smooth}_v1"
+        
+        # B. 動態閾值線 (Rolling Quantile)
+        # OBV 閾值 (重複利用 PriceVolume3 的定義，參數不同會自動產生新 ID)
+        fid_obv_th = f"smooth_obv_quantile_{self.obv_smooth}_{self.window}_{self.th1}_v1"
+        
+        # VROC 閾值 (剛剛新增的)
+        fid_vroc_th = f"vroc_quantile_{self.vroc_period}_{self.window}_{self.th2}_v1"
+
+        # ==========================================
+        # 2. 向 Feature Store 請求數據
+        # ==========================================
+        df = self.load_features([fid_vroc, fid_obv, fid_obv_th, fid_vroc_th])
+        
+        # 安全檢查
+        if df.empty or len(df) < self.window + 20:
             return None
 
-        # 2. 準備數據
-        close = self.kline_data['close'].values
-        volume = self.kline_data['volume'].values
-        
-        # ==========================================
-        #  因子計算
-        # ==========================================
-
-        # A. 計算 OBV (使用平滑版)
-        obv = ind.AlphaLibrary.calc_smooth_obv(close, volume, window=self.obv_smooth)
-
-        # B. 計算 VROC (成交量變化率)
-        vroc = ind.AlphaLibrary.calc_vroc(volume, window=self.vroc_period)
-
-        # C. 計算滾動分位數閾值 (Rolling Quantile)
-        # data['OBV'].rolling(250).quantile(0.8)
-        obv_th = ind.AlphaLibrary.calc_rolling_quantile(obv, self.window, self.th1)
-        
-        # data['vroc'].rolling(250).quantile(0.8)
-        vroc_th = ind.AlphaLibrary.calc_rolling_quantile(vroc, self.window, self.th2)
+        required_cols = [fid_vroc, fid_obv, fid_obv_th, fid_vroc_th]
+        if not all(col in df.columns for col in required_cols):
+            return None
 
         # ==========================================
-        #  獲取當前數值
+        # 3. 交易邏輯
         # ==========================================
         
-        curr_obv = obv[-1]
-        curr_vroc = vroc[-1]
+        curr = df.iloc[-1]
         
-        curr_obv_th = obv_th[-1]
-        curr_vroc_th = vroc_th[-1]
+        # 取值
+        curr_obv     = curr[fid_obv]
+        curr_vroc    = curr[fid_vroc]
+        curr_obv_th  = curr[fid_obv_th]
+        curr_vroc_th = curr[fid_vroc_th]
 
-        # Debug Log (你可以打開來看數值)
-        # print(f"[{self.name}] OBV:{curr_obv:.0f}(>{curr_obv_th:.0f}) | VROC:{curr_vroc:.2f}(>{curr_vroc_th:.2f})")
-
-        # ==========================================
-        #  進出場邏輯 (Logic)
-        # ==========================================
-
-        # 進場: (OBV > 80% Quantile) & (VROC > 80% Quantile)
-        # 意義：長期量能趨勢強，且短期成交量爆發
+        # 決策邏輯: 雙強進場
+        # 長期量能趨勢強 (OBV > 80%) 且 短期成交量爆發 (VROC > 80%)
         long_condition = (curr_obv > curr_obv_th) and (curr_vroc > curr_vroc_th)
         
-        # 出場: (OBV < 80% Quantile) & (VROC < 80% Quantile)
-        # 注意：你的代碼是用 & (AND)，這比 | (OR) 更難觸發。
-        # 意義：必須等到「量能趨勢轉弱」且「爆發力也消失」才平倉，容忍度較高。
+        # 出場: 雙弱離場
+        # 注意：這裡保留原本的 AND 邏輯 (只有兩者都轉弱才跑)
         exit_condition = (curr_obv < curr_obv_th) and (curr_vroc < curr_vroc_th)
 
         if long_condition:
             return {
                 'action': 'LONG',
                 'quantity': 0.005,
-                'reason': f'High_OBV & High_VROC'
+                'reason': f'High_OBV({curr_obv:.0f}) & High_VROC({curr_vroc:.2f})'
             }
             
         elif exit_condition:

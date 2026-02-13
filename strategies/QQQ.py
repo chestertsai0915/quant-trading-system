@@ -1,55 +1,73 @@
 from .base_strategy import BaseStrategy
-import indicators as ind
-import numpy as np
 import pandas as pd
+import numpy as np
 
 class QQQ_price(BaseStrategy):
     def __init__(self):
         super().__init__(name="Strategy13_QQQ_Wavelet_Trend")
         
         # --- 策略參數 ---
-        self.lookback_window = 400  # 歷史分位數視窗 (注意：這是指 400 根 K 線)
+        self.target_source = 'us_stock_qqq'
+        self.wavelet_window = 120   # 小波計算視窗 (日線)
+        self.output_col = 'A_mean'  # 取出的特徵
         
-        self.long_th = 0.7          # 進場分位數 (0.7)
-        self.exit_th = 0.1          # 出場分位數 (0.1)
+        # 【關鍵差異】
+        # 這裡的 window = 400 是 "400 小時" (約 16.6 天)
+        # 我們的目標是：在小時線上，對著 "已經廣播(ffill)過來的日線數據" 做滾動統計
+        self.lookback_window = 400  
         
+        self.long_th = 0.7          # 進場分位數
+        self.exit_th = 0.1          # 出場分位數
 
     def generate_signal(self):
         # ==========================================
-        # 1. 【關鍵修改】主動混合外部特徵
+        # 1. 定義需要的特徵 ID
         # ==========================================
-        # 告訴系統：我要把 'us_stock_qqq' 資料源裡的 'QQQ_Wavelet' 欄位併進來
-        # 注意：這裡會回傳一個新的 df，包含了原始 K 線 + QQQ 資料
-        df = self.enrich_data_with_external(
-            source_name='us_stock_qqq',
-            feature_cols=['QQQ_Wavelet'] 
-        )
-        if 'QQQ_Wavelet' not in df.columns:
-            # logging.warning(f"策略 {self.name}: 缺少 QQQ_Wavelet 數據，跳過")
+        
+        # 只請求 "原始小波數值" (WaveletFeature_V1)
+        # Feature Store 會算出 QQQ 日線的小波值，並自動對齊(ffill)到我們的小時線
+        # ID: wavelet_{source}_{wav_win}_{col}_v1
+        fid_val = f"wavelet_{self.target_source}_{self.wavelet_window}_{self.output_col}_v1"
+        
+        # ==========================================
+        # 2. 向 Feature Store 請求數據
+        # ==========================================
+        df = self.load_features([fid_val])
+        
+        # 安全檢查
+        # 注意：雖然我們只滾動 400 小時，但因為原始特徵是 wavelet(120日)，
+        # 所以數據源頭需要很長的歷史資料。
+        if df.empty or len(df) < self.lookback_window + 50:
             return None
-        # 檢查特徵是否存在 (防呆)
-        # 注意：現在要檢查的是 df，而不是 self.kline_data
-        if 'QQQ_Wavelet' not in df.columns:
+
+        if fid_val not in df.columns:
             return None
+
+        # ==========================================
+        # 3. 策略層計算 (Strategy-Side Calculation)
+        # ==========================================
+        # 這裡我們 "犯規" 了：不使用預定義的 Wavelet_Quantile 特徵，
+        # 而是直接在策略裡算，為了復刻 "小時線滾動日線數據" 的特殊 Alpha。
+        
+        wavelet_series = df[fid_val] # 這是一條已經被廣播成小時線的序列 (每24根數值一樣)
+        
+        # 計算動態閾值 (Rolling Quantile on Hourly Broadcasted Data)
+        long_threshold_series = wavelet_series.rolling(window=self.lookback_window).quantile(self.long_th)
+        exit_threshold_series = wavelet_series.rolling(window=self.lookback_window).quantile(self.exit_th)
         
         # ==========================================
-        # 2. 以下邏輯與原本完全相同 (只改變數來源為 df)
+        # 4. 交易邏輯
         # ==========================================
         
-        # 取出特徵序列 (已經對齊到小時線了)
-        wavelet_series = df['QQQ_Wavelet']
-       
-        # 3. 計算動態閾值 (Rolling Quantile)
-        # 這裡是對 "混合後的序列" 做 rolling，代表 "過去 400 個小時" 的分位數
-        long_threshold_series = wavelet_series.rolling(self.lookback_window).quantile(self.long_th)
-        exit_threshold_series = wavelet_series.rolling(self.lookback_window).quantile(self.exit_th)
-        
-        # 4. 取當前值
         curr_val = wavelet_series.iloc[-1]
         curr_long_th = long_threshold_series.iloc[-1]
         curr_exit_th = exit_threshold_series.iloc[-1]
-       
-        # 5. 邏輯判斷
+        
+        # 檢查 NaN (剛開始滾動時會是空值)
+        if np.isnan(curr_long_th) or np.isnan(curr_exit_th):
+            return None
+
+        # 邏輯判斷
         if curr_val > curr_long_th:
              return {
                 'action': 'LONG',

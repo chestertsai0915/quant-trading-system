@@ -1,78 +1,73 @@
 from .base_strategy import BaseStrategy
-import indicators as ind
-import numpy as np
+import pandas as pd
 
 class PriceVolume8(BaseStrategy):
     def __init__(self):
         super().__init__(name="Strategy8_Vol_BuyPressure")
         
-        # --- 策略參數 ---
-        self.window = 30       # 滾動視窗
-        self.th1 = 0.7         # MAD 閾值 (波動率中高)
-        self.th2 = 0.9         # BS Ratio 閾值 (買壓極強)
-        
-        # 基礎指標參數
+        # --- 參數映射 ---
         self.mad_period = 10   # MAD 計算週期
+        self.window = 30       # 滾動視窗 (計算分位數用)
+        self.th1 = 0.7         # MAD 閾值 (70% 中高波動)
+        self.th2 = 0.9         # BS Ratio 閾值 (90% 極強買壓)
 
     def generate_signal(self):
-        # 1. 數據長度檢查
-        # MAD(10) + Rolling(30) = 40 根
-        if len(self.kline_data) < 60:
+        # ==========================================
+        # 1. 定義需要的特徵 ID
+        # ==========================================
+        
+        # A. 基礎指標數值
+        # MAD_V1 -> mad_{col}_{win}_v1
+        fid_mad = f"mad_close_{self.mad_period}_v1"
+        
+        # BSRatio_V1 -> bs_ratio_v1 (無參數)
+        fid_bs = "bs_ratio_v1"
+        
+        # B. 動態閾值線 (Rolling Quantile)
+        # MAD 閾值 (MAD_Quantile_V1)
+        fid_mad_th = f"mad_quantile_{self.mad_period}_{self.window}_{self.th1}_v1"
+        
+        # BS Ratio 閾值 (BSRatio_Quantile_V1)
+        # ID: bs_quantile_{roll}_{q}_v1
+        fid_bs_th = f"bs_quantile_{self.window}_{self.th2}_v1"
+
+        # ==========================================
+        # 2. 向 Feature Store 請求數據
+        # ==========================================
+        df = self.load_features([fid_mad, fid_bs, fid_mad_th, fid_bs_th])
+        
+        # 安全檢查
+        if df.empty or len(df) < self.window + 20:
             return None
 
-        # 2. 準備數據
-        close = self.kline_data['close'].values
-        high = self.kline_data['high'].values
-        low = self.kline_data['low'].values
-        
-        # ==========================================
-        #  因子計算
-        # ==========================================
-
-        # A. 計算 MAD (價格偏離度)
-        mad = ind.AlphaLibrary.calc_mad(close, window=self.mad_period)
-
-        # B. 計算 BS Ratio (買賣壓比)
-        bs_ratio = ind.AlphaLibrary.calc_bs_ratio(high, low, close)
-
-        # C. 計算滾動分位數閾值
-        # MAD.rolling(30).quantile(0.7)
-        mad_th = ind.AlphaLibrary.calc_rolling_quantile(mad, self.window, self.th1)
-        
-        # BS_Ratio.rolling(30).quantile(0.9)
-        bs_th = ind.AlphaLibrary.calc_rolling_quantile(bs_ratio, self.window, self.th2)
+        required_cols = [fid_mad, fid_bs, fid_mad_th, fid_bs_th]
+        if not all(col in df.columns for col in required_cols):
+            return None
 
         # ==========================================
-        #  獲取當前數值
+        # 3. 交易邏輯
         # ==========================================
         
-        curr_mad = mad[-1]
-        curr_bs = bs_ratio[-1]
+        curr = df.iloc[-1]
         
-        curr_mad_th = mad_th[-1]
-        curr_bs_th = bs_th[-1]
+        # 取值
+        curr_mad    = curr[fid_mad]
+        curr_bs     = curr[fid_bs]
+        curr_mad_th = curr[fid_mad_th]
+        curr_bs_th  = curr[fid_bs_th]
 
-        # Debug Log
-        # print(f"[{self.name}] MAD:{curr_mad:.4f}(>{curr_mad_th:.4f}) | BS:{curr_bs:.2f}(>{curr_bs_th:.2f})")
-
-        # ==========================================
-        #  進出場邏輯
-        # ==========================================
-
-        # 進場: MAD > 70% AND BS_Ratio > 90%
-        # 意義：波動率放大，且買盤呈現壓倒性優勢
+        # 進場: 波動率放大 (MAD > 70%) 且 買壓極強 (BS > 90%)
         long_condition = (curr_mad > curr_mad_th) and (curr_bs > curr_bs_th)
         
-        # 出場: MAD < 70% AND BS_Ratio < 90%
-        # 注意：使用 AND，必須等到「波動率冷卻」且「買盤也退潮」才出場
-        # 如果買盤退了但波動率還很大（例如開始暴跌），這個邏輯可能不會出場（風險點）
+        # 出場: 波動率冷卻 (MAD < 70%) 且 買壓退潮 (BS < 90%)
+        # 注意：這裡維持 AND 邏輯，需兩者同時滿足才出場
         exit_condition = (curr_mad < curr_mad_th) and (curr_bs < curr_bs_th)
 
         if long_condition:
             return {
                 'action': 'LONG',
                 'quantity': 0.005,
-                'reason': f'HighVol & Extreme_Buy'
+                'reason': f'HighVol({curr_mad:.4f}) & Extreme_Buy({curr_bs:.2f})'
             }
             
         elif exit_condition:

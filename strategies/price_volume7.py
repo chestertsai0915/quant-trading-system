@@ -1,80 +1,78 @@
 from .base_strategy import BaseStrategy
-import indicators as ind
-import numpy as np
+import pandas as pd
 
 class PriceVolume7(BaseStrategy):
     def __init__(self):
         super().__init__(name="Strategy7_Mom_LowVolFilter")
         
-        # --- 策略參數 ---
-        self.window = 25       # 滾動視窗
-        self.th1 = 0.7         # Momentum 閾值 (強勢動能)
-        self.th2 = 0.1         # MAD 閾值 (排除極致死魚盤即可)
-        
-        # 基礎指標參數
+        # --- 參數映射 ---
         self.mom_period = 10   # Momentum 週期
         self.mom_smooth = 5    # Momentum 平滑週期
         self.mad_period = 10   # MAD 計算週期
+        
+        self.window = 25       # 滾動視窗 (計算分位數用)
+        self.th1 = 0.7         # Momentum 閾值 (70% 強勢)
+        self.th2 = 0.1         # MAD 閾值 (10% 低波過濾)
 
     def generate_signal(self):
-        # 1. 數據長度檢查
-        # Momentum(15) + Rolling(25) = 40
-        if len(self.kline_data) < 60:
+        # ==========================================
+        # 1. 定義需要的特徵 ID
+        # ==========================================
+        
+        # A. 基礎指標數值
+        # SmoothMomentum_V1 -> smooth_mom_{mom}_{smooth}_v1
+        fid_mom = f"smooth_mom_{self.mom_period}_{self.mom_smooth}_v1"
+        
+        # MAD_V1 -> mad_{col}_{win}_v1 (假設 column 預設為 close)
+        fid_mad = f"mad_close_{self.mad_period}_v1"
+        
+        # B. 動態閾值線 (Rolling Quantile)
+        # Momentum 閾值 (SmoothMomentum_Quantile_V1)
+        # ID: smooth_mom_quantile_{mom}_{smooth}_{roll}_{q}_v1
+        fid_mom_th = f"smooth_mom_quantile_{self.mom_period}_{self.mom_smooth}_{self.window}_{self.th1}_v1"
+        
+        # MAD 閾值 (MAD_Quantile_V1)
+        # ID: mad_quantile_{mad}_{roll}_{q}_v1
+        fid_mad_th = f"mad_quantile_{self.mad_period}_{self.window}_{self.th2}_v1"
+
+        # ==========================================
+        # 2. 向 Feature Store 請求數據
+        # ==========================================
+        df = self.load_features([fid_mom, fid_mad, fid_mom_th, fid_mad_th])
+        
+        # 安全檢查
+        if df.empty or len(df) < self.window + 20:
             return None
 
-        # 2. 準備數據
-        close = self.kline_data['close'].values
-        
-        # ==========================================
-        #  因子計算
-        # ==========================================
-
-        # A. 計算 Momentum (平滑版)
-        momentum = ind.AlphaLibrary.calc_smooth_momentum(
-            close, mom_period=self.mom_period, smooth_period=self.mom_smooth
-        )
-
-        # B. 計算 MAD (價格偏離度)
-        mad = ind.AlphaLibrary.calc_mad(close, window=self.mad_period)
-
-        # C. 計算滾動分位數閾值
-        # Momentum.rolling(25).quantile(0.7)
-        mom_th = ind.AlphaLibrary.calc_rolling_quantile(momentum, self.window, self.th1)
-        
-        # MAD.rolling(25).quantile(0.1)
-        mad_low_th = ind.AlphaLibrary.calc_rolling_quantile(mad, self.window, self.th2)
+        required_cols = [fid_mom, fid_mad, fid_mom_th, fid_mad_th]
+        if not all(col in df.columns for col in required_cols):
+            return None
 
         # ==========================================
-        #  獲取當前數值
+        # 3. 交易邏輯
         # ==========================================
         
-        curr_mom = momentum[-1]
-        curr_mad = mad[-1]
+        curr = df.iloc[-1]
         
-        curr_mom_th = mom_th[-1]
-        curr_mad_th = mad_low_th[-1]
+        # 取值
+        curr_mom    = curr[fid_mom]
+        curr_mad    = curr[fid_mad]
+        curr_mom_th = curr[fid_mom_th]
+        curr_mad_th = curr[fid_mad_th]
 
-        # Debug Log
-        # print(f"[{self.name}] MOM:{curr_mom:.2f}(>{curr_mom_th:.2f}) | MAD:{curr_mad:.4f}(>{curr_mad_th:.4f})")
-
-        # ==========================================
-        #  進出場邏輯
-        # ==========================================
-
-        # 進場: Momentum > 70% AND MAD > 10%
-        # 意義：動能強，且波動率只要不是在最低 10% 都可以進場
+        # 進場: 動能強 (Mom > 70%) 且 波動率正常 (MAD > 10%)
+        # 邏輯：只要市場不是極致死魚盤 (MAD < 10%)，且動能出現，就追進去
         long_condition = (curr_mom > curr_mom_th) and (curr_mad > curr_mad_th)
         
-        # 出場: Momentum < 70% AND MAD < 10%
-        # 意義：必須等到動能轉弱，且市場進入死魚盤狀態 (MAD < 10%) 才平倉
-        # 這是一個非常寬鬆的出場條件，可能會抱過很多回調
+        # 出場: 動能轉弱 (Mom < 70%) 且 市場變死魚 (MAD < 10%)
+        # 邏輯：必須等到動能消失且波動率也躺平了才出場 (非常寬鬆的出場，容易抱大波段)
         exit_condition = (curr_mom < curr_mom_th) and (curr_mad < curr_mad_th)
 
         if long_condition:
             return {
                 'action': 'LONG',
                 'quantity': 0.005,
-                'reason': f'Mom_Strong & Not_Dead_Fish'
+                'reason': f'Mom_Strong({curr_mom:.2f}) & Not_Dead_Fish({curr_mad:.4f})'
             }
             
         elif exit_condition:

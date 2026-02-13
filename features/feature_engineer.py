@@ -5,45 +5,6 @@ import indicators as ind
 class FeatureEngineer:
     def __init__(self):
         pass
-    def add_qqq_wavelet_feature(self, qqq_df, window=120, level=3):
-        """
-        專門為 QQQ 日線數據計算小波特徵
-        input: qqq_df (日線資料)
-        output: qqq_df (新增了 'QQQ_Wavelet_A' 欄位)
-        """
-        if qqq_df.empty or len(qqq_df) < window:
-            return qqq_df
-
-        # 為了效能，我們不需要對整個歷史重算幾千次小波
-        # 但為了 Stateless，我們每次進來還是得算一下最新的
-        # 這裡有兩種做法：
-        # 1. (簡單版) 用 rolling apply (慢，但程式碼乾淨)
-        # 2. (優化版) 只算最後一筆 (快，適合實盤)
-        
-        # 這裡示範「全量計算」的寫法 (適合 Backtest & Live)，
-        # 如果實盤覺得慢，可以改成只算 tail
-        
-        # 定義一個內部函數來處理單一視窗
-        def calc_wavelet(series):
-            try:
-                # 呼叫您的 AlphaLibrary
-                feats = ind.AlphaLibrary.calc_wavelet_features(
-                    series, wavelet='db4', level=level
-                )
-                return feats.get('A_mean', 0)
-            except Exception:
-                return 0
-
-        # 使用 Pandas Rolling Apply
-        # 注意：這步運算量較大，如果 qqq_df 有幾千筆，建議只取最後 500 筆來算
-        calc_df = qqq_df.copy()
-        
-        # 創造特徵欄位
-        # raw=True 傳入 numpy array 加速
-        calc_df['QQQ_Wavelet'] = calc_df['close'].rolling(window=window).apply(calc_wavelet, raw=True)
-        
-        return calc_df
-
 
     def attach_low_freq_feature(self, high_freq_df, low_freq_df, feature_cols, rename_map=None, time_col='open_time'):
         """

@@ -1,71 +1,70 @@
 from .base_strategy import BaseStrategy
-import indicators as ind  # 引用根目錄的 indicators.py
-import numpy as np
+import pandas as pd
 
 class PriceVolume2(BaseStrategy):
     def __init__(self):
         super().__init__(name="Price_Volume2")
         
-        # --- 參數區 (方便未來調整) ---
-        self.atr_window = 16         # 因子參數
-        self.obv_window = 20         # 因子參數
+        # --- 參數區 (對應 Feature ID) ---
+        self.atr_win = 16        # ATR 窗口
+        self.obv_win = 20        # OBV 窗口
         
-        self.signal_obv_ma = 5       # 訊號參數 (window1)
-        self.signal_atr_ma = 30      # 訊號參數 (window2)
+        self.obv_ma_win = 5      # OBV 的 MA (訊號線)
+        self.atr_ma_win = 30     # ATR 的 MA (訊號線)
 
     def generate_signal(self):
-        # 1. 數據長度檢查 (因為要算多次 MA，建議留長一點 buffer)
-        if len(self.kline_data) < 60:
+        # ==========================================
+        # 1. 定義需要的特徵 ID
+        # ==========================================
+        
+        # A. 基礎指標 (原本已有的定義)
+        fid_atr = f"custom_atr_{self.atr_win}_v1"
+        fid_obv = f"smooth_obv_{self.obv_win}_v1"
+        
+        # B. 訊號線 (剛剛新增的複合特徵)
+        fid_atr_ma = f"custom_atr_ma_{self.atr_win}_{self.atr_ma_win}_v1"
+        fid_obv_ma = f"smooth_obv_ma_{self.obv_win}_{self.obv_ma_win}_v1"
+
+        # ==========================================
+        # 2. 向 Feature Store 請求數據
+        # ==========================================
+        df = self.load_features([fid_atr, fid_obv, fid_atr_ma, fid_obv_ma])
+        
+        # 安全檢查 (MA 需要較長的數據)
+        min_len = max(self.atr_ma_win, self.obv_ma_win) + 20
+        if df.empty or len(df) < min_len:
             return None
 
-        # 2. 準備 Raw Data (轉成 numpy array)
-        close = self.kline_data['close'].values
-        high = self.kline_data['high'].values
-        low = self.kline_data['low'].values
-        volume = self.kline_data['volume'].values
+        # 檢查欄位是否存在
+        required_cols = [fid_atr, fid_obv, fid_atr_ma, fid_obv_ma]
+        if not all(col in df.columns for col in required_cols):
+            return None
 
         # ==========================================
-        #  呼叫共用因子庫 (核心改變)
-        # ==========================================
-        
-        # 呼叫自定義 ATR
-        my_atr = ind.AlphaLibrary.calc_custom_atr(high, low, close, self.atr_window)
-        
-        # 呼叫自定義 OBV
-        my_obv = ind.AlphaLibrary.calc_smooth_obv(close, volume, self.obv_window)
-
-        # ==========================================
-        #  計算進出場訊號線
+        # 3. 交易邏輯
         # ==========================================
         
-        # 計算訊號判斷用的 MA (OBV 的 5日均線, ATR 的 30日均線)
-        obv_ma_line = ind.AlphaLibrary.calc_sma(my_obv, self.signal_obv_ma)
-        atr_ma_line = ind.AlphaLibrary.calc_sma(my_atr, self.signal_atr_ma)
-
-        # 取得「最新一根 (剛收盤)」的數值
-        curr_obv = my_obv[-1]
-        curr_obv_ma = obv_ma_line[-1]
+        curr = df.iloc[-1]
         
-        curr_atr = my_atr[-1]
-        curr_atr_ma = atr_ma_line[-1]
+        # 數值提取
+        curr_atr    = curr[fid_atr]
+        curr_atr_ma = curr[fid_atr_ma]
+        
+        curr_obv    = curr[fid_obv]
+        curr_obv_ma = curr[fid_obv_ma]
 
-        # Log (方便 Debug)
-        # print(f"[{self.name}] OBV:{curr_obv:.2f} vs MA:{curr_obv_ma:.2f} | ATR:{curr_atr:.4f} vs MA:{curr_atr_ma:.4f}")
-
-        # ==========================================
-        #  決策邏輯 (Logic)
-        # ==========================================
-
-        # 進場條件: (OBV > OBV_MA) & (ATR > ATR_MA)
+        # 決策邏輯 (Logic)
+        
+        # 進場: (OBV > OBV_MA) & (ATR > ATR_MA)
         long_condition = (curr_obv > curr_obv_ma) and (curr_atr > curr_atr_ma)
         
-        # 出場條件: (OBV < OBV_MA) | (ATR < ATR_MA)
+        # 出場: (OBV < OBV_MA) | (ATR < ATR_MA)
         exit_condition = (curr_obv < curr_obv_ma) or (curr_atr < curr_atr_ma)
 
         if long_condition:
             return {
                 'action': 'LONG',
-                'quantity': 0.005,  # Phase 3 會改成動態計算
+                'quantity': 0.005,
                 'reason': f'Entry: OBV({curr_obv:.1f})>MA & ATR>MA'
             }
             

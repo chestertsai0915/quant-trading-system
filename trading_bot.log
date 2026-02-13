@@ -2021,3 +2021,1372 @@ AttributeError: 'DatabaseHandler' object has no attribute 'save_market_data'
 2026-02-12 22:03:25,409 [INFO] [SNAPSHOT] 交易所總持倉: 0 BTC | 現價: 67995.7
 2026-02-12 22:03:25,410 [INFO] 本週期結束，等待下一次收盤...
 2026-02-12 22:03:34,027 [WARNING] 停止運行
+2026-02-13 21:46:35,895 [INFO] 設定檔載入成功: config.json
+2026-02-13 21:46:36,589 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-13 21:46:36,593 [INFO] [BACKFILL] 上次收盤: 2026-02-12 14:00:00 | 現在時間: 2026-02-13 13:46:36.593000 | 缺少 K 線: 23 根
+2026-02-13 21:46:36,593 [INFO] [BACKFILL] 開始回補 25 根 K 線...
+2026-02-13 21:46:37,079 [INFO] [BACKFILL] 成功寫入 25 筆數據！斷層修復完成。
+2026-02-13 21:46:37,080 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-13 21:46:37,080 [INFO]  外部數據背景更新啟動
+2026-02-13 21:46:37,081 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-13 21:46:37,082 [INFO] 策略已掛載: PriceVolume1
+2026-02-13 21:46:37,083 [INFO] 策略已掛載: PriceVolume2
+2026-02-13 21:46:37,083 [INFO] 策略已掛載: PriceVolume3
+2026-02-13 21:46:37,083 [INFO] 策略已掛載: PriceVolume4
+2026-02-13 21:46:37,083 [INFO] 策略已掛載: PriceVolume5
+2026-02-13 21:46:37,084 [INFO] 策略已掛載: PriceVolume6
+2026-02-13 21:46:37,084 [INFO] 策略已掛載: PriceVolume7
+2026-02-13 21:46:37,084 [INFO] 策略已掛載: PriceVolume8
+2026-02-13 21:46:37,085 [INFO] 策略已掛載: PriceVolume9
+2026-02-13 21:46:37,085 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-13 21:46:37,085 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-13 21:46:37,085 [INFO] 策略已掛載: PriceVolume10
+2026-02-13 21:46:37,086 [INFO] 策略已掛載: QQQ_price
+2026-02-13 21:46:37,086 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-13 21:46:37,086 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-13 21:46:38,681 [INFO] 監控 1h K 線...
+2026-02-13 21:46:38,743 [INFO] [ETL] 處理新 K 線: 2026-02-13 12:00:00
+2026-02-13 21:46:38,761 [ERROR] 特徵計算失敗 mad_close_10_v1: 10
+2026-02-13 21:46:38,763 [ERROR] 特徵計算失敗 bs_ratio_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 21:46:38,763 [WARNING] [FeatureStore] 無法解析特徵 ID: mad_quantile_10_25_0.8_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:38,764 [WARNING] [FeatureStore] 無法解析特徵 ID: bs_quantile_25_0.9_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,108 [ERROR] 特徵計算失敗 is_us_trade_time_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 21:46:42,110 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 21:46:42,112 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 21:46:42,114 [ERROR] 特徵計算失敗 custom_atr_ma_16_30_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 21:46:42,115 [ERROR] 特徵計算失敗 smooth_obv_ma_20_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 21:46:42,116 [ERROR] 特徵計算失敗 mad_close_10_v1: 10
+2026-02-13 21:46:42,118 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 21:46:42,118 [WARNING] [FeatureStore] 無法解析特徵 ID: mad_quantile_10_90_0.9_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,119 [WARNING] [FeatureStore] 無法解析特徵 ID: smooth_obv_quantile_20_90_0.3_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,121 [ERROR] 特徵計算失敗 vroc_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 21:46:42,123 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 21:46:42,123 [WARNING] [FeatureStore] 無法解析特徵 ID: smooth_obv_quantile_20_250_0.8_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,124 [WARNING] [FeatureStore] 無法解析特徵 ID: vroc_quantile_10_250_0.8_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,126 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 21:46:42,126 [WARNING] [FeatureStore] 無法解析特徵 ID: smooth_mom_10_5_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,127 [WARNING] [FeatureStore] 無法解析特徵 ID: custom_atr_quantile_16_25_0.9_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,128 [WARNING] [FeatureStore] 無法解析特徵 ID: smooth_mom_quantile_10_5_25_0.7_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,130 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 21:46:42,132 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 21:46:42,133 [WARNING] [FeatureStore] 無法解析特徵 ID: custom_atr_quantile_16_30_0.9_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,133 [WARNING] [FeatureStore] 無法解析特徵 ID: smooth_obv_quantile_20_30_0.9_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,134 [WARNING] [FeatureStore] 無法解析特徵 ID: smooth_mom_10_5_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,135 [ERROR] 特徵計算失敗 mad_close_10_v1: 10
+2026-02-13 21:46:42,135 [WARNING] [FeatureStore] 無法解析特徵 ID: smooth_mom_quantile_10_5_25_0.7_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,135 [WARNING] [FeatureStore] 無法解析特徵 ID: mad_quantile_10_25_0.1_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,136 [ERROR] 特徵計算失敗 mad_close_10_v1: 10
+2026-02-13 21:46:42,138 [ERROR] 特徵計算失敗 bs_ratio_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 21:46:42,138 [WARNING] [FeatureStore] 無法解析特徵 ID: mad_quantile_10_30_0.7_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,138 [WARNING] [FeatureStore] 無法解析特徵 ID: bs_quantile_30_0.9_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,139 [WARNING] [FeatureStore] 無法解析特徵 ID: smooth_mom_10_5_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,141 [ERROR] 特徵計算失敗 vroc_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 21:46:42,141 [WARNING] [FeatureStore] 無法解析特徵 ID: smooth_mom_quantile_10_5_90_0.8_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,141 [WARNING] [FeatureStore] 無法解析特徵 ID: vroc_quantile_10_90_0.9_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,143 [WARNING] [FeatureStore] 無法解析特徵 ID: google_trends_raw_google_trends_BTC_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,143 [WARNING] [FeatureStore] 無法解析特徵 ID: google_trends_raw_google_trends_crypto_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,144 [WARNING] [FeatureStore] 無法解析特徵 ID: zscore_close_100_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,145 [WARNING] [FeatureStore] 無法解析特徵 ID: zscore_quantile_100_1000_0.7_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,147 [ERROR] 特徵計算失敗 fear_greed_raw_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 21:46:42,148 [WARNING] [FeatureStore] 無法解析特徵 ID: macro_raw_yield_10y_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,154 [WARNING] [FeatureStore] 無法解析特徵 ID: vol_sma_diff_15_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,155 [WARNING] [FeatureStore] 無法解析特徵 ID: vol_sma_diff_quantile_15_60_0.8_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,155 [WARNING] [FeatureStore] 無法解析特徵 ID: vol_sma_diff_quantile_15_100_0.2_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,166 [ERROR] 特徵計算失敗 is_us_trade_time_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 21:46:42,167 [WARNING] [FeatureStore] 無法解析特徵 ID: wavelet_us_stock_qqq_120_A_mean_v1 (請檢查拼寫或定義)
+2026-02-13 21:46:42,170 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 67178.6
+2026-02-13 21:46:42,170 [INFO] 本週期結束，等待下一次收盤...
+2026-02-13 21:46:45,525 [WARNING] 停止運行
+2026-02-13 22:17:55,003 [INFO] 設定檔載入成功: config.json
+2026-02-13 22:17:55,667 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-13 22:17:55,673 [INFO] [BACKFILL] 上次收盤: 2026-02-13 13:00:00 | 現在時間: 2026-02-13 14:17:55.673000 | 缺少 K 線: 1 根
+2026-02-13 22:17:55,673 [INFO] [BACKFILL] 開始回補 3 根 K 線...
+2026-02-13 22:17:56,080 [INFO] [BACKFILL] 成功寫入 3 筆數據！斷層修復完成。
+2026-02-13 22:17:56,081 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-13 22:17:56,081 [INFO]  外部數據背景更新啟動
+2026-02-13 22:17:56,082 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-13 22:17:56,083 [INFO] 策略已掛載: PriceVolume1
+2026-02-13 22:17:56,084 [INFO] 策略已掛載: PriceVolume2
+2026-02-13 22:17:56,084 [INFO] 策略已掛載: PriceVolume3
+2026-02-13 22:17:56,084 [INFO] 策略已掛載: PriceVolume4
+2026-02-13 22:17:56,085 [INFO] 策略已掛載: PriceVolume5
+2026-02-13 22:17:56,085 [INFO] 策略已掛載: PriceVolume6
+2026-02-13 22:17:56,086 [INFO] 策略已掛載: PriceVolume7
+2026-02-13 22:17:56,086 [INFO] 策略已掛載: PriceVolume8
+2026-02-13 22:17:56,086 [INFO] 策略已掛載: PriceVolume9
+2026-02-13 22:17:56,086 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-13 22:17:56,088 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-13 22:17:56,088 [INFO] 策略已掛載: PriceVolume10
+2026-02-13 22:17:56,089 [INFO] 策略已掛載: QQQ_price
+2026-02-13 22:17:56,089 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-13 22:17:56,089 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-13 22:17:58,153 [INFO] 監控 1h K 線...
+2026-02-13 22:17:58,211 [INFO] [ETL] 處理新 K 線: 2026-02-13 13:00:00
+2026-02-13 22:17:58,232 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:58,233 [ERROR] 特徵計算失敗 bs_ratio_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:58,237 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:58,240 [ERROR] 特徵計算失敗 bs_quantile_25_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,735 [ERROR] 特徵計算失敗 is_us_trade_time_v1: 'numpy.ndarray' object has no attribute 'empty'
+2026-02-13 22:17:59,737 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,740 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,742 [ERROR] 特徵計算失敗 custom_atr_ma_16_30_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,744 [ERROR] 特徵計算失敗 smooth_obv_ma_20_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,745 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,747 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,749 [ERROR] 特徵計算失敗 mad_quantile_10_90_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,751 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_90_0.3_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,754 [ERROR] 特徵計算失敗 vroc_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,756 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,758 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_250_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,761 [ERROR] 特徵計算失敗 vroc_quantile_10_250_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,763 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,764 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,767 [ERROR] 特徵計算失敗 custom_atr_quantile_16_25_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,769 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,771 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,772 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,774 [ERROR] 特徵計算失敗 custom_atr_quantile_16_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,776 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,778 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,780 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,784 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,786 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.1_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,788 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,789 [ERROR] 特徵計算失敗 bs_ratio_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,791 [ERROR] 特徵計算失敗 mad_quantile_10_30_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,793 [ERROR] 特徵計算失敗 bs_quantile_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,795 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,796 [ERROR] 特徵計算失敗 vroc_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,798 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_90_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,800 [ERROR] 特徵計算失敗 vroc_quantile_10_90_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,802 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_BTC_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:17:59,805 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_crypto_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:17:59,807 [ERROR] 特徵計算失敗 zscore_close_100_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,811 [ERROR] 特徵計算失敗 zscore_quantile_100_1000_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,815 [ERROR] 特徵計算失敗 fear_greed_raw_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:17:59,818 [ERROR] 特徵計算失敗 macro_raw_yield_10y_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:17:59,828 [ERROR] 特徵計算失敗 vol_sma_diff_15_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,830 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_60_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,833 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_100_0.2_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:17:59,922 [ERROR] 特徵計算失敗 is_us_trade_time_v1: 'numpy.ndarray' object has no attribute 'empty'
+2026-02-13 22:17:59,940 [ERROR] 特徵計算失敗 wavelet_us_stock_qqq_120_A_mean_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:17:59,952 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 67272.5
+2026-02-13 22:17:59,952 [INFO] 本週期結束，等待下一次收盤...
+2026-02-13 22:21:20,989 [WARNING] 停止運行
+2026-02-13 22:21:22,894 [INFO] 設定檔載入成功: config.json
+2026-02-13 22:21:23,527 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-13 22:21:23,531 [INFO] [BACKFILL] 上次收盤: 2026-02-13 14:00:00 | 現在時間: 2026-02-13 14:21:23.531000 | 缺少 K 線: 0 根
+2026-02-13 22:21:23,531 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-13 22:21:23,970 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-13 22:21:23,972 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-13 22:21:23,972 [INFO]  外部數據背景更新啟動
+2026-02-13 22:21:23,972 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-13 22:21:23,975 [INFO] 策略已掛載: PriceVolume1
+2026-02-13 22:21:23,975 [INFO] 策略已掛載: PriceVolume2
+2026-02-13 22:21:23,976 [INFO] 策略已掛載: PriceVolume3
+2026-02-13 22:21:23,976 [INFO] 策略已掛載: PriceVolume4
+2026-02-13 22:21:23,977 [INFO] 策略已掛載: PriceVolume5
+2026-02-13 22:21:23,977 [INFO] 策略已掛載: PriceVolume6
+2026-02-13 22:21:23,977 [INFO] 策略已掛載: PriceVolume7
+2026-02-13 22:21:23,977 [INFO] 策略已掛載: PriceVolume8
+2026-02-13 22:21:23,978 [INFO] 策略已掛載: PriceVolume9
+2026-02-13 22:21:23,978 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-13 22:21:23,978 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-13 22:21:23,979 [INFO] 策略已掛載: PriceVolume10
+2026-02-13 22:21:23,979 [INFO] 策略已掛載: QQQ_price
+2026-02-13 22:21:23,979 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-13 22:21:23,979 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-13 22:21:26,322 [INFO] 監控 1h K 線...
+2026-02-13 22:21:26,389 [INFO] [ETL] 處理新 K 線: 2026-02-13 13:00:00
+2026-02-13 22:21:26,405 [ERROR] 特徵計算失敗 mad_close_10_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,408 [ERROR] 特徵計算失敗 bs_ratio_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,411 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.8_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,413 [ERROR] 特徵計算失敗 bs_quantile_25_0.9_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,549 [ERROR] 特徵計算失敗 is_us_trade_time_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,551 [ERROR] 特徵計算失敗 custom_atr_16_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,553 [ERROR] 特徵計算失敗 smooth_obv_20_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,554 [ERROR] 特徵計算失敗 custom_atr_ma_16_30_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,556 [ERROR] 特徵計算失敗 smooth_obv_ma_20_5_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,558 [ERROR] 特徵計算失敗 mad_close_10_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,559 [ERROR] 特徵計算失敗 smooth_obv_20_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,562 [ERROR] 特徵計算失敗 mad_quantile_10_90_0.9_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,564 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_90_0.3_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,567 [ERROR] 特徵計算失敗 vroc_10_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,568 [ERROR] 特徵計算失敗 smooth_obv_20_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,570 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_250_0.8_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,572 [ERROR] 特徵計算失敗 vroc_quantile_10_250_0.8_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,573 [ERROR] 特徵計算失敗 custom_atr_16_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,575 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,576 [ERROR] 特徵計算失敗 custom_atr_quantile_16_25_0.9_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,579 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,582 [ERROR] 特徵計算失敗 custom_atr_16_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,584 [ERROR] 特徵計算失敗 smooth_obv_20_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,586 [ERROR] 特徵計算失敗 custom_atr_quantile_16_30_0.9_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,587 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_30_0.9_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,591 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,592 [ERROR] 特徵計算失敗 mad_close_10_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,594 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,596 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.1_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,598 [ERROR] 特徵計算失敗 mad_close_10_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,599 [ERROR] 特徵計算失敗 bs_ratio_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,601 [ERROR] 特徵計算失敗 mad_quantile_10_30_0.7_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,603 [ERROR] 特徵計算失敗 bs_quantile_30_0.9_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,605 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,607 [ERROR] 特徵計算失敗 vroc_10_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,609 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_90_0.8_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,612 [ERROR] 特徵計算失敗 vroc_quantile_10_90_0.9_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,614 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_BTC_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,616 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_crypto_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,619 [ERROR] 特徵計算失敗 zscore_close_100_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,621 [ERROR] 特徵計算失敗 zscore_quantile_100_1000_0.7_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,624 [ERROR] 特徵計算失敗 fear_greed_raw_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,627 [ERROR] 特徵計算失敗 macro_raw_yield_10y_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,633 [ERROR] 特徵計算失敗 vol_sma_diff_15_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,635 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_60_0.8_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,637 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_100_0.2_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,723 [ERROR] 特徵計算失敗 is_us_trade_time_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,735 [ERROR] 特徵計算失敗 wavelet_us_stock_qqq_120_A_mean_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:21:26,737 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 67291.8
+2026-02-13 22:21:26,738 [INFO] 本週期結束，等待下一次收盤...
+2026-02-13 22:21:33,010 [WARNING] 停止運行
+2026-02-13 22:24:34,254 [INFO] 設定檔載入成功: config.json
+2026-02-13 22:24:34,975 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-13 22:24:34,979 [INFO] [BACKFILL] 上次收盤: 2026-02-13 14:00:00 | 現在時間: 2026-02-13 14:24:34.979000 | 缺少 K 線: 0 根
+2026-02-13 22:24:34,979 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-13 22:24:35,407 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-13 22:24:35,408 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-13 22:24:35,408 [INFO]  外部數據背景更新啟動
+2026-02-13 22:24:35,409 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-13 22:24:35,410 [INFO] 策略已掛載: PriceVolume1
+2026-02-13 22:24:35,410 [INFO] 策略已掛載: PriceVolume2
+2026-02-13 22:24:35,412 [INFO] 策略已掛載: PriceVolume3
+2026-02-13 22:24:35,412 [INFO] 策略已掛載: PriceVolume4
+2026-02-13 22:24:35,412 [INFO] 策略已掛載: PriceVolume5
+2026-02-13 22:24:35,413 [INFO] 策略已掛載: PriceVolume6
+2026-02-13 22:24:35,413 [INFO] 策略已掛載: PriceVolume7
+2026-02-13 22:24:35,414 [INFO] 策略已掛載: PriceVolume8
+2026-02-13 22:24:35,414 [INFO] 策略已掛載: PriceVolume9
+2026-02-13 22:24:35,414 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-13 22:24:35,414 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-13 22:24:35,415 [INFO] 策略已掛載: PriceVolume10
+2026-02-13 22:24:35,415 [INFO] 策略已掛載: QQQ_price
+2026-02-13 22:24:35,415 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-13 22:24:35,416 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-13 22:24:36,884 [INFO] 監控 1h K 線...
+2026-02-13 22:24:36,949 [INFO] [ETL] 處理新 K 線: 2026-02-13 13:00:00
+2026-02-13 22:24:36,965 [ERROR] 特徵計算失敗 mad_close_10_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:36,967 [ERROR] 特徵計算失敗 bs_ratio_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:36,971 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.8_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:36,974 [ERROR] 特徵計算失敗 bs_quantile_25_0.9_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,108 [ERROR] 特徵計算失敗 is_us_trade_time_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,110 [ERROR] 特徵計算失敗 custom_atr_16_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,112 [ERROR] 特徵計算失敗 smooth_obv_20_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,113 [ERROR] 特徵計算失敗 custom_atr_ma_16_30_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,115 [ERROR] 特徵計算失敗 smooth_obv_ma_20_5_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,117 [ERROR] 特徵計算失敗 mad_close_10_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,119 [ERROR] 特徵計算失敗 smooth_obv_20_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,123 [ERROR] 特徵計算失敗 mad_quantile_10_90_0.9_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,126 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_90_0.3_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,128 [ERROR] 特徵計算失敗 vroc_10_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,130 [ERROR] 特徵計算失敗 smooth_obv_20_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,133 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_250_0.8_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,136 [ERROR] 特徵計算失敗 vroc_quantile_10_250_0.8_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,138 [ERROR] 特徵計算失敗 custom_atr_16_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,141 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,143 [ERROR] 特徵計算失敗 custom_atr_quantile_16_25_0.9_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,145 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,147 [ERROR] 特徵計算失敗 custom_atr_16_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,149 [ERROR] 特徵計算失敗 smooth_obv_20_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,151 [ERROR] 特徵計算失敗 custom_atr_quantile_16_30_0.9_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,155 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_30_0.9_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,157 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,158 [ERROR] 特徵計算失敗 mad_close_10_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,161 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,163 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.1_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,165 [ERROR] 特徵計算失敗 mad_close_10_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,167 [ERROR] 特徵計算失敗 bs_ratio_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,170 [ERROR] 特徵計算失敗 mad_quantile_10_30_0.7_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,173 [ERROR] 特徵計算失敗 bs_quantile_30_0.9_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,175 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,177 [ERROR] 特徵計算失敗 vroc_10_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,179 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_90_0.8_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,181 [ERROR] 特徵計算失敗 vroc_quantile_10_90_0.9_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,185 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_BTC_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,187 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_crypto_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,189 [ERROR] 特徵計算失敗 zscore_close_100_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,191 [ERROR] 特徵計算失敗 zscore_quantile_100_1000_0.7_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,195 [ERROR] 特徵計算失敗 fear_greed_raw_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,197 [ERROR] 特徵計算失敗 macro_raw_yield_10y_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,204 [ERROR] 特徵計算失敗 vol_sma_diff_15_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,205 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_60_0.8_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,208 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_100_0.2_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,294 [ERROR] 特徵計算失敗 is_us_trade_time_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,307 [ERROR] 特徵計算失敗 wavelet_us_stock_qqq_120_A_mean_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:24:37,309 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 67215.9
+2026-02-13 22:24:37,309 [INFO] 本週期結束，等待下一次收盤...
+2026-02-13 22:34:29,152 [WARNING] 停止運行
+2026-02-13 22:34:31,502 [INFO] 設定檔載入成功: config.json
+2026-02-13 22:34:31,924 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-13 22:34:31,929 [INFO] [BACKFILL] 上次收盤: 2026-02-13 14:00:00 | 現在時間: 2026-02-13 14:34:31.929000 | 缺少 K 線: 0 根
+2026-02-13 22:34:31,929 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-13 22:34:32,338 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-13 22:34:32,339 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-13 22:34:32,339 [INFO]  外部數據背景更新啟動
+2026-02-13 22:34:32,340 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-13 22:34:32,342 [INFO] 策略已掛載: PriceVolume1
+2026-02-13 22:34:32,342 [INFO] 策略已掛載: PriceVolume2
+2026-02-13 22:34:32,343 [INFO] 策略已掛載: PriceVolume3
+2026-02-13 22:34:32,343 [INFO] 策略已掛載: PriceVolume4
+2026-02-13 22:34:32,343 [INFO] 策略已掛載: PriceVolume5
+2026-02-13 22:34:32,343 [INFO] 策略已掛載: PriceVolume6
+2026-02-13 22:34:32,344 [INFO] 策略已掛載: PriceVolume7
+2026-02-13 22:34:32,344 [INFO] 策略已掛載: PriceVolume8
+2026-02-13 22:34:32,344 [INFO] 策略已掛載: PriceVolume9
+2026-02-13 22:34:32,345 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-13 22:34:32,345 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-13 22:34:32,345 [INFO] 策略已掛載: PriceVolume10
+2026-02-13 22:34:32,345 [INFO] 策略已掛載: QQQ_price
+2026-02-13 22:34:32,346 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-13 22:34:32,346 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-13 22:34:34,105 [INFO] 監控 1h K 線...
+2026-02-13 22:34:34,158 [INFO] [ETL] 處理新 K 線: 2026-02-13 13:00:00
+2026-02-13 22:34:34,186 [ERROR] 特徵計算失敗 mad_close_10_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,194 [ERROR] 特徵計算失敗 bs_ratio_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,203 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.8_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,211 [ERROR] 特徵計算失敗 bs_quantile_25_0.9_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,361 [ERROR] 特徵計算失敗 is_us_trade_time_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,371 [ERROR] 特徵計算失敗 custom_atr_16_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,378 [ERROR] 特徵計算失敗 smooth_obv_20_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,384 [ERROR] 特徵計算失敗 custom_atr_ma_16_30_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,391 [ERROR] 特徵計算失敗 smooth_obv_ma_20_5_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,397 [ERROR] 特徵計算失敗 mad_close_10_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,404 [ERROR] 特徵計算失敗 smooth_obv_20_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,416 [ERROR] 特徵計算失敗 mad_quantile_10_90_0.9_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,424 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_90_0.3_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,432 [ERROR] 特徵計算失敗 vroc_10_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,437 [ERROR] 特徵計算失敗 smooth_obv_20_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,447 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_250_0.8_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,455 [ERROR] 特徵計算失敗 vroc_quantile_10_250_0.8_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,463 [ERROR] 特徵計算失敗 custom_atr_16_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,469 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,477 [ERROR] 特徵計算失敗 custom_atr_quantile_16_25_0.9_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,484 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,492 [ERROR] 特徵計算失敗 custom_atr_16_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,499 [ERROR] 特徵計算失敗 smooth_obv_20_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,507 [ERROR] 特徵計算失敗 custom_atr_quantile_16_30_0.9_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,515 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_30_0.9_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,522 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,528 [ERROR] 特徵計算失敗 mad_close_10_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,537 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,545 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.1_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,553 [ERROR] 特徵計算失敗 mad_close_10_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,559 [ERROR] 特徵計算失敗 bs_ratio_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,567 [ERROR] 特徵計算失敗 mad_quantile_10_30_0.7_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,575 [ERROR] 特徵計算失敗 bs_quantile_30_0.9_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,584 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,590 [ERROR] 特徵計算失敗 vroc_10_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,597 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_90_0.8_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,605 [ERROR] 特徵計算失敗 vroc_quantile_10_90_0.9_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,612 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_BTC_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,617 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_crypto_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,624 [ERROR] 特徵計算失敗 zscore_close_100_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,632 [ERROR] 特徵計算失敗 zscore_quantile_100_1000_0.7_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,637 [ERROR] 特徵計算失敗 fear_greed_raw_v1: 'FearGreedRaw_V1' object has no attribute 'metric'
+2026-02-13 22:34:34,639 [ERROR] 特徵計算失敗 macro_raw_yield_10y_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,651 [ERROR] 特徵計算失敗 vol_sma_diff_15_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,658 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_60_0.8_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,667 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_100_0.2_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,763 [ERROR] 特徵計算失敗 is_us_trade_time_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,775 [ERROR] 特徵計算失敗 wavelet_us_stock_qqq_120_A_mean_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:34:34,777 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 67548.7
+2026-02-13 22:34:34,777 [INFO] 本週期結束，等待下一次收盤...
+2026-02-13 22:34:38,590 [WARNING] 停止運行
+2026-02-13 22:42:14,366 [INFO] 設定檔載入成功: config.json
+2026-02-13 22:42:15,014 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-13 22:42:15,018 [INFO] [BACKFILL] 上次收盤: 2026-02-13 14:00:00 | 現在時間: 2026-02-13 14:42:15.018000 | 缺少 K 線: 0 根
+2026-02-13 22:42:15,018 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-13 22:42:15,396 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-13 22:42:15,397 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-13 22:42:15,397 [INFO]  外部數據背景更新啟動
+2026-02-13 22:42:15,397 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-13 22:42:15,399 [INFO] 策略已掛載: PriceVolume1
+2026-02-13 22:42:15,399 [INFO] 策略已掛載: PriceVolume2
+2026-02-13 22:42:15,399 [INFO] 策略已掛載: PriceVolume3
+2026-02-13 22:42:15,399 [INFO] 策略已掛載: PriceVolume4
+2026-02-13 22:42:15,401 [INFO] 策略已掛載: PriceVolume5
+2026-02-13 22:42:15,401 [INFO] 策略已掛載: PriceVolume6
+2026-02-13 22:42:15,401 [INFO] 策略已掛載: PriceVolume7
+2026-02-13 22:42:15,401 [INFO] 策略已掛載: PriceVolume8
+2026-02-13 22:42:15,401 [INFO] 策略已掛載: PriceVolume9
+2026-02-13 22:42:15,402 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-13 22:42:15,402 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-13 22:42:15,402 [INFO] 策略已掛載: PriceVolume10
+2026-02-13 22:42:15,402 [INFO] 策略已掛載: QQQ_price
+2026-02-13 22:42:15,402 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-13 22:42:15,403 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-13 22:42:18,608 [INFO] 監控 1h K 線...
+2026-02-13 22:42:18,669 [INFO] [ETL] 處理新 K 線: 2026-02-13 13:00:00
+2026-02-13 22:42:18,685 [ERROR] 特徵計算失敗 mad_close_10_v1: 'MAD_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,686 [ERROR] 特徵計算失敗 bs_ratio_v1: 'BSRatio_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,686 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.8_v1: 'MAD_Quantile_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,687 [ERROR] 特徵計算失敗 bs_quantile_25_0.9_v1: 'BSRatio_Quantile_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,740 [ERROR] 特徵計算失敗 is_us_trade_time_v1: 'IsUSTradeTime_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,741 [ERROR] 特徵計算失敗 custom_atr_16_v1: 'CustomATR_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,742 [ERROR] 特徵計算失敗 smooth_obv_20_v1: 'SmoothOBV_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,742 [ERROR] 特徵計算失敗 custom_atr_ma_16_30_v1: 'CustomATR_MA_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,743 [ERROR] 特徵計算失敗 smooth_obv_ma_20_5_v1: 'SmoothOBV_MA_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,744 [ERROR] 特徵計算失敗 mad_close_10_v1: 'MAD_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,744 [ERROR] 特徵計算失敗 smooth_obv_20_v1: 'SmoothOBV_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,745 [ERROR] 特徵計算失敗 mad_quantile_10_90_0.9_v1: 'MAD_Quantile_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,745 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_90_0.3_v1: 'SmoothOBV_Quantile_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,746 [ERROR] 特徵計算失敗 vroc_10_v1: 'VROC_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,747 [ERROR] 特徵計算失敗 smooth_obv_20_v1: 'SmoothOBV_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,747 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_250_0.8_v1: 'SmoothOBV_Quantile_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,749 [ERROR] 特徵計算失敗 vroc_quantile_10_250_0.8_v1: 'VROC_Quantile_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,750 [ERROR] 特徵計算失敗 custom_atr_16_v1: 'CustomATR_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,750 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: 'SmoothMomentum_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,751 [ERROR] 特徵計算失敗 custom_atr_quantile_16_25_0.9_v1: 'CustomATR_Quantile_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,751 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: 'SmoothMomentum_Quantile_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,752 [ERROR] 特徵計算失敗 custom_atr_16_v1: 'CustomATR_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,752 [ERROR] 特徵計算失敗 smooth_obv_20_v1: 'SmoothOBV_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,752 [ERROR] 特徵計算失敗 custom_atr_quantile_16_30_0.9_v1: 'CustomATR_Quantile_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,753 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_30_0.9_v1: 'SmoothOBV_Quantile_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,754 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: 'SmoothMomentum_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,754 [ERROR] 特徵計算失敗 mad_close_10_v1: 'MAD_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,754 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: 'SmoothMomentum_Quantile_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,754 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.1_v1: 'MAD_Quantile_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,755 [ERROR] 特徵計算失敗 mad_close_10_v1: 'MAD_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,756 [ERROR] 特徵計算失敗 bs_ratio_v1: 'BSRatio_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,756 [ERROR] 特徵計算失敗 mad_quantile_10_30_0.7_v1: 'MAD_Quantile_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,756 [ERROR] 特徵計算失敗 bs_quantile_30_0.9_v1: 'BSRatio_Quantile_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,757 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: 'SmoothMomentum_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,758 [ERROR] 特徵計算失敗 vroc_10_v1: 'VROC_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,758 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_90_0.8_v1: 'SmoothMomentum_Quantile_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,758 [ERROR] 特徵計算失敗 vroc_quantile_10_90_0.9_v1: 'VROC_Quantile_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,759 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_BTC_v1: 'GoogleTrendsRaw_V1' object has no attribute '_inspect_data'
+2026-02-13 22:42:18,759 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_crypto_v1: 'GoogleTrendsRaw_V1' object has no attribute '_inspect_data'
+2026-02-13 22:42:18,760 [ERROR] 特徵計算失敗 zscore_close_100_v1: 'ZScore_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,760 [ERROR] 特徵計算失敗 zscore_quantile_100_1000_0.7_v1: 'ZScore_Quantile_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,762 [ERROR] 特徵計算失敗 fear_greed_raw_v1: 'FearGreedRaw_V1' object has no attribute '_inspect_data'
+2026-02-13 22:42:18,766 [ERROR] 特徵計算失敗 macro_raw_yield_10y_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:42:18,772 [ERROR] 特徵計算失敗 vol_sma_diff_15_v1: 'VolumeSMA_Diff_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,772 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_60_0.8_v1: 'VolumeSMA_Diff_Quantile_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,773 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_100_0.2_v1: 'VolumeSMA_Diff_Quantile_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,773 [ERROR] 特徵計算失敗 is_us_trade_time_v1: 'IsUSTradeTime_V1' object has no attribute '_get_clean_kline'
+2026-02-13 22:42:18,786 [ERROR] 特徵計算失敗 wavelet_us_stock_qqq_120_A_mean_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:42:18,788 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 66882.2
+2026-02-13 22:42:18,788 [INFO] 本週期結束，等待下一次收盤...
+2026-02-13 22:45:51,331 [WARNING] 停止運行
+2026-02-13 22:45:53,874 [INFO] 設定檔載入成功: config.json
+2026-02-13 22:45:54,526 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-13 22:45:54,530 [INFO] [BACKFILL] 上次收盤: 2026-02-13 14:00:00 | 現在時間: 2026-02-13 14:45:54.530000 | 缺少 K 線: 0 根
+2026-02-13 22:45:54,530 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-13 22:45:55,065 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-13 22:45:55,067 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-13 22:45:55,067 [INFO]  外部數據背景更新啟動
+2026-02-13 22:45:55,067 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-13 22:45:55,069 [INFO] 策略已掛載: PriceVolume1
+2026-02-13 22:45:55,069 [INFO] 策略已掛載: PriceVolume2
+2026-02-13 22:45:55,069 [INFO] 策略已掛載: PriceVolume3
+2026-02-13 22:45:55,070 [INFO] 策略已掛載: PriceVolume4
+2026-02-13 22:45:55,070 [INFO] 策略已掛載: PriceVolume5
+2026-02-13 22:45:55,070 [INFO] 策略已掛載: PriceVolume6
+2026-02-13 22:45:55,071 [INFO] 策略已掛載: PriceVolume7
+2026-02-13 22:45:55,071 [INFO] 策略已掛載: PriceVolume8
+2026-02-13 22:45:55,072 [INFO] 策略已掛載: PriceVolume9
+2026-02-13 22:45:55,072 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-13 22:45:55,072 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-13 22:45:55,072 [INFO] 策略已掛載: PriceVolume10
+2026-02-13 22:45:55,072 [INFO] 策略已掛載: QQQ_price
+2026-02-13 22:45:55,074 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-13 22:45:55,074 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-13 22:45:56,542 [INFO] 監控 1h K 線...
+2026-02-13 22:45:56,598 [INFO] [ETL] 處理新 K 線: 2026-02-13 13:00:00
+2026-02-13 22:45:56,617 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,619 [ERROR] 特徵計算失敗 bs_ratio_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,623 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,626 [ERROR] 特徵計算失敗 bs_quantile_25_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,772 [ERROR] 特徵計算失敗 is_us_trade_time_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,774 [ERROR] 特徵計算失敗 custom_atr_16_v1: 'numpy.ndarray' object has no attribute 'values'
+2026-02-13 22:45:56,776 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,778 [ERROR] 特徵計算失敗 custom_atr_ma_16_30_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,780 [ERROR] 特徵計算失敗 smooth_obv_ma_20_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,784 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,786 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,789 [ERROR] 特徵計算失敗 mad_quantile_10_90_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,792 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_90_0.3_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,794 [ERROR] 特徵計算失敗 vroc_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,796 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,799 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_250_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,801 [ERROR] 特徵計算失敗 vroc_quantile_10_250_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,802 [ERROR] 特徵計算失敗 custom_atr_16_v1: 'numpy.ndarray' object has no attribute 'values'
+2026-02-13 22:45:56,805 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,808 [ERROR] 特徵計算失敗 custom_atr_quantile_16_25_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,810 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,813 [ERROR] 特徵計算失敗 custom_atr_16_v1: 'numpy.ndarray' object has no attribute 'values'
+2026-02-13 22:45:56,814 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,817 [ERROR] 特徵計算失敗 custom_atr_quantile_16_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,820 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,823 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,825 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,829 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,832 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.1_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,835 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,837 [ERROR] 特徵計算失敗 bs_ratio_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,840 [ERROR] 特徵計算失敗 mad_quantile_10_30_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,843 [ERROR] 特徵計算失敗 bs_quantile_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,846 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,849 [ERROR] 特徵計算失敗 vroc_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,851 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_90_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,854 [ERROR] 特徵計算失敗 vroc_quantile_10_90_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,857 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_BTC_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:45:56,859 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_crypto_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:45:56,862 [ERROR] 特徵計算失敗 zscore_close_100_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,865 [ERROR] 特徵計算失敗 zscore_quantile_100_1000_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,868 [ERROR] 特徵計算失敗 fear_greed_raw_v1: 'FearGreedRaw_V1' object has no attribute 'metric'
+2026-02-13 22:45:56,869 [ERROR] 特徵計算失敗 macro_raw_yield_10y_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:45:56,877 [ERROR] 特徵計算失敗 vol_sma_diff_15_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,880 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_60_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,883 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_100_0.2_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,972 [ERROR] 特徵計算失敗 is_us_trade_time_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:45:56,983 [ERROR] 特徵計算失敗 wavelet_us_stock_qqq_120_A_mean_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:45:56,985 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 67681.7
+2026-02-13 22:45:56,986 [INFO] 本週期結束，等待下一次收盤...
+2026-02-13 22:46:01,918 [WARNING] 停止運行
+2026-02-13 22:52:11,244 [INFO] 設定檔載入成功: config.json
+2026-02-13 22:52:11,942 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-13 22:52:11,946 [INFO] [BACKFILL] 上次收盤: 2026-02-13 14:00:00 | 現在時間: 2026-02-13 14:52:11.946000 | 缺少 K 線: 0 根
+2026-02-13 22:52:11,948 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-13 22:52:12,386 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-13 22:52:12,386 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-13 22:52:12,387 [INFO]  外部數據背景更新啟動
+2026-02-13 22:52:12,387 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-13 22:52:12,389 [INFO] 策略已掛載: PriceVolume1
+2026-02-13 22:52:12,389 [INFO] 策略已掛載: PriceVolume2
+2026-02-13 22:52:12,389 [INFO] 策略已掛載: PriceVolume3
+2026-02-13 22:52:12,390 [INFO] 策略已掛載: PriceVolume4
+2026-02-13 22:52:12,390 [INFO] 策略已掛載: PriceVolume5
+2026-02-13 22:52:12,390 [INFO] 策略已掛載: PriceVolume6
+2026-02-13 22:52:12,390 [INFO] 策略已掛載: PriceVolume7
+2026-02-13 22:52:12,391 [INFO] 策略已掛載: PriceVolume8
+2026-02-13 22:52:12,391 [INFO] 策略已掛載: PriceVolume9
+2026-02-13 22:52:12,392 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-13 22:52:12,392 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-13 22:52:12,393 [INFO] 策略已掛載: PriceVolume10
+2026-02-13 22:52:12,393 [INFO] 策略已掛載: QQQ_price
+2026-02-13 22:52:12,393 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-13 22:52:12,393 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-13 22:52:14,105 [INFO] 監控 1h K 線...
+2026-02-13 22:52:14,163 [INFO] [ETL] 處理新 K 線: 2026-02-13 13:00:00
+2026-02-13 22:52:14,186 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,189 [ERROR] 特徵計算失敗 bs_ratio_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,195 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,199 [ERROR] 特徵計算失敗 bs_quantile_25_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,358 [ERROR] 特徵計算失敗 is_us_trade_time_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,360 [ERROR] 特徵計算失敗 custom_atr_16_v1: 'numpy.ndarray' object has no attribute 'values'
+2026-02-13 22:52:14,362 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,364 [ERROR] 特徵計算失敗 custom_atr_ma_16_30_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,365 [ERROR] 特徵計算失敗 smooth_obv_ma_20_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,368 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,370 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,373 [ERROR] 特徵計算失敗 mad_quantile_10_90_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,376 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_90_0.3_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,379 [ERROR] 特徵計算失敗 vroc_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,380 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,384 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_250_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,386 [ERROR] 特徵計算失敗 vroc_quantile_10_250_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,387 [ERROR] 特徵計算失敗 custom_atr_16_v1: 'numpy.ndarray' object has no attribute 'values'
+2026-02-13 22:52:14,389 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,393 [ERROR] 特徵計算失敗 custom_atr_quantile_16_25_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,396 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,398 [ERROR] 特徵計算失敗 custom_atr_16_v1: 'numpy.ndarray' object has no attribute 'values'
+2026-02-13 22:52:14,400 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,403 [ERROR] 特徵計算失敗 custom_atr_quantile_16_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,406 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,408 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,409 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,412 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,415 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.1_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,417 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,419 [ERROR] 特徵計算失敗 bs_ratio_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,422 [ERROR] 特徵計算失敗 mad_quantile_10_30_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,425 [ERROR] 特徵計算失敗 bs_quantile_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,428 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,431 [ERROR] 特徵計算失敗 vroc_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,433 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_90_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,436 [ERROR] 特徵計算失敗 vroc_quantile_10_90_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,438 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_BTC_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:52:14,440 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_crypto_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:52:14,442 [ERROR] 特徵計算失敗 zscore_close_100_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,445 [ERROR] 特徵計算失敗 zscore_quantile_100_1000_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,448 [ERROR] 特徵計算失敗 fear_greed_raw_v1: 'FearGreedRaw_V1' object has no attribute 'metric'
+2026-02-13 22:52:14,450 [ERROR] 特徵計算失敗 macro_raw_yield_10y_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:52:14,457 [ERROR] 特徵計算失敗 vol_sma_diff_15_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,459 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_60_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,463 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_100_0.2_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,551 [ERROR] 特徵計算失敗 is_us_trade_time_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:52:14,563 [ERROR] 特徵計算失敗 wavelet_us_stock_qqq_120_A_mean_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:52:14,564 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 67866.0
+2026-02-13 22:52:14,564 [INFO] 本週期結束，等待下一次收盤...
+2026-02-13 22:52:19,315 [WARNING] 停止運行
+2026-02-13 22:54:41,211 [INFO] 設定檔載入成功: config.json
+2026-02-13 22:54:41,592 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-13 22:54:41,596 [INFO] [BACKFILL] 上次收盤: 2026-02-13 14:00:00 | 現在時間: 2026-02-13 14:54:41.596000 | 缺少 K 線: 0 根
+2026-02-13 22:54:41,597 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-13 22:54:41,954 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-13 22:54:41,955 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-13 22:54:41,956 [INFO]  外部數據背景更新啟動
+2026-02-13 22:54:41,956 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-13 22:54:41,958 [INFO] 策略已掛載: PriceVolume1
+2026-02-13 22:54:41,958 [INFO] 策略已掛載: PriceVolume2
+2026-02-13 22:54:41,959 [INFO] 策略已掛載: PriceVolume3
+2026-02-13 22:54:41,959 [INFO] 策略已掛載: PriceVolume4
+2026-02-13 22:54:41,960 [INFO] 策略已掛載: PriceVolume5
+2026-02-13 22:54:41,960 [INFO] 策略已掛載: PriceVolume6
+2026-02-13 22:54:41,960 [INFO] 策略已掛載: PriceVolume7
+2026-02-13 22:54:41,961 [INFO] 策略已掛載: PriceVolume8
+2026-02-13 22:54:41,961 [INFO] 策略已掛載: PriceVolume9
+2026-02-13 22:54:41,962 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-13 22:54:41,962 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-13 22:54:41,962 [INFO] 策略已掛載: PriceVolume10
+2026-02-13 22:54:41,963 [INFO] 策略已掛載: QQQ_price
+2026-02-13 22:54:41,963 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-13 22:54:41,963 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-13 22:54:43,472 [INFO] 監控 1h K 線...
+2026-02-13 22:54:43,532 [INFO] [ETL] 處理新 K 線: 2026-02-13 13:00:00
+2026-02-13 22:54:43,552 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,555 [ERROR] 特徵計算失敗 bs_ratio_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,558 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,561 [ERROR] 特徵計算失敗 bs_quantile_25_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,711 [ERROR] 特徵計算失敗 is_us_trade_time_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,714 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,716 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,718 [ERROR] 特徵計算失敗 custom_atr_ma_16_30_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,721 [ERROR] 特徵計算失敗 smooth_obv_ma_20_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,723 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,725 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,728 [ERROR] 特徵計算失敗 mad_quantile_10_90_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,730 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_90_0.3_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,733 [ERROR] 特徵計算失敗 vroc_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,735 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,738 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_250_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,741 [ERROR] 特徵計算失敗 vroc_quantile_10_250_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,744 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,747 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,750 [ERROR] 特徵計算失敗 custom_atr_quantile_16_25_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,753 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,754 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,757 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,759 [ERROR] 特徵計算失敗 custom_atr_quantile_16_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,762 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,764 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,766 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,769 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,772 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.1_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,774 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,777 [ERROR] 特徵計算失敗 bs_ratio_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,780 [ERROR] 特徵計算失敗 mad_quantile_10_30_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,783 [ERROR] 特徵計算失敗 bs_quantile_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,786 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,787 [ERROR] 特徵計算失敗 vroc_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,790 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_90_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,793 [ERROR] 特徵計算失敗 vroc_quantile_10_90_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,795 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_BTC_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:54:43,797 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_crypto_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:54:43,800 [ERROR] 特徵計算失敗 zscore_close_100_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,803 [ERROR] 特徵計算失敗 zscore_quantile_100_1000_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,806 [ERROR] 特徵計算失敗 fear_greed_raw_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:54:43,807 [ERROR] 特徵計算失敗 macro_raw_yield_10y_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:54:43,813 [ERROR] 特徵計算失敗 vol_sma_diff_15_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,815 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_60_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,818 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_100_0.2_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,907 [ERROR] 特徵計算失敗 is_us_trade_time_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:54:43,918 [ERROR] 特徵計算失敗 wavelet_us_stock_qqq_120_A_mean_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:54:43,920 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 67749.1
+2026-02-13 22:54:43,920 [INFO] 本週期結束，等待下一次收盤...
+2026-02-13 22:57:52,433 [WARNING] 停止運行
+2026-02-13 22:57:54,542 [INFO] 設定檔載入成功: config.json
+2026-02-13 22:57:55,227 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-13 22:57:55,232 [INFO] [BACKFILL] 上次收盤: 2026-02-13 14:00:00 | 現在時間: 2026-02-13 14:57:55.232000 | 缺少 K 線: 0 根
+2026-02-13 22:57:55,233 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-13 22:57:56,623 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-13 22:57:56,625 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-13 22:57:56,625 [INFO]  外部數據背景更新啟動
+2026-02-13 22:57:56,626 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-13 22:57:56,627 [INFO] 策略已掛載: PriceVolume1
+2026-02-13 22:57:56,627 [INFO] 策略已掛載: PriceVolume2
+2026-02-13 22:57:56,628 [INFO] 策略已掛載: PriceVolume3
+2026-02-13 22:57:56,628 [INFO] 策略已掛載: PriceVolume4
+2026-02-13 22:57:56,629 [INFO] 策略已掛載: PriceVolume5
+2026-02-13 22:57:56,629 [INFO] 策略已掛載: PriceVolume6
+2026-02-13 22:57:56,629 [INFO] 策略已掛載: PriceVolume7
+2026-02-13 22:57:56,629 [INFO] 策略已掛載: PriceVolume8
+2026-02-13 22:57:56,630 [INFO] 策略已掛載: PriceVolume9
+2026-02-13 22:57:56,630 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-13 22:57:56,630 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-13 22:57:56,631 [INFO] 策略已掛載: PriceVolume10
+2026-02-13 22:57:56,631 [INFO] 策略已掛載: QQQ_price
+2026-02-13 22:57:56,631 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-13 22:57:56,631 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-13 22:57:58,088 [INFO] 監控 1h K 線...
+2026-02-13 22:57:58,151 [INFO] [ETL] 處理新 K 線: 2026-02-13 13:00:00
+2026-02-13 22:57:58,170 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,172 [ERROR] 特徵計算失敗 bs_ratio_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,175 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,177 [ERROR] 特徵計算失敗 bs_quantile_25_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,319 [ERROR] 特徵計算失敗 is_us_trade_time_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,322 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,323 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,325 [ERROR] 特徵計算失敗 custom_atr_ma_16_30_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,326 [ERROR] 特徵計算失敗 smooth_obv_ma_20_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,328 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,329 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,332 [ERROR] 特徵計算失敗 mad_quantile_10_90_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,335 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_90_0.3_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,336 [ERROR] 特徵計算失敗 vroc_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,339 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,342 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_250_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,344 [ERROR] 特徵計算失敗 vroc_quantile_10_250_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,346 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,347 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,350 [ERROR] 特徵計算失敗 custom_atr_quantile_16_25_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,355 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,358 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,360 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,362 [ERROR] 特徵計算失敗 custom_atr_quantile_16_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,366 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,368 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,370 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,373 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,376 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.1_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,379 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,382 [ERROR] 特徵計算失敗 bs_ratio_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,385 [ERROR] 特徵計算失敗 mad_quantile_10_30_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,388 [ERROR] 特徵計算失敗 bs_quantile_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,390 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,392 [ERROR] 特徵計算失敗 vroc_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,394 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_90_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,396 [ERROR] 特徵計算失敗 vroc_quantile_10_90_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,400 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_BTC_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:57:58,404 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_crypto_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:57:58,407 [ERROR] 特徵計算失敗 zscore_close_100_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,410 [ERROR] 特徵計算失敗 zscore_quantile_100_1000_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,414 [ERROR] 特徵計算失敗 fear_greed_raw_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:57:58,416 [ERROR] 特徵計算失敗 macro_raw_yield_10y_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:57:58,422 [ERROR] 特徵計算失敗 vol_sma_diff_15_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,424 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_60_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,427 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_100_0.2_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,513 [ERROR] 特徵計算失敗 is_us_trade_time_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 22:57:58,525 [ERROR] 特徵計算失敗 wavelet_us_stock_qqq_120_A_mean_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 22:57:58,527 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 67651.6
+2026-02-13 22:57:58,528 [INFO] 本週期結束，等待下一次收盤...
+2026-02-13 23:00:03,597 [INFO] [ETL] 處理新 K 線: 2026-02-13 14:00:00
+2026-02-13 23:00:03,618 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,620 [ERROR] 特徵計算失敗 bs_ratio_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,623 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,626 [ERROR] 特徵計算失敗 bs_quantile_25_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,729 [ERROR] 特徵計算失敗 is_us_trade_time_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,732 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,734 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,737 [ERROR] 特徵計算失敗 custom_atr_ma_16_30_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,741 [ERROR] 特徵計算失敗 smooth_obv_ma_20_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,744 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,747 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,751 [ERROR] 特徵計算失敗 mad_quantile_10_90_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,755 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_90_0.3_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,759 [ERROR] 特徵計算失敗 vroc_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,761 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,763 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_250_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,767 [ERROR] 特徵計算失敗 vroc_quantile_10_250_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,770 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,772 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,776 [ERROR] 特徵計算失敗 custom_atr_quantile_16_25_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,780 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,784 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,786 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,789 [ERROR] 特徵計算失敗 custom_atr_quantile_16_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,792 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,794 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,796 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,799 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,803 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.1_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,806 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,809 [ERROR] 特徵計算失敗 bs_ratio_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,812 [ERROR] 特徵計算失敗 mad_quantile_10_30_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,816 [ERROR] 特徵計算失敗 bs_quantile_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,818 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,821 [ERROR] 特徵計算失敗 vroc_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,823 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_90_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,826 [ERROR] 特徵計算失敗 vroc_quantile_10_90_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,828 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_BTC_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 23:00:03,831 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_crypto_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 23:00:03,833 [ERROR] 特徵計算失敗 zscore_close_100_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,836 [ERROR] 特徵計算失敗 zscore_quantile_100_1000_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,839 [ERROR] 特徵計算失敗 fear_greed_raw_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 23:00:03,841 [ERROR] 特徵計算失敗 macro_raw_yield_10y_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 23:00:03,848 [ERROR] 特徵計算失敗 vol_sma_diff_15_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,851 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_60_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,854 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_100_0.2_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,946 [ERROR] 特徵計算失敗 is_us_trade_time_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:03,957 [ERROR] 特徵計算失敗 wavelet_us_stock_qqq_120_A_mean_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 23:00:03,959 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 67709.5
+2026-02-13 23:00:03,959 [INFO] 本週期結束，等待下一次收盤...
+2026-02-13 23:00:07,011 [WARNING] 停止運行
+2026-02-13 23:00:34,997 [INFO] 設定檔載入成功: config.json
+2026-02-13 23:00:35,664 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-13 23:00:35,670 [INFO] [BACKFILL] 上次收盤: 2026-02-13 14:00:00 | 現在時間: 2026-02-13 15:00:35.669000 | 缺少 K 線: 1 根
+2026-02-13 23:00:35,670 [INFO] [BACKFILL] 開始回補 3 根 K 線...
+2026-02-13 23:00:36,159 [INFO] [BACKFILL] 成功寫入 3 筆數據！斷層修復完成。
+2026-02-13 23:00:36,160 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-13 23:00:36,160 [INFO]  外部數據背景更新啟動
+2026-02-13 23:00:36,161 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-13 23:00:36,162 [INFO] 策略已掛載: PriceVolume1
+2026-02-13 23:00:36,163 [INFO] 策略已掛載: PriceVolume2
+2026-02-13 23:00:36,163 [INFO] 策略已掛載: PriceVolume3
+2026-02-13 23:00:36,163 [INFO] 策略已掛載: PriceVolume4
+2026-02-13 23:00:36,164 [INFO] 策略已掛載: PriceVolume5
+2026-02-13 23:00:36,164 [INFO] 策略已掛載: PriceVolume6
+2026-02-13 23:00:36,164 [INFO] 策略已掛載: PriceVolume7
+2026-02-13 23:00:36,165 [INFO] 策略已掛載: PriceVolume8
+2026-02-13 23:00:36,165 [INFO] 策略已掛載: PriceVolume9
+2026-02-13 23:00:36,165 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-13 23:00:36,166 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-13 23:00:36,166 [INFO] 策略已掛載: PriceVolume10
+2026-02-13 23:00:36,166 [INFO] 策略已掛載: QQQ_price
+2026-02-13 23:00:36,166 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-13 23:00:36,166 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-13 23:00:37,703 [INFO] 監控 1h K 線...
+2026-02-13 23:00:37,761 [INFO] [ETL] 處理新 K 線: 2026-02-13 14:00:00
+2026-02-13 23:00:37,776 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,779 [ERROR] 特徵計算失敗 bs_ratio_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,782 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,784 [ERROR] 特徵計算失敗 bs_quantile_25_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,920 [ERROR] 特徵計算失敗 is_us_trade_time_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,922 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,924 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,926 [ERROR] 特徵計算失敗 custom_atr_ma_16_30_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,928 [ERROR] 特徵計算失敗 smooth_obv_ma_20_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,931 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,932 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,935 [ERROR] 特徵計算失敗 mad_quantile_10_90_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,938 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_90_0.3_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,941 [ERROR] 特徵計算失敗 vroc_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,942 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,946 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_250_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,950 [ERROR] 特徵計算失敗 vroc_quantile_10_250_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,953 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,954 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,957 [ERROR] 特徵計算失敗 custom_atr_quantile_16_25_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,960 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,961 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,963 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,966 [ERROR] 特徵計算失敗 custom_atr_quantile_16_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,968 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,970 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,972 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,975 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,977 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.1_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,980 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,982 [ERROR] 特徵計算失敗 bs_ratio_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,984 [ERROR] 特徵計算失敗 mad_quantile_10_30_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,986 [ERROR] 特徵計算失敗 bs_quantile_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,989 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,990 [ERROR] 特徵計算失敗 vroc_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,993 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_90_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,996 [ERROR] 特徵計算失敗 vroc_quantile_10_90_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:37,998 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_BTC_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 23:00:38,000 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_crypto_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 23:00:38,003 [ERROR] 特徵計算失敗 zscore_close_100_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:38,005 [ERROR] 特徵計算失敗 zscore_quantile_100_1000_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:38,008 [ERROR] 特徵計算失敗 fear_greed_raw_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 23:00:38,010 [ERROR] 特徵計算失敗 macro_raw_yield_10y_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 23:00:38,017 [ERROR] 特徵計算失敗 vol_sma_diff_15_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:38,019 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_60_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:38,022 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_100_0.2_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:38,111 [ERROR] 特徵計算失敗 is_us_trade_time_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:00:38,124 [ERROR] 特徵計算失敗 wavelet_us_stock_qqq_120_A_mean_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 23:00:38,126 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 67743.8
+2026-02-13 23:00:38,126 [INFO] 本週期結束，等待下一次收盤...
+2026-02-13 23:07:34,614 [WARNING] 停止運行
+2026-02-13 23:07:36,486 [INFO] 設定檔載入成功: config.json
+2026-02-13 23:07:37,141 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-13 23:07:37,146 [INFO] [BACKFILL] 上次收盤: 2026-02-13 15:00:00 | 現在時間: 2026-02-13 15:07:37.145000 | 缺少 K 線: 0 根
+2026-02-13 23:07:37,146 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-13 23:07:37,615 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-13 23:07:37,617 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-13 23:07:37,617 [INFO]  外部數據背景更新啟動
+2026-02-13 23:07:37,618 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-13 23:07:37,620 [INFO] 策略已掛載: PriceVolume1
+2026-02-13 23:07:37,620 [INFO] 策略已掛載: PriceVolume2
+2026-02-13 23:07:37,620 [INFO] 策略已掛載: PriceVolume3
+2026-02-13 23:07:37,621 [INFO] 策略已掛載: PriceVolume4
+2026-02-13 23:07:37,621 [INFO] 策略已掛載: PriceVolume5
+2026-02-13 23:07:37,621 [INFO] 策略已掛載: PriceVolume6
+2026-02-13 23:07:37,621 [INFO] 策略已掛載: PriceVolume7
+2026-02-13 23:07:37,622 [INFO] 策略已掛載: PriceVolume8
+2026-02-13 23:07:37,622 [INFO] 策略已掛載: PriceVolume9
+2026-02-13 23:07:37,622 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-13 23:07:37,623 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-13 23:07:37,623 [INFO] 策略已掛載: PriceVolume10
+2026-02-13 23:07:37,623 [INFO] 策略已掛載: QQQ_price
+2026-02-13 23:07:37,623 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-13 23:07:37,624 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-13 23:07:39,588 [INFO] 監控 1h K 線...
+2026-02-13 23:07:39,651 [INFO] [ETL] 處理新 K 線: 2026-02-13 14:00:00
+2026-02-13 23:07:39,680 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:39,683 [ERROR] 特徵計算失敗 bs_ratio_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:39,687 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:39,691 [ERROR] 特徵計算失敗 bs_quantile_25_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:39,951 [ERROR] 特徵計算失敗 is_us_trade_time_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:39,954 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:39,956 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:39,959 [ERROR] 特徵計算失敗 custom_atr_ma_16_30_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:39,961 [ERROR] 特徵計算失敗 smooth_obv_ma_20_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:39,964 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:39,967 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:39,970 [ERROR] 特徵計算失敗 mad_quantile_10_90_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:39,973 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_90_0.3_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:39,976 [ERROR] 特徵計算失敗 vroc_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:39,978 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:39,982 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_250_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:39,985 [ERROR] 特徵計算失敗 vroc_quantile_10_250_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:39,989 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:39,991 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:39,995 [ERROR] 特徵計算失敗 custom_atr_quantile_16_25_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:39,998 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,001 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,003 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,007 [ERROR] 特徵計算失敗 custom_atr_quantile_16_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,010 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,013 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,016 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,020 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,024 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.1_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,027 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,029 [ERROR] 特徵計算失敗 bs_ratio_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,032 [ERROR] 特徵計算失敗 mad_quantile_10_30_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,036 [ERROR] 特徵計算失敗 bs_quantile_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,038 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,040 [ERROR] 特徵計算失敗 vroc_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,043 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_90_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,047 [ERROR] 特徵計算失敗 vroc_quantile_10_90_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,051 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_BTC_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 23:07:40,054 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_crypto_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 23:07:40,056 [ERROR] 特徵計算失敗 zscore_close_100_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,061 [ERROR] 特徵計算失敗 zscore_quantile_100_1000_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,065 [ERROR] 特徵計算失敗 fear_greed_raw_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 23:07:40,069 [ERROR] 特徵計算失敗 macro_raw_yield_10y_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 23:07:40,078 [ERROR] 特徵計算失敗 vol_sma_diff_15_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,082 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_60_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,085 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_100_0.2_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,250 [ERROR] 特徵計算失敗 is_us_trade_time_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:07:40,270 [ERROR] 特徵計算失敗 wavelet_us_stock_qqq_120_A_mean_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-13 23:07:40,273 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 67700.1
+2026-02-13 23:07:40,273 [INFO] 本週期結束，等待下一次收盤...
+2026-02-13 23:07:48,290 [WARNING] 停止運行
+2026-02-13 23:15:34,807 [INFO] 設定檔載入成功: config.json
+2026-02-13 23:15:35,484 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-13 23:15:35,488 [INFO] [BACKFILL] 上次收盤: 2026-02-13 15:00:00 | 現在時間: 2026-02-13 15:15:35.487000 | 缺少 K 線: 0 根
+2026-02-13 23:15:35,488 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-13 23:15:35,985 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-13 23:15:35,986 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-13 23:15:35,986 [INFO]  外部數據背景更新啟動
+2026-02-13 23:15:35,987 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-13 23:15:35,988 [INFO] 策略已掛載: PriceVolume2
+2026-02-13 23:15:35,988 [INFO] 目前運行策略列表: ['Price_Volume2']
+2026-02-13 23:15:35,988 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-13 23:15:37,539 [INFO] 監控 1h K 線...
+2026-02-13 23:15:37,607 [INFO] [ETL] 處理新 K 線: 2026-02-13 14:00:00
+2026-02-13 23:15:37,626 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:15:37,628 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:15:37,631 [ERROR] 特徵計算失敗 custom_atr_ma_16_30_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:15:37,633 [ERROR] 特徵計算失敗 smooth_obv_ma_20_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:15:37,634 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 68428.4
+2026-02-13 23:15:37,634 [INFO] 本週期結束，等待下一次收盤...
+2026-02-13 23:20:09,553 [WARNING] 停止運行
+2026-02-13 23:20:12,400 [INFO] 設定檔載入成功: config.json
+2026-02-13 23:20:13,022 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-13 23:20:13,027 [INFO] [BACKFILL] 上次收盤: 2026-02-13 15:00:00 | 現在時間: 2026-02-13 15:20:13.027000 | 缺少 K 線: 0 根
+2026-02-13 23:20:13,027 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-13 23:20:13,450 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-13 23:20:13,451 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-13 23:20:13,451 [INFO]  外部數據背景更新啟動
+2026-02-13 23:20:13,452 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-13 23:20:13,454 [INFO] 策略已掛載: PriceVolume2
+2026-02-13 23:20:13,454 [INFO] 目前運行策略列表: ['Price_Volume2']
+2026-02-13 23:20:13,454 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-13 23:20:14,982 [INFO] 監控 1h K 線...
+2026-02-13 23:20:15,039 [INFO] [ETL] 處理新 K 線: 2026-02-13 14:00:00
+2026-02-13 23:20:15,066 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 68259.1
+2026-02-13 23:20:15,066 [INFO] 本週期結束，等待下一次收盤...
+2026-02-13 23:26:38,237 [WARNING] 停止運行
+2026-02-13 23:26:40,074 [INFO] 設定檔載入成功: config.json
+2026-02-13 23:26:40,735 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-13 23:26:40,740 [INFO] [BACKFILL] 上次收盤: 2026-02-13 15:00:00 | 現在時間: 2026-02-13 15:26:40.740000 | 缺少 K 線: 0 根
+2026-02-13 23:26:40,741 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-13 23:26:41,168 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-13 23:26:41,169 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-13 23:26:41,170 [INFO]  外部數據背景更新啟動
+2026-02-13 23:26:41,171 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-13 23:26:41,173 [INFO] 策略已掛載: PriceVolume2
+2026-02-13 23:26:41,173 [INFO] 目前運行策略列表: ['Price_Volume2']
+2026-02-13 23:26:41,173 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-13 23:26:42,624 [INFO] 監控 1h K 線...
+2026-02-13 23:26:42,679 [INFO] [ETL] 處理新 K 線: 2026-02-13 14:00:00
+2026-02-13 23:26:42,701 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 68659.6
+2026-02-13 23:26:42,701 [INFO] 本週期結束，等待下一次收盤...
+2026-02-13 23:26:45,906 [WARNING] 停止運行
+2026-02-13 23:27:34,739 [INFO] 設定檔載入成功: config.json
+2026-02-13 23:27:35,374 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-13 23:27:35,378 [INFO] [BACKFILL] 上次收盤: 2026-02-13 15:00:00 | 現在時間: 2026-02-13 15:27:35.378000 | 缺少 K 線: 0 根
+2026-02-13 23:27:35,378 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-13 23:27:35,744 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-13 23:27:35,745 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-13 23:27:35,745 [INFO]  外部數據背景更新啟動
+2026-02-13 23:27:35,746 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-13 23:27:35,748 [INFO] 策略已掛載: PriceVolume2
+2026-02-13 23:27:35,748 [INFO] 目前運行策略列表: ['Price_Volume2']
+2026-02-13 23:27:35,748 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-13 23:27:37,292 [INFO] 監控 1h K 線...
+2026-02-13 23:27:37,358 [INFO] [ETL] 處理新 K 線: 2026-02-13 14:00:00
+2026-02-13 23:27:37,401 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 68661.1
+2026-02-13 23:27:37,402 [INFO] 本週期結束，等待下一次收盤...
+2026-02-13 23:28:36,488 [WARNING] 停止運行
+2026-02-13 23:28:42,897 [INFO] 設定檔載入成功: config.json
+2026-02-13 23:28:43,505 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-13 23:28:43,509 [INFO] [BACKFILL] 上次收盤: 2026-02-13 15:00:00 | 現在時間: 2026-02-13 15:28:43.509000 | 缺少 K 線: 0 根
+2026-02-13 23:28:43,509 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-13 23:28:43,908 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-13 23:28:43,909 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-13 23:28:43,909 [INFO]  外部數據背景更新啟動
+2026-02-13 23:28:43,910 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-13 23:28:43,911 [INFO] 策略已掛載: PriceVolume2
+2026-02-13 23:28:43,912 [INFO] 目前運行策略列表: ['Price_Volume2']
+2026-02-13 23:28:43,912 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-13 23:28:45,461 [INFO] 監控 1h K 線...
+2026-02-13 23:28:45,513 [INFO] [ETL] 處理新 K 線: 2026-02-13 14:00:00
+2026-02-13 23:28:45,543 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 68740.0
+2026-02-13 23:28:45,543 [INFO] 本週期結束，等待下一次收盤...
+2026-02-13 23:45:06,117 [WARNING] 停止運行
+2026-02-13 23:47:26,593 [INFO] 設定檔載入成功: config.json
+2026-02-13 23:47:27,292 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-13 23:47:27,297 [INFO] [BACKFILL] 上次收盤: 2026-02-13 15:00:00 | 現在時間: 2026-02-13 15:47:27.295000 | 缺少 K 線: 0 根
+2026-02-13 23:47:27,297 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-13 23:47:27,745 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-13 23:47:27,746 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-13 23:47:27,746 [INFO]  外部數據背景更新啟動
+2026-02-13 23:47:27,746 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-13 23:47:27,748 [INFO] 策略已掛載: PriceVolume2
+2026-02-13 23:47:27,748 [INFO] 目前運行策略列表: ['Price_Volume2']
+2026-02-13 23:47:27,748 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-13 23:47:29,327 [INFO] 監控 1h K 線...
+2026-02-13 23:47:29,389 [INFO] [ETL] 處理新 K 線: 2026-02-13 14:00:00
+2026-02-13 23:47:29,415 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:47:29,421 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:47:29,423 [ERROR] 特徵計算失敗 custom_atr_ma_16_30_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:47:29,427 [ERROR] 特徵計算失敗 smooth_obv_ma_20_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:47:29,427 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 68502.9
+2026-02-13 23:47:29,427 [INFO] 本週期結束，等待下一次收盤...
+2026-02-13 23:47:31,608 [WARNING] 停止運行
+2026-02-13 23:53:52,453 [INFO] 設定檔載入成功: config.json
+2026-02-13 23:53:53,141 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-13 23:53:53,146 [INFO] [BACKFILL] 上次收盤: 2026-02-13 15:00:00 | 現在時間: 2026-02-13 15:53:53.145000 | 缺少 K 線: 0 根
+2026-02-13 23:53:53,146 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-13 23:53:53,687 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-13 23:53:53,688 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-13 23:53:53,688 [INFO]  外部數據背景更新啟動
+2026-02-13 23:53:53,689 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-13 23:53:53,690 [INFO] 策略已掛載: PriceVolume2
+2026-02-13 23:53:53,691 [INFO] 目前運行策略列表: ['Price_Volume2']
+2026-02-13 23:53:53,691 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-13 23:53:56,683 [INFO] 監控 1h K 線...
+2026-02-13 23:53:56,734 [INFO] [ETL] 處理新 K 線: 2026-02-13 14:00:00
+2026-02-13 23:53:56,759 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:53:56,765 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:53:56,770 [ERROR] 特徵計算失敗 custom_atr_ma_16_30_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:53:56,775 [ERROR] 特徵計算失敗 smooth_obv_ma_20_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:53:56,776 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 68574.8
+2026-02-13 23:53:56,776 [INFO] 本週期結束，等待下一次收盤...
+2026-02-13 23:54:50,685 [WARNING] 停止運行
+2026-02-13 23:54:56,492 [INFO] 設定檔載入成功: config.json
+2026-02-13 23:54:57,100 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-13 23:54:57,106 [INFO] [BACKFILL] 上次收盤: 2026-02-13 15:00:00 | 現在時間: 2026-02-13 15:54:57.105000 | 缺少 K 線: 0 根
+2026-02-13 23:54:57,106 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-13 23:54:57,482 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-13 23:54:57,483 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-13 23:54:57,483 [INFO]  外部數據背景更新啟動
+2026-02-13 23:54:57,484 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-13 23:54:57,485 [INFO] 策略已掛載: PriceVolume2
+2026-02-13 23:54:57,485 [INFO] 目前運行策略列表: ['Price_Volume2']
+2026-02-13 23:54:57,486 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-13 23:54:58,958 [INFO] 監控 1h K 線...
+2026-02-13 23:54:59,017 [INFO] [ETL] 處理新 K 線: 2026-02-13 14:00:00
+2026-02-13 23:54:59,039 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:54:59,043 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:54:59,048 [ERROR] 特徵計算失敗 custom_atr_ma_16_30_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:54:59,053 [ERROR] 特徵計算失敗 smooth_obv_ma_20_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:54:59,053 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 68567.3
+2026-02-13 23:54:59,053 [INFO] 本週期結束，等待下一次收盤...
+2026-02-13 23:55:05,843 [WARNING] 停止運行
+2026-02-13 23:55:21,816 [INFO] 設定檔載入成功: config.json
+2026-02-13 23:55:22,464 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-13 23:55:22,469 [INFO] [BACKFILL] 上次收盤: 2026-02-13 15:00:00 | 現在時間: 2026-02-13 15:55:22.469000 | 缺少 K 線: 0 根
+2026-02-13 23:55:22,470 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-13 23:55:22,830 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-13 23:55:22,832 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-13 23:55:22,832 [INFO]  外部數據背景更新啟動
+2026-02-13 23:55:22,832 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-13 23:55:22,834 [INFO] 策略已掛載: PriceVolume2
+2026-02-13 23:55:22,834 [INFO] 目前運行策略列表: ['Price_Volume2']
+2026-02-13 23:55:22,834 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-13 23:55:24,356 [INFO] 監控 1h K 線...
+2026-02-13 23:55:24,413 [INFO] [ETL] 處理新 K 線: 2026-02-13 14:00:00
+2026-02-13 23:55:24,440 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:55:24,444 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:55:24,450 [ERROR] 特徵計算失敗 custom_atr_ma_16_30_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:55:24,454 [ERROR] 特徵計算失敗 smooth_obv_ma_20_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-13 23:55:24,455 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 68584.7
+2026-02-13 23:55:24,455 [INFO] 本週期結束，等待下一次收盤...
+2026-02-13 23:55:35,650 [WARNING] 停止運行
+2026-02-14 00:05:28,483 [INFO] 設定檔載入成功: config.json
+2026-02-14 00:05:29,211 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 00:05:29,216 [INFO] [BACKFILL] 上次收盤: 2026-02-13 15:00:00 | 現在時間: 2026-02-13 16:05:29.216000 | 缺少 K 線: 1 根
+2026-02-14 00:05:29,216 [INFO] [BACKFILL] 開始回補 3 根 K 線...
+2026-02-14 00:05:29,702 [INFO] [BACKFILL] 成功寫入 3 筆數據！斷層修復完成。
+2026-02-14 00:05:29,703 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 00:05:29,703 [INFO]  外部數據背景更新啟動
+2026-02-14 00:05:29,703 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 00:05:29,705 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 00:05:29,705 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 00:05:29,705 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 00:05:29,705 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 00:05:29,706 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 00:05:29,706 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 00:05:29,706 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 00:05:29,706 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 00:05:29,706 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 00:05:29,707 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 00:05:29,707 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 00:05:29,707 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 00:05:29,707 [INFO] 策略已掛載: QQQ_price
+2026-02-14 00:05:29,707 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 00:05:29,708 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 00:05:31,134 [INFO] 監控 1h K 線...
+2026-02-14 00:05:31,201 [INFO] [ETL] 處理新 K 線: 2026-02-13 15:00:00
+2026-02-14 00:05:31,226 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,232 [ERROR] 特徵計算失敗 bs_ratio_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,238 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,244 [ERROR] 特徵計算失敗 bs_quantile_25_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,393 [ERROR] 特徵計算失敗 is_us_trade_time_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,399 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,402 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,408 [ERROR] 特徵計算失敗 custom_atr_ma_16_30_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,413 [ERROR] 特徵計算失敗 smooth_obv_ma_20_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,418 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,425 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,429 [ERROR] 特徵計算失敗 mad_quantile_10_90_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,436 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_90_0.3_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,441 [ERROR] 特徵計算失敗 vroc_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,446 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,452 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_250_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,458 [ERROR] 特徵計算失敗 vroc_quantile_10_250_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,463 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,469 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,476 [ERROR] 特徵計算失敗 custom_atr_quantile_16_25_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,483 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,489 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,495 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,500 [ERROR] 特徵計算失敗 custom_atr_quantile_16_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,506 [ERROR] 特徵計算失敗 smooth_obv_quantile_20_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,511 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,516 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,522 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_25_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,527 [ERROR] 特徵計算失敗 mad_quantile_10_25_0.1_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,533 [ERROR] 特徵計算失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,539 [ERROR] 特徵計算失敗 bs_ratio_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,545 [ERROR] 特徵計算失敗 mad_quantile_10_30_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,550 [ERROR] 特徵計算失敗 bs_quantile_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,555 [ERROR] 特徵計算失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,560 [ERROR] 特徵計算失敗 vroc_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,567 [ERROR] 特徵計算失敗 smooth_mom_quantile_10_5_90_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,573 [ERROR] 特徵計算失敗 vroc_quantile_10_90_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,579 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_BTC_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-14 00:05:31,585 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_crypto_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-14 00:05:31,591 [ERROR] 特徵計算失敗 zscore_close_100_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,599 [ERROR] 特徵計算失敗 zscore_quantile_100_1000_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,606 [ERROR] 特徵計算失敗 fear_greed_raw_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-14 00:05:31,613 [ERROR] 特徵計算失敗 macro_raw_yield_10y_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-14 00:05:31,622 [ERROR] 特徵計算失敗 vol_sma_diff_15_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,627 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_60_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,633 [ERROR] 特徵計算失敗 vol_sma_diff_quantile_15_100_0.2_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,723 [ERROR] 特徵計算失敗 is_us_trade_time_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:05:31,737 [ERROR] 特徵計算失敗 wavelet_us_stock_qqq_120_A_mean_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-14 00:05:31,738 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 68726.1
+2026-02-14 00:05:31,738 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 00:05:56,313 [WARNING] 停止運行
+2026-02-14 00:05:58,316 [INFO] 設定檔載入成功: config.json
+2026-02-14 00:05:58,972 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 00:05:58,977 [INFO] [BACKFILL] 上次收盤: 2026-02-13 16:00:00 | 現在時間: 2026-02-13 16:05:58.977000 | 缺少 K 線: 0 根
+2026-02-14 00:05:58,977 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 00:05:59,339 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 00:05:59,341 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 00:05:59,341 [INFO]  外部數據背景更新啟動
+2026-02-14 00:05:59,342 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 00:05:59,344 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 00:05:59,344 [INFO] 目前運行策略列表: ['Price_Volume2']
+2026-02-14 00:05:59,344 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 00:06:00,853 [INFO] 監控 1h K 線...
+2026-02-14 00:06:00,907 [INFO] [ETL] 處理新 K 線: 2026-02-13 15:00:00
+2026-02-14 00:06:00,932 [ERROR] 特徵計算失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:06:00,938 [ERROR] 特徵計算失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:06:00,942 [ERROR] 特徵計算失敗 custom_atr_ma_16_30_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:06:00,947 [ERROR] 特徵計算失敗 smooth_obv_ma_20_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 00:06:00,948 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 68838.9
+2026-02-14 00:06:00,948 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 00:06:24,940 [WARNING] 停止運行
+2026-02-14 00:06:28,730 [INFO] 設定檔載入成功: config.json
+2026-02-14 00:06:29,390 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 00:06:29,395 [INFO] [BACKFILL] 上次收盤: 2026-02-13 16:00:00 | 現在時間: 2026-02-13 16:06:29.394000 | 缺少 K 線: 0 根
+2026-02-14 00:06:29,395 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 00:06:29,799 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 00:06:29,801 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 00:06:29,801 [INFO]  外部數據背景更新啟動
+2026-02-14 00:06:29,802 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 00:06:29,803 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 00:06:29,804 [INFO] 目前運行策略列表: ['Price_Volume2']
+2026-02-14 00:06:29,804 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 00:06:31,251 [INFO] 監控 1h K 線...
+2026-02-14 00:06:31,303 [INFO] [ETL] 處理新 K 線: 2026-02-13 15:00:00
+2026-02-14 00:06:31,325 [INFO] [SIGNAL] Price_Volume2 (0.0 BTC) | CLOSE | Exit: OBV(-975836.4)<MA or ATR<MA
+2026-02-14 00:06:31,327 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉
+2026-02-14 00:06:31,327 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 68862.6
+2026-02-14 00:06:31,327 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 00:07:25,529 [WARNING] 停止運行
+2026-02-14 00:07:27,412 [INFO] 設定檔載入成功: config.json
+2026-02-14 00:07:28,067 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 00:07:28,071 [INFO] [BACKFILL] 上次收盤: 2026-02-13 16:00:00 | 現在時間: 2026-02-13 16:07:28.071000 | 缺少 K 線: 0 根
+2026-02-14 00:07:28,072 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 00:07:28,443 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 00:07:28,444 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 00:07:28,444 [INFO]  外部數據背景更新啟動
+2026-02-14 00:07:28,445 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 00:07:28,447 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 00:07:28,447 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 00:07:28,447 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 00:07:28,447 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 00:07:28,448 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 00:07:28,448 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 00:07:28,448 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 00:07:28,448 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 00:07:28,449 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 00:07:28,449 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 00:07:28,449 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 00:07:28,449 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 00:07:28,449 [INFO] 策略已掛載: QQQ_price
+2026-02-14 00:07:28,449 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 00:07:28,451 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 00:07:29,950 [INFO] 監控 1h K 線...
+2026-02-14 00:07:30,005 [INFO] [ETL] 處理新 K 線: 2026-02-13 15:00:00
+2026-02-14 00:07:30,246 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_BTC_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-14 00:07:30,248 [ERROR] 特徵計算失敗 google_trends_raw_google_trends_crypto_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-14 00:07:30,257 [ERROR] 特徵計算失敗 fear_greed_raw_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-14 00:07:30,260 [ERROR] 特徵計算失敗 macro_raw_yield_10y_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-14 00:07:30,367 [ERROR] 特徵計算失敗 wavelet_us_stock_qqq_120_A_mean_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-14 00:07:30,368 [INFO] [SIGNAL] Strategy1_MAD_BSR (0.0 BTC) | CLOSE | MAD or BS fell below Threshold
+2026-02-14 00:07:30,376 [INFO] [SKIP] Strategy1_MAD_BSR 目前空手，無法平倉
+2026-02-14 00:07:30,376 [INFO] [SIGNAL] Price_Volume2 (0.0 BTC) | CLOSE | Exit: OBV(-975800.9)<MA or ATR<MA
+2026-02-14 00:07:30,377 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉
+2026-02-14 00:07:30,377 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (0.0 BTC) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-14 00:07:30,378 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉
+2026-02-14 00:07:30,378 [INFO] [SIGNAL] Strategy4_High_Momentum (0.0 BTC) | CLOSE | Momentum_Collapsed
+2026-02-14 00:07:30,379 [INFO] [SKIP] Strategy4_High_Momentum 目前空手，無法平倉
+2026-02-14 00:07:30,379 [INFO] [SIGNAL] Strategy6_Climax_Momentum (0.0 BTC) | CLOSE | Vol_CoolDown & OBV_Drop
+2026-02-14 00:07:30,380 [INFO] [SKIP] Strategy6_Climax_Momentum 目前空手，無法平倉
+2026-02-14 00:07:30,380 [INFO] [SIGNAL] Strategy7_Mom_LowVolFilter (0.0 BTC) | LONG | Mom_Strong(1533.76) & Not_Dead_Fish(0.0238)
+2026-02-14 00:07:30,381 [INFO]  [Mock] 收到訂單: BUY 0.007251452828574205 BTCUSDT
+2026-02-14 00:07:30,591 [INFO] [Strategy7_Mom_LowVolFilter] 訂單已發送 ID: 19601130
+2026-02-14 00:07:33,593 [INFO]  [DB] 交易已儲存: LONG 0.007251452828574205 BTCUSDT
+2026-02-14 00:07:34,933 [INFO] [VERIFIED] 成交確認 | 均價: 68951.7
+2026-02-14 00:07:34,934 [INFO] [SNAPSHOT] 交易所總持倉: 0.007251452828574205 BTC | 現價: 68951.7
+2026-02-14 00:07:34,934 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 00:07:39,589 [WARNING] [AlphaVantage] 抓取失敗: We have detected your API key as E5VUD2IG0AV6U3WM and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits.
+2026-02-14 00:07:39,590 [INFO] [US_STOCK] AlphaVantage 失敗，切換至備用源 Tiingo 抓取 QQQ...
+2026-02-14 00:07:40,609 [INFO] [US_STOCK] Tiingo 抓取成功！
+2026-02-14 00:07:52,538 [WARNING] 停止運行
+2026-02-14 00:51:27,702 [INFO] 設定檔載入成功: config.json
+2026-02-14 00:51:28,374 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 00:51:28,379 [INFO] [BACKFILL] 上次收盤: 2026-02-13 16:00:00 | 現在時間: 2026-02-13 16:51:28.379000 | 缺少 K 線: 0 根
+2026-02-14 00:51:28,380 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 00:51:28,848 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 00:51:28,849 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 00:51:28,849 [INFO]  外部數據背景更新啟動
+2026-02-14 00:51:28,850 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 00:51:28,852 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 00:51:28,852 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 00:51:28,852 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 00:51:28,853 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 00:51:28,853 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 00:51:28,853 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 00:51:28,854 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 00:51:28,854 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 00:51:28,854 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 00:51:28,855 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 00:51:28,855 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 00:51:28,855 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 00:51:28,855 [INFO] 策略已掛載: QQQ_price
+2026-02-14 00:51:28,856 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 00:51:28,856 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 00:51:30,212 [INFO] 監控 1h K 線...
+2026-02-14 00:51:30,266 [INFO] [ETL] 處理新 K 線: 2026-02-13 15:00:00
+2026-02-14 00:51:30,626 [ERROR] 特徵計算失敗 wavelet_us_stock_qqq_120_A_mean_v1: 'open_time' is both an index level and a column label, which is ambiguous.
+2026-02-14 00:51:30,628 [INFO] [SIGNAL] Strategy1_MAD_BSR (0.0 BTC) | CLOSE | MAD or BS fell below Threshold
+2026-02-14 00:51:30,630 [INFO] [SKIP] Strategy1_MAD_BSR 目前空手，無法平倉
+2026-02-14 00:51:30,630 [INFO] [SIGNAL] Price_Volume2 (0.0 BTC) | CLOSE | Exit: OBV(-975164.9)<MA or ATR<MA
+2026-02-14 00:51:30,631 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉
+2026-02-14 00:51:30,631 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (0.0 BTC) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-14 00:51:30,631 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉
+2026-02-14 00:51:30,633 [INFO] [SIGNAL] Strategy6_Climax_Momentum (0.0 BTC) | CLOSE | Vol_CoolDown & OBV_Drop
+2026-02-14 00:51:30,634 [INFO] [SKIP] Strategy6_Climax_Momentum 目前空手，無法平倉
+2026-02-14 00:51:30,634 [INFO] [SIGNAL] Strategy7_Mom_LowVolFilter (0.007251452828574205 BTC) | LONG | Mom_Strong(1551.62) & Not_Dead_Fish(0.0250)
+2026-02-14 00:51:30,634 [INFO] [SKIP] Strategy7_Mom_LowVolFilter 已有持倉 0.007251452828574205，跳過開倉
+2026-02-14 00:51:30,634 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 69041.0
+2026-02-14 00:51:30,635 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 00:51:43,533 [WARNING] 停止運行
+2026-02-14 00:59:05,885 [INFO] 設定檔載入成功: config.json
+2026-02-14 00:59:06,548 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 00:59:06,553 [INFO] [BACKFILL] 上次收盤: 2026-02-13 16:00:00 | 現在時間: 2026-02-13 16:59:06.552000 | 缺少 K 線: 0 根
+2026-02-14 00:59:06,553 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 00:59:06,952 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 00:59:06,954 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 00:59:06,954 [INFO]  外部數據背景更新啟動
+2026-02-14 00:59:06,954 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 00:59:06,956 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 00:59:06,956 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 00:59:06,957 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 00:59:06,957 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 00:59:06,957 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 00:59:06,958 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 00:59:06,958 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 00:59:06,958 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 00:59:06,959 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 00:59:06,959 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 00:59:06,959 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 00:59:06,960 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 00:59:06,960 [INFO] 策略已掛載: QQQ_price
+2026-02-14 00:59:06,960 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 00:59:06,960 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 00:59:08,346 [INFO] 監控 1h K 線...
+2026-02-14 00:59:08,409 [INFO] [ETL] 處理新 K 線: 2026-02-13 15:00:00
+2026-02-14 00:59:08,947 [INFO] [SIGNAL] Strategy1_MAD_BSR (0.0 BTC) | CLOSE | MAD or BS fell below Threshold
+2026-02-14 00:59:08,949 [INFO] [SKIP] Strategy1_MAD_BSR 目前空手，無法平倉
+2026-02-14 00:59:08,949 [INFO] [SIGNAL] Price_Volume2 (0.0 BTC) | CLOSE | Exit: OBV(-975095.2)<MA or ATR<MA
+2026-02-14 00:59:08,950 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉
+2026-02-14 00:59:08,950 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (0.0 BTC) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-14 00:59:08,951 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉
+2026-02-14 00:59:08,951 [INFO] [SIGNAL] Strategy6_Climax_Momentum (0.0 BTC) | CLOSE | Vol_CoolDown & OBV_Drop
+2026-02-14 00:59:08,951 [INFO] [SKIP] Strategy6_Climax_Momentum 目前空手，無法平倉
+2026-02-14 00:59:08,952 [INFO] [SIGNAL] Strategy7_Mom_LowVolFilter (0.007251452828574205 BTC) | LONG | Mom_Strong(1524.38) & Not_Dead_Fish(0.0232)
+2026-02-14 00:59:08,952 [INFO] [SKIP] Strategy7_Mom_LowVolFilter 已有持倉 0.007251452828574205，跳過開倉
+2026-02-14 00:59:08,952 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 68904.8
+2026-02-14 00:59:08,952 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 00:59:14,026 [WARNING] 停止運行

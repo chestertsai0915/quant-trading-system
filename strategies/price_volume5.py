@@ -1,81 +1,72 @@
 from .base_strategy import BaseStrategy
-import indicators as ind
-import numpy as np
+import pandas as pd
 
 class PriceVolume5(BaseStrategy):
     def __init__(self):
         super().__init__(name="Strategy5_HighVol_Momentum")
         
-        # --- 策略參數 ---
-        self.window = 25       # 滾動視窗 (短期統計)
-        self.th1 = 0.9         # ATR 閾值 (波動率極高)
-        self.th2 = 0.7         # Momentum 閾值 (動能強勢)
-        
-        # 基礎指標參數 (依照你之前的定義)
+        # --- 參數映射 ---
         self.atr_window = 16   # ATR 計算週期
         self.mom_period = 10   # Momentum 週期
         self.mom_smooth = 5    # Momentum 平滑週期
+        
+        self.window = 25       # 滾動視窗 (短期統計)
+        self.th1 = 0.9         # ATR 閾值 (90%)
+        self.th2 = 0.7         # Momentum 閾值 (70%)
 
     def generate_signal(self):
-        # 1. 數據長度檢查
-        # 需要: ATR(16) + Rolling(25) = 41 根
-        # Momentum(10+5) + Rolling(25) = 40 根
-        # 安全邊際設 60
-        if len(self.kline_data) < 60:
+        # ==========================================
+        # 1. 定義需要的特徵 ID
+        # ==========================================
+        
+        # A. 基礎指標數值
+        fid_atr = f"custom_atr_{self.atr_window}_v1"
+        fid_mom = f"smooth_mom_{self.mom_period}_{self.mom_smooth}_v1"
+        
+        # B. 動態閾值線 (Rolling Quantile)
+        # ATR 閾值
+        fid_atr_th = f"custom_atr_quantile_{self.atr_window}_{self.window}_{self.th1}_v1"
+        
+        # Momentum 閾值
+        fid_mom_th = f"smooth_mom_quantile_{self.mom_period}_{self.mom_smooth}_{self.window}_{self.th2}_v1"
+
+        # ==========================================
+        # 2. 向 Feature Store 請求數據
+        # ==========================================
+        df = self.load_features([fid_atr, fid_mom, fid_atr_th, fid_mom_th])
+        
+        # 安全檢查
+        if df.empty or len(df) < self.window + 20:
             return None
 
-        # 2. 準備數據
-        close = self.kline_data['close'].values
-        high = self.kline_data['high'].values
-        low = self.kline_data['low'].values
-        
-        # ==========================================
-        #  因子計算
-        # ==========================================
-
-        # A. 計算 ATR (自定義版: TR -> SMA)
-        atr = ind.AlphaLibrary.calc_custom_atr(high, low, close, window=self.atr_window)
-
-        # B. 計算 Momentum (平滑版: MOM -> SMA)
-        momentum = ind.AlphaLibrary.calc_smooth_momentum(close, mom_period=self.mom_period, smooth_period=self.mom_smooth)
-
-        # C. 計算滾動分位數閾值
-        # data['ATR'].rolling(25).quantile(0.9)
-        atr_th = ind.AlphaLibrary.calc_rolling_quantile(atr, self.window, self.th1)
-        
-        # data['momentum'].rolling(25).quantile(0.7)
-        mom_th = ind.AlphaLibrary.calc_rolling_quantile(momentum, self.window, self.th2)
+        required_cols = [fid_atr, fid_mom, fid_atr_th, fid_mom_th]
+        if not all(col in df.columns for col in required_cols):
+            return None
 
         # ==========================================
-        #  獲取當前數值
+        # 3. 交易邏輯
         # ==========================================
         
-        curr_atr = atr[-1]
-        curr_mom = momentum[-1]
+        curr = df.iloc[-1]
         
-        curr_atr_th = atr_th[-1]
-        curr_mom_th = mom_th[-1]
+        # 取值
+        curr_atr    = curr[fid_atr]
+        curr_mom    = curr[fid_mom]
+        curr_atr_th = curr[fid_atr_th]
+        curr_mom_th = curr[fid_mom_th]
 
-        # Debug Log
-        # print(f"[{self.name}] ATR:{curr_atr:.2f}(>{curr_atr_th:.2f}) | MOM:{curr_mom:.2f}(>{curr_mom_th:.2f})")
-
-        # ==========================================
-        #  進出場邏輯
-        # ==========================================
-
-        # 進場: ATR > 90% Quantile AND Momentum > 70% Quantile
-        # 意義：波動率放大且動能強勁 -> 追漲
+        # 進場: 波動率放大 (ATR > 90%) 且 動能強勁 (Mom > 70%)
         long_condition = (curr_atr > curr_atr_th) and (curr_mom > curr_mom_th)
         
-        # 出場: ATR < 90% Quantile AND Momentum < 70% Quantile
-        # 注意：使用 & (AND)，代表兩者都必須轉弱才跑，這會比 OR 更能抱住單子
+        # 出場: 波動率冷卻 (ATR < 90%) 且 動能轉弱 (Mom < 70%)
+        # 使用 AND 邏輯，容忍度較高 (抱單)
         exit_condition = (curr_atr < curr_atr_th) and (curr_mom < curr_mom_th)
 
         if long_condition:
             return {
                 'action': 'LONG',
                 'quantity': 0.005,
-                'reason': f'Vol_Explosion & Mom_Strong'
+                'reason': f'Vol_Explosion({curr_atr:.2f}) & Mom_Strong({curr_mom:.2f})'
             }
             
         elif exit_condition:

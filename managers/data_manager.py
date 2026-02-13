@@ -164,7 +164,6 @@ class DataManager:
                 if source_name == 'us_stock_qqq':
                     df = self.db.load_market_data('QQQ', '1d', limit=500)
                     if not df.empty:
-                        df = self.feature_engineer.add_qqq_wavelet_feature(df)
                         snapshot[source_name] = df
                     continue
 

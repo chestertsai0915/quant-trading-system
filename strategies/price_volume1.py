@@ -1,94 +1,75 @@
 from .base_strategy import BaseStrategy
-import indicators as ind
-import numpy as np
+import pandas as pd
 
 class PriceVolume1(BaseStrategy):
     def __init__(self):
         super().__init__(name="Strategy1_MAD_BSR")
         
-        # --- 策略參數 (完全依照你提供的數值) ---
-        self.window = 25
-        self.th1 = 0.8  # MAD 的分位數閾值
-        self.th2 = 0.9  # BS_Ratio 的分位數閾值
-        
-        # MAD 計算本身的 SMA 週期 (原本回測代碼中似乎有用到 talib.SMA(10) 來算 MAD)
-        # 假設你的 mad 是用 10日均線計算偏離
-        self.mad_ma_period = 10 
+        # --- 參數設定 (對應 Feature ID 的參數) ---
+        self.mad_ma = 10       # MAD 的均線週期
+        self.win = 25          # 滾動視窗
+        self.th1 = 0.8         # MAD 閾值分位數
+        self.th2 = 0.9         # BS 閾值分位數
 
     def generate_signal(self):
-        # 1. 數據長度檢查
-        # 需要: MAD(10) -> Rolling(25) -> Quantile
-        # 至少需要 10 + 25 = 35 根，保險起見設 50
-        if len(self.kline_data) < 50:
+        # ==========================================
+        # 1. 定義需要的特徵 ID (點菜單)
+        # ==========================================
+        
+        # A. 數值本身
+        fid_mad = f"mad_close_{self.mad_ma}_v1"  # 需確保 feature_definitions.py 有 MAD_V1 且 id 規則一致
+        fid_bs  = "bs_ratio_v1"
+        
+        # B. 閾值線 (來自我們剛新增的複合特徵)
+        fid_mad_th = f"mad_quantile_{self.mad_ma}_{self.win}_{self.th1}_v1"
+        fid_bs_th  = f"bs_quantile_{self.win}_{self.th2}_v1"
+        
+        # C. 濾網
+        fid_time = "is_us_trade_time_v1"
+
+        # ==========================================
+        # 2. 向 Feature Store 請求數據
+        # ==========================================
+        # 這會自動計算、快取並對齊所有特徵
+        df = self.load_features([fid_mad, fid_bs, fid_mad_th, fid_bs_th, fid_time])
+        
+        # 安全檢查
+        if df.empty or len(df) < 50:
+            return None
+        
+        # 檢查欄位是否存在 (防止 ID 打錯或計算失敗)
+        required_cols = [fid_mad, fid_bs, fid_mad_th, fid_bs_th, fid_time]
+        if not all(col in df.columns for col in required_cols):
             return None
 
-        # 2. 時間因子計算
-        # 這一步會回傳一個加上了 'is_trade_time' 欄位的 df
-        df_with_time = ind.AlphaLibrary.add_us_market_open_flag(self.kline_data)
-        
-        # 3. 準備 Numpy Array
-        close = df_with_time['close'].values
-        high = df_with_time['high'].values
-        low = df_with_time['low'].values
-        
         # ==========================================
-        #  因子計算
-        # ==========================================
-
-        # A. 計算 MAD (使用 close, 預設 MA=10)
-        # data['mad'] = (close - ma) / ma
-        mad = ind.AlphaLibrary.calc_mad(close, window=self.mad_ma_period)
-
-        # B. 計算 BS Ratio
-        # data['bs_ratio'] = (close - low) / (high - close)
-        bs_ratio = ind.AlphaLibrary.calc_bs_ratio(high, low, close)
-
-        # C. 計算滾動分位數閾值 (Rolling Quantile)
-        # data['mad'].rolling(window).quantile(th1)
-        mad_quantile = ind.AlphaLibrary.calc_rolling_quantile(mad, self.window, self.th1)
-        
-        # data['bs_ratio'].rolling(window).quantile(th2)
-        bs_quantile = ind.AlphaLibrary.calc_rolling_quantile(bs_ratio, self.window, self.th2)
-
-        # ==========================================
-        #  獲取當前數值 (Current Step)
+        # 3. 交易邏輯 (只剩下單純的比大小)
         # ==========================================
         
-        # 對應 shift(1).fillna(False) 的邏輯：
-        # 實盤中，當 K 線收盤 (Close) 時，我們拿到的是 illoc[-1]，這就是回測中 shift(1) 的那個時間點
-        # 我們根據這個剛收盤的數據，來決定「下一個 Open」要不要動作
+        # 取出最新一筆 (Current Step)
+        curr = df.iloc[-1]
         
-        curr_mad = mad[-1]
-        curr_bs = bs_ratio[-1]
-        
-        curr_mad_th = mad_quantile[-1]
-        curr_bs_th = bs_quantile[-1]
-        
-        is_trade_time = df_with_time['is_trade_time'].iloc[-1]
+        curr_mad    = curr[fid_mad]
+        curr_bs     = curr[fid_bs]
+        curr_mad_th = curr[fid_mad_th]
+        curr_bs_th  = curr[fid_bs_th]
+        is_trade    = bool(curr[fid_time]) # 轉成布林值
 
-        # Debug Log (觀察數值用)
-        # print(f"MAD:{curr_mad:.4f} (Th:{curr_mad_th:.4f}) | BS:{curr_bs:.2f} (Th:{curr_bs_th:.2f}) | Time:{is_trade_time}")
-
-        # ==========================================
-        #  進出場條件 (Logic)
-        # ==========================================
-
-        # data['long_signal'] = (mad > mad_th) & (bs > bs_th) & (time==True)
+        # 進場條件
         long_condition = (curr_mad > curr_mad_th) and \
                          (curr_bs > curr_bs_th) and \
-                         (is_trade_time)
+                         (is_trade)
 
-        # data['exit_signal'] = (mad < mad_th) | (bs < bs_th) & (time==True)
-        # 注意：這裡解釋為 (條件A 或 條件B) 且 在交易時間內
+        # 出場條件
         exit_condition = ((curr_mad < curr_mad_th) or (curr_bs < curr_bs_th)) and \
-                         (is_trade_time)
+                         (is_trade)
 
         # 回傳訊號
         if long_condition:
             return {
                 'action': 'LONG',
-                'quantity': 0.005, # 之後由資金管理模組決定
-                'reason': f'MAD({curr_mad:.4f})>Th & BS({curr_bs:.2f})>Th'
+                'quantity': 0.005,
+                'reason': f'MAD({curr_mad:.4f})>Th({curr_mad_th:.4f}) & BS({curr_bs:.2f})>Th'
             }
             
         elif exit_condition:

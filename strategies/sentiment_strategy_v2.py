@@ -1,13 +1,13 @@
 from .base_strategy import BaseStrategy
-import numpy as np
 import pandas as pd
+import numpy as np
 
 class SentimentStrategyV2(BaseStrategy):
     def __init__(self):
         super().__init__(name="Strategy12_GnF_Yield_Ratio")
         
         # --- 策略參數 ---
-        self.gnf_window = 100       # GnF Ratio 滾動視窗
+        self.gnf_window = 100       # GnF Ratio 滾動視窗 (小時)
         self.yield_window = 168     # 殖利率滾動視窗 (168小時 = 1週)
         
         # 閾值
@@ -18,107 +18,109 @@ class SentimentStrategyV2(BaseStrategy):
         self.yield_exit_q = 0.3     # 出場分位數
         
     def generate_signal(self):
-        # 1. 確保 DataBoard 存在
-        if self.data_board is None:
+        # ==========================================
+        # 1. 定義需要的特徵 ID
+        # ==========================================
+        
+        # A. Fear & Greed Raw
+        fid_fg = "fear_greed_raw_v1"
+        
+        # B. Macro Raw (Yield 10Y)
+        fid_yield = "macro_raw_yield_10y_v1"
+        
+        # C. Funding Rate (作為 Fallback)
+        # 假設我們也有一個 funding_rate_raw_{symbol}_v1
+        # 但為了簡單，這裡假設如果 yield 沒抓到，策略直接返回 None，或你可以新增 FundingRateRaw
+        # 這裡示範只用 Yield
+        
+        # ==========================================
+        # 2. 向 Feature Store 請求數據
+        # ==========================================
+        # Feature Store 會自動將 F&G (日) 和 Yield (日) ffill 到小時線
+        df = self.load_features([fid_fg, fid_yield])
+        
+        # 安全檢查
+        if df.empty or len(df) < max(self.gnf_window, self.yield_window):
             return None
 
-        # 2. 準備基礎 K 線 (High Freq)
-        # BaseStrategy 已經把 main_kline 放在 self.kline_data
-        df = self.kline_data.copy()
-
-        # ==========================================
-        # 3. 【特徵工程】混合外部數據
-        # ==========================================
-
-        # A. 混合 Fear & Greed (單一指標，直接用 Helper)
-        df = self.enrich_data_with_external(
-            source_name='fear_greed',
-            feature_cols=['value'],
-            rename_map={'value': 'fear_greed'}
-        )
-
-        # B. 混合 US Yield 10Y (多指標數據，需手動處理)
-        # 從 DataBoard 取得 FRED 原始數據
-        fred_df = self.data_board.external_data.get('fred_macro')
-        
-        if fred_df is not None and not fred_df.empty:
-            print('----------------------------------------------------------------',fred_df['metric'].unique())  # 印出有哪些指標，幫助調試
-            # [關鍵步驟] 先篩選出我們要的 'yield_10y'
-            # 因為 fred_macro 裡面混雜了 yield_2y, fed_assets 等
-            yield_source = fred_df[fred_df['metric'] == 'yield_10y']
-            
-            # 手動呼叫 FeatureEngineer 進行縫合
-            df = self.feature_engineer.attach_low_freq_feature(
-                high_freq_df=df,
-                low_freq_df=yield_source,
-                feature_cols=['value'],
-                rename_map={'value': 'yield_10y'}
-            )
-
-        print(df)
-        # ==========================================
-        # 4. 數據檢查與計算 (邏輯保留)
-        # ==========================================
-        
-        # 檢查 Fear Greed 是否存在
-        if 'fear_greed' not in df.columns:
-            return None
-            
-        # 檢查數據長度
-        if len(df) < max(self.gnf_window, self.yield_window):
+        # 如果關鍵特徵缺失，直接不交易
+        if fid_fg not in df.columns or fid_yield not in df.columns:
             return None
 
-        # A. 計算 GnF Ratio 序列
-        # GnF = FearGreed / Volume
-        # 使用 replace 避免除以 0
-        gnf_ratio_series = df['fear_greed'] / np.log(df['volume'].replace(0, 1))
-        
-        # B. 計算 GnF 的動態閾值
-        gnf_entry_th_series = gnf_ratio_series.rolling(window=self.gnf_window).quantile(self.gnf_entry_q)
-        gnf_exit_th_series = gnf_ratio_series.rolling(window=self.gnf_window).quantile(self.gnf_exit_q)
-
-        # C. 處理 Yield (Fallback 機制)
-        # 如果 yield_10y 成功抓到且有值，就用它；否則退而求其次用 funding_rate
-        target_yield_col = 'yield_10y' if 'yield_10y' in df.columns else 'funding_rate'
-        
-        # 如果連 funding_rate 都沒有，那就真的沒戲唱了
-        if target_yield_col not in df.columns:
-            return None
-            
-        yield_series = df[target_yield_col]
-        
-        # D. 計算 Yield 的動態閾值
-        yield_entry_th_series = yield_series.rolling(window=self.yield_window).quantile(self.yield_entry_q)
-        yield_exit_th_series = yield_series.rolling(window=self.yield_window).quantile(self.yield_exit_q)
-
         # ==========================================
-        # 5. 取出「當下」數值 & 產生訊號
+        # 3. 策略層計算 (Strategy-Side Calculation)
         # ==========================================
         
-        # 當前值
+        # A. 取得已經廣播好的序列 (Hourly Series)
+        fg_series = df[fid_fg]
+        yield_series = df[fid_yield]
+        
+        # B. 計算 GnF Ratio
+        # 公式: FearGreed / log(Volume)
+        # 這裡混合了日線特徵 (fg_series) 和小時線特徵 (df['volume'])
+        # 這就是所謂的 "廣播後計算"
+        # 注意：load_features 回傳的 df 包含了原始 K 線數據 (close, volume...)
+        log_volume = np.log(self.kline_data['volume'].replace(0, 1))
+        
+        # 為了對齊長度，我們只取 load_features 回傳的部分
+        # 因為 df 已經是與 kline 對齊的結果
+        # 但保險起見，我們直接操作 df 裡的 volume (如果 feature store 有保留 raw kline columns)
+        # 根據我們之前的實作，load_features 回傳的是 merge 後的 df，
+        # 但它只保留了 open_time 和 features。
+        # [修正]: 我們需要把 volume 併進來，或者直接用 kline_data 的 volume (需確保 index 對齊)
+        
+        # 最佳解：利用 merge_asof 對齊時間索引
+        # 這裡簡單假設 df 的長度跟 self.kline_data 一樣且對齊
+        # (通常是的，因為 FeatureStore 也是用 main_kline 作為骨架)
+        
+        # 為了安全，我們重新用時間對齊 volume
+        vol_series = self.kline_data.set_index('open_time')['volume']
+        # 確保 df 的 index 是 open_time (如果不是，請 set_index)
+        if 'open_time' in df.columns:
+             df = df.set_index('open_time')
+        
+        # 對齊 volume 到 df
+        aligned_vol = vol_series.reindex(df.index).ffill()
+        
+        # 計算 GnF
+        gnf_ratio_series = fg_series / np.log(aligned_vol.replace(0, 1))
+        
+        # C. 計算 GnF 的動態閾值 (Rolling on Hourly Data)
+        gnf_entry_th = gnf_ratio_series.rolling(window=self.gnf_window).quantile(self.gnf_entry_q)
+        gnf_exit_th = gnf_ratio_series.rolling(window=self.gnf_window).quantile(self.gnf_exit_q)
+        
+        # D. 計算 Yield 的動態閾值 (Rolling on Hourly Broadcasted Data)
+        yield_entry_th = yield_series.rolling(window=self.yield_window).quantile(self.yield_entry_q)
+        yield_exit_th = yield_series.rolling(window=self.yield_window).quantile(self.yield_exit_q)
+
+        # ==========================================
+        # 4. 交易邏輯
+        # ==========================================
+        
         curr_gnf = gnf_ratio_series.iloc[-1]
         curr_yield = yield_series.iloc[-1]
         
-        # 當前閾值
-        curr_gnf_entry_th = gnf_entry_th_series.iloc[-1]
-        curr_gnf_exit_th = gnf_exit_th_series.iloc[-1]
+        curr_gnf_entry = gnf_entry_th.iloc[-1]
+        curr_gnf_exit = gnf_exit_th.iloc[-1]
         
-        curr_yield_entry_th = yield_entry_th_series.iloc[-1]
-        curr_yield_exit_th = yield_exit_th_series.iloc[-1]
+        curr_yield_entry = yield_entry_th.iloc[-1]
+        curr_yield_exit = yield_exit_th.iloc[-1]
 
-        # 檢查是否為 NaN
-        if np.isnan(curr_gnf_entry_th) or np.isnan(curr_yield_entry_th):
+        # 檢查 NaN
+        if np.isnan(curr_gnf_entry) or np.isnan(curr_yield_entry):
             return None
 
-        # 進出場判斷
-        long_condition = (curr_gnf > curr_gnf_entry_th) and (curr_yield > curr_yield_entry_th)
-        exit_condition = (curr_gnf < curr_gnf_exit_th) or (curr_yield < curr_yield_exit_th)
+        # 進場
+        long_condition = (curr_gnf > curr_gnf_entry) and (curr_yield > curr_yield_entry)
+        
+        # 出場
+        exit_condition = (curr_gnf < curr_gnf_exit) or (curr_yield < curr_yield_exit)
 
         if long_condition:
             return {
                 'action': 'LONG',
                 'quantity': 0.005,
-                'reason': f'High_GnF({curr_gnf:.2e}) & High_Yield({curr_yield:.2f}) [{target_yield_col}]'
+                'reason': f'High_GnF({curr_gnf:.2e}) & High_Yield({curr_yield:.2f})'
             }
             
         elif exit_condition:
