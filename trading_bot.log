@@ -3390,3 +3390,122 @@ AttributeError: 'DatabaseHandler' object has no attribute 'save_market_data'
 2026-02-14 00:59:08,952 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 68904.8
 2026-02-14 00:59:08,952 [INFO] 本週期結束，等待下一次收盤...
 2026-02-14 00:59:14,026 [WARNING] 停止運行
+2026-02-14 01:02:55,685 [INFO] 設定檔載入成功: config.json
+2026-02-14 01:02:56,326 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 01:02:56,331 [INFO] [BACKFILL] 上次收盤: 2026-02-13 16:00:00 | 現在時間: 2026-02-13 17:02:56.329000 | 缺少 K 線: 1 根
+2026-02-14 01:02:56,331 [INFO] [BACKFILL] 開始回補 3 根 K 線...
+2026-02-14 01:02:56,711 [INFO] [BACKFILL] 成功寫入 3 筆數據！斷層修復完成。
+2026-02-14 01:02:56,712 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 01:02:56,712 [INFO]  外部數據背景更新啟動
+2026-02-14 01:02:56,713 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 01:02:56,714 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 01:02:56,716 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 01:02:56,717 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 01:02:56,717 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 01:02:56,718 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 01:02:56,718 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 01:02:56,718 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 01:02:56,718 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 01:02:56,719 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 01:02:56,719 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 01:02:56,719 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 01:02:56,719 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 01:02:56,720 [INFO] 策略已掛載: QQQ_price
+2026-02-14 01:02:56,720 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 01:02:56,720 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 01:02:58,172 [INFO] 監控 1h K 線...
+2026-02-14 01:02:58,229 [INFO] [ETL] 處理新 K 線: 2026-02-13 16:00:00
+2026-02-14 01:02:58,390 [ERROR] 特徵合併失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,392 [ERROR] 特徵合併失敗 bs_ratio_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,393 [ERROR] 特徵合併失敗 mad_quantile_10_25_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,394 [ERROR] 特徵合併失敗 bs_quantile_25_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,396 [ERROR] 特徵合併失敗 is_us_trade_time_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,401 [ERROR] 特徵合併失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,403 [ERROR] 特徵合併失敗 custom_atr_ma_16_30_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,404 [ERROR] 特徵合併失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,405 [ERROR] 特徵合併失敗 smooth_obv_ma_20_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,410 [ERROR] 特徵合併失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,411 [ERROR] 特徵合併失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,412 [ERROR] 特徵合併失敗 smooth_obv_quantile_20_90_0.3_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,414 [ERROR] 特徵合併失敗 mad_quantile_10_90_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,420 [ERROR] 特徵合併失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,422 [ERROR] 特徵合併失敗 vroc_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,423 [ERROR] 特徵合併失敗 smooth_obv_quantile_20_250_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,424 [ERROR] 特徵合併失敗 vroc_quantile_10_250_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,430 [ERROR] 特徵合併失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,431 [ERROR] 特徵合併失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,432 [ERROR] 特徵合併失敗 smooth_mom_quantile_10_5_25_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,433 [ERROR] 特徵合併失敗 custom_atr_quantile_16_25_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,438 [ERROR] 特徵合併失敗 custom_atr_16_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,439 [ERROR] 特徵合併失敗 smooth_obv_20_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,440 [ERROR] 特徵合併失敗 custom_atr_quantile_16_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,443 [ERROR] 特徵合併失敗 smooth_obv_quantile_20_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,448 [ERROR] 特徵合併失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,450 [ERROR] 特徵合併失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,450 [ERROR] 特徵合併失敗 smooth_mom_quantile_10_5_25_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,452 [ERROR] 特徵合併失敗 mad_quantile_10_25_0.1_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,458 [ERROR] 特徵合併失敗 mad_close_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,459 [ERROR] 特徵合併失敗 bs_ratio_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,460 [ERROR] 特徵合併失敗 bs_quantile_30_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,461 [ERROR] 特徵合併失敗 mad_quantile_10_30_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,468 [ERROR] 特徵合併失敗 smooth_mom_10_5_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,469 [ERROR] 特徵合併失敗 vroc_10_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,471 [ERROR] 特徵合併失敗 smooth_mom_quantile_10_5_90_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,473 [ERROR] 特徵合併失敗 vroc_quantile_10_90_0.9_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,479 [ERROR] 特徵合併失敗 google_trends_raw_google_trends_crypto_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,481 [ERROR] 特徵合併失敗 google_trends_raw_google_trends_BTC_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,482 [ERROR] 特徵合併失敗 zscore_close_100_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,483 [ERROR] 特徵合併失敗 zscore_quantile_100_1000_0.7_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,487 [ERROR] 特徵合併失敗 fear_greed_raw_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,488 [ERROR] 特徵合併失敗 macro_raw_yield_10y_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,592 [ERROR] 特徵合併失敗 vol_sma_diff_15_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,594 [ERROR] 特徵合併失敗 vol_sma_diff_quantile_15_60_0.8_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,595 [ERROR] 特徵合併失敗 vol_sma_diff_quantile_15_100_0.2_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,597 [ERROR] 特徵合併失敗 is_us_trade_time_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,610 [ERROR] 特徵合併失敗 wavelet_us_stock_qqq_120_A_mean_v1: Index(...) must be called with a collection of some kind, 'open_time' was passed
+2026-02-14 01:02:58,612 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 68863.3
+2026-02-14 01:02:58,612 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 01:03:08,629 [WARNING] [AlphaVantage] 抓取失敗: We have detected your API key as E5VUD2IG0AV6U3WM and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits.
+2026-02-14 01:03:08,631 [INFO] [US_STOCK] AlphaVantage 失敗，切換至備用源 Tiingo 抓取 QQQ...
+2026-02-14 01:03:09,618 [INFO] [US_STOCK] Tiingo 抓取成功！
+2026-02-14 01:03:39,993 [WARNING] 停止運行
+2026-02-14 01:06:42,659 [INFO] 設定檔載入成功: config.json
+2026-02-14 01:06:43,311 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 01:06:43,317 [INFO] [BACKFILL] 上次收盤: 2026-02-13 17:00:00 | 現在時間: 2026-02-13 17:06:43.317000 | 缺少 K 線: 0 根
+2026-02-14 01:06:43,317 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 01:06:43,673 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 01:06:43,675 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 01:06:43,675 [INFO]  外部數據背景更新啟動
+2026-02-14 01:06:43,676 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 01:06:43,677 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 01:06:43,678 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 01:06:43,678 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 01:06:43,678 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 01:06:43,679 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 01:06:43,679 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 01:06:43,679 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 01:06:43,680 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 01:06:43,680 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 01:06:43,680 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 01:06:43,680 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 01:06:43,681 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 01:06:43,681 [INFO] 策略已掛載: QQQ_price
+2026-02-14 01:06:43,681 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 01:06:43,681 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 01:06:45,146 [INFO] 監控 1h K 線...
+2026-02-14 01:06:45,214 [INFO] [ETL] 處理新 K 線: 2026-02-13 16:00:00
+2026-02-14 01:06:45,613 [INFO] [SIGNAL] Strategy1_MAD_BSR (0.0 BTC) | CLOSE | MAD or BS fell below Threshold
+2026-02-14 01:06:45,615 [INFO] [SKIP] Strategy1_MAD_BSR 目前空手，無法平倉
+2026-02-14 01:06:45,615 [INFO] [SIGNAL] Price_Volume2 (0.0 BTC) | CLOSE | Exit: OBV(-974380.7)<MA or ATR<MA
+2026-02-14 01:06:45,615 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉
+2026-02-14 01:06:45,616 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (0.0 BTC) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-14 01:06:45,616 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉
+2026-02-14 01:06:45,616 [INFO] [SIGNAL] Strategy4_High_Momentum (0.0 BTC) | CLOSE | Momentum_Collapsed
+2026-02-14 01:06:45,617 [INFO] [SKIP] Strategy4_High_Momentum 目前空手，無法平倉
+2026-02-14 01:06:45,617 [INFO] [SIGNAL] Strategy6_Climax_Momentum (0.0 BTC) | CLOSE | Vol_CoolDown & OBV_Drop
+2026-02-14 01:06:45,618 [INFO] [SKIP] Strategy6_Climax_Momentum 目前空手，無法平倉
+2026-02-14 01:06:45,618 [INFO] [SIGNAL] Strategy7_Mom_LowVolFilter (0.007251452828574205 BTC) | LONG | Mom_Strong(1988.86) & Not_Dead_Fish(0.0192)
+2026-02-14 01:06:45,619 [INFO] [SKIP] Strategy7_Mom_LowVolFilter 已有持倉 0.007251452828574205，跳過開倉
+2026-02-14 01:06:45,619 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 68911.8
+2026-02-14 01:06:45,619 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 01:07:00,331 [WARNING] 停止運行
