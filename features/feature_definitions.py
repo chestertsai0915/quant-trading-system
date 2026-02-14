@@ -459,8 +459,8 @@ class GoogleTrendsRaw_V1(BaseFeature):
         # 假設外部數據有 open_time 欄位
         if 'open_time' in target.columns:
             df=pd.DataFrame({
-            'open_time': df['open_time'] if 'open_time' in df.columns else df.index,
-            self.feature_id: df["value"]
+            'open_time': target['open_time'] if 'open_time' in target.columns else target.index,
+            self.feature_id: target["value"]
         })   
         return df
 
@@ -502,8 +502,8 @@ class MacroRaw_V1(BaseFeature):
         
         if 'open_time' in target.columns:
             df= pd.DataFrame({
-            'open_time': df['open_time'] if 'open_time' in df.columns else df.index,
-            self.feature_id: df["value"]
+            'open_time': target['open_time'] if 'open_time' in target.columns else target.index,
+            self.feature_id: target["value"]
         })
         return df
 

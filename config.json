@@ -11,7 +11,7 @@
     },
     "risk": {
         "leverage": 5,
-        "allocation_mode": "EQUAL_WEIGHT",
+        "allocation_mode": "SHARPE_REBALANCE",
         "total_strategies": 13,
         "default_amount": 100, 
         "strategy_allocations": {

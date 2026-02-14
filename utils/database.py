@@ -37,7 +37,8 @@ class DatabaseHandler:
                     quantity REAL,
                     notional REAL,
                     order_id TEXT,
-                    fee REAL DEFAULT 0
+                    fee REAL DEFAULT 0,
+                    realized_pnl REAL DEFAULT 0
                 )
             ''')
 
@@ -99,11 +100,11 @@ class DatabaseHandler:
             ''')
 
             cursor.execute('''
-            CREATE TABLE IF NOT EXISTS strategy_states (
-                strategy TEXT PRIMARY KEY,
-                position REAL DEFAULT 0,      
-                entry_price REAL DEFAULT 0,  
-                realized_pnl REAL DEFAULT 0   
+                CREATE TABLE IF NOT EXISTS strategy_states (
+                    strategy TEXT PRIMARY KEY,
+                    position REAL DEFAULT 0,      
+                    entry_price REAL DEFAULT 0,  
+                    realized_pnl REAL DEFAULT 0   
                 )
             ''')
         
@@ -112,19 +113,45 @@ class DatabaseHandler:
         except Exception as e:
             logging.error(f" [DB ERROR] 初始化資料庫表失敗: {e}")
 
-    def log_trade(self, strategy, symbol, side, price, quantity, order_id, notional):
-        """ 紀錄一筆成交 """
+    def log_trade(self, strategy, symbol, side, price, quantity, order_id, notional, pnl=0):
         try:
             cursor = self.conn.cursor()
             cursor.execute('''
-                INSERT INTO trades (timestamp, symbol, strategy, side, price, quantity, notional, order_id)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (datetime.now(), symbol, strategy, side, price, quantity, notional, order_id))
+                INSERT INTO trades (timestamp, symbol, strategy, side, price, quantity, notional, order_id, realized_pnl)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (datetime.now(), symbol, strategy, side, price, quantity, notional, order_id, pnl))
             self.conn.commit()
-            
-            logging.info(f" [DB] 交易已儲存: {side} {quantity} {symbol}")
+            logging.info(f" [DB] 交易已儲存: {side} {quantity} {symbol} | PnL: {pnl:.2f}")
         except Exception as e:
             logging.error(f" [DB ERROR] 寫入交易失敗: {e}")
+
+    def get_strategy_period_pnl(self, days=30):
+        """
+        回傳一個字典: {'StrategyA': 500.0, 'StrategyB': -200.0}
+        """
+        try:
+            cursor = self.conn.cursor()
+            # SQL 魔法：直接撈出過去 N 天的 PnL 總和
+            query = '''
+                SELECT strategy, SUM(realized_pnl)
+                FROM trades
+                WHERE timestamp >= datetime('now', ?)
+                GROUP BY strategy
+            '''
+            # '-30 days'
+            time_filter = f'-{days} days'
+            cursor.execute(query, (time_filter,))
+            
+            results = {}
+            for row in cursor.fetchall():
+                strategy, total_pnl = row
+                results[strategy] = total_pnl if total_pnl else 0.0
+                
+            return results
+            
+        except Exception as e:
+            logging.error(f"[DB Error] 查詢區間損益失敗: {e}")
+            return {}
 
     def log_signal(self, strategy, symbol, action, price, reason):
         """ 紀錄策略訊號 """
@@ -422,3 +449,36 @@ class DatabaseHandler:
             self.conn.commit()
         except Exception as e:
             logging.error(f"[DB Error] 儲存策略狀態失敗: {e}")
+
+    def get_daily_pnl_history(self, days=30):
+        """
+        取得過去 N 天，每個策略的「每日損益」數據 (用於計算 Sharpe)
+        回傳格式: { 'StrategyA': [10, -5, 20...], 'StrategyB': [...] }
+        """
+        try:
+            cursor = self.conn.cursor()
+            # SQL: 按日期和策略分組，加總 realized_pnl
+            query = '''
+                SELECT 
+                    strategy,
+                    DATE(timestamp) as trade_date, 
+                    SUM(realized_pnl) as daily_pnl
+                FROM trades
+                WHERE timestamp >= datetime('now', ?)
+                GROUP BY strategy, trade_date
+                ORDER BY trade_date ASC
+            '''
+            time_filter = f'-{days} days'
+            cursor.execute(query, (time_filter,))
+            
+            history = {}
+            for row in cursor.fetchall():
+                strat, date, pnl = row
+                if strat not in history:
+                    history[strat] = []
+                history[strat].append(pnl)
+                
+            return history
+        except Exception as e:
+            logging.error(f"[DB Error] 查詢每日損益失敗: {e}")
+            return {}

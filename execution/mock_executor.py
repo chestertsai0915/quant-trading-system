@@ -16,7 +16,15 @@ class MockExecutor:
         pos = self.positions.get(symbol, 0.0)
         # logging.info(f" [Mock] 查詢持倉 {symbol}: {pos}")
         return pos
-
+    def get_account_info(self):
+        """
+        模擬回傳帳戶資訊，讓 PortfolioManager 有錢可以算
+        """
+        return {
+            'totalWalletBalance': 100000.0,  # 假裝有 10 萬 U
+            'totalMarginBalance': 100000.0,
+            'availableBalance': 100000.0
+        }
     def execute_order(self, symbol, side, quantity, reduce_only=False):
         """
         模擬下單

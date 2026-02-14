@@ -68,8 +68,8 @@ class TradingBot:
                         
                         # 4. Trade Manager 執行交易
                         for signal in signals:
-                            self.trade_manager.process_signal(signal, current_pos_amt=0)
-
+                            self.trade_manager.process_signal(signal)
+                        # 5. 記錄快照 (包含參考價格)
                         ref_price = data_board.main_kline['close'].iloc[-1]
                         self.trade_manager.log_snapshot(ref_price)
                     

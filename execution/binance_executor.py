@@ -131,3 +131,41 @@ class BinanceExecutor:
             logging.error(f" 設定槓桿失敗: {e.error_code} - {e.error_message}")
         except Exception as e:
             logging.error(f" 設定槓桿發生未知錯誤: {e}")
+
+    def get_account_info(self):
+        """
+        從幣安獲取真實帳戶餘額
+        """
+        try:
+            # 呼叫 API 取得合約帳戶資訊
+            # 這裡回傳的是整個帳戶的詳細資訊
+            # 我們需要過濾出 USDT 的餘額 (假設是用 USDT 本位)
+            account_info = self.client.account()
+            
+            # 取得 USDT 資產
+            total_wallet_balance = 0.0
+            total_margin_balance = 0.0
+            available_balance = 0.0
+            
+            for asset in account_info['assets']:
+                if asset['asset'] == 'USDT':
+                    total_wallet_balance = float(asset['walletBalance'])
+                    total_margin_balance = float(asset['marginBalance'])
+                    available_balance = float(asset['availableBalance'])
+                    break
+            
+            # 回傳符合統一格式的字典
+            return {
+                'totalWalletBalance': total_wallet_balance,
+                'totalMarginBalance': total_margin_balance,
+                'availableBalance': available_balance
+            }
+            
+        except Exception as e:
+            logging.error(f" [Executor] 獲取帳戶資訊失敗: {e}")
+            # 回傳一個安全預設值，避免程式崩潰
+            return {
+                'totalWalletBalance': 0.0,
+                'totalMarginBalance': 0.0,
+                'availableBalance': 0.0
+            }

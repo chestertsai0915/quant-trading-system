@@ -3547,3 +3547,809 @@ AttributeError: 'DatabaseHandler' object has no attribute 'save_market_data'
 2026-02-14 16:45:19,261 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 69650.0
 2026-02-14 16:45:19,261 [INFO] 本週期結束，等待下一次收盤...
 2026-02-14 16:46:27,755 [WARNING] 停止運行
+2026-02-14 21:04:11,243 [INFO] 設定檔載入成功: config.json
+2026-02-14 21:04:11,273 [ERROR]  [DB ERROR] 初始化資料庫表失敗: near "realized_pnl": syntax error
+2026-02-14 21:04:11,900 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 21:04:11,905 [INFO] [BACKFILL] 上次收盤: 2026-02-14 08:00:00 | 現在時間: 2026-02-14 13:04:11.904000 | 缺少 K 線: 5 根
+2026-02-14 21:04:11,905 [INFO] [BACKFILL] 開始回補 7 根 K 線...
+2026-02-14 21:04:12,316 [INFO] [BACKFILL] 成功寫入 7 筆數據！斷層修復完成。
+2026-02-14 21:04:12,317 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 21:04:12,317 [INFO]  外部數據背景更新啟動
+2026-02-14 21:04:12,317 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 21:04:12,319 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 21:04:12,320 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 21:04:12,320 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 21:04:12,321 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 21:04:12,321 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 21:04:12,321 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 21:04:12,322 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 21:04:12,322 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 21:04:12,323 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 21:04:12,323 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 21:04:12,323 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 21:04:12,324 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 21:04:12,324 [INFO] 策略已掛載: QQQ_price
+2026-02-14 21:04:12,324 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 21:04:12,325 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 21:06:52,084 [INFO] 設定檔載入成功: config.json
+2026-02-14 21:06:52,099 [ERROR]  [DB ERROR] 初始化資料庫表失敗: near "realized_pnl": syntax error
+2026-02-14 21:06:52,707 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 21:06:52,712 [INFO] [BACKFILL] 上次收盤: 2026-02-14 13:00:00 | 現在時間: 2026-02-14 13:06:52.711000 | 缺少 K 線: 0 根
+2026-02-14 21:06:52,712 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 21:06:53,150 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 21:06:53,151 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 21:06:53,151 [INFO]  外部數據背景更新啟動
+2026-02-14 21:06:53,152 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 21:06:53,154 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 21:06:53,155 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 21:06:53,155 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 21:06:53,155 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 21:06:53,155 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 21:06:53,155 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 21:06:53,156 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 21:06:53,156 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 21:06:53,157 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 21:06:53,157 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 21:06:53,157 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 21:06:53,157 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 21:06:53,157 [INFO] 策略已掛載: QQQ_price
+2026-02-14 21:06:53,157 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 21:06:53,157 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 21:06:53,159 [INFO] [Portfolio] 無狀態檔，將初始化為全新狀態。
+2026-02-14 21:06:55,752 [INFO] 監控 1h K 線...
+2026-02-14 21:06:55,824 [INFO] [ETL] 處理新 K 線: 2026-02-14 12:00:00
+2026-02-14 21:06:59,289 [ERROR] 核心崩潰: TradeManager.process_signal() got an unexpected keyword argument 'current_pos_amt'
+2026-02-14 21:09:26,762 [INFO] 設定檔載入成功: config.json
+2026-02-14 21:09:26,777 [ERROR]  [DB ERROR] 初始化資料庫表失敗: near "realized_pnl": syntax error
+2026-02-14 21:09:27,492 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 21:09:27,496 [INFO] [BACKFILL] 上次收盤: 2026-02-14 13:00:00 | 現在時間: 2026-02-14 13:09:27.496000 | 缺少 K 線: 0 根
+2026-02-14 21:09:27,496 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 21:09:27,862 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 21:09:27,863 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 21:09:27,864 [INFO]  外部數據背景更新啟動
+2026-02-14 21:09:27,864 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 21:09:27,866 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 21:09:27,866 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 21:09:27,866 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 21:09:27,866 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 21:09:27,867 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 21:09:27,867 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 21:09:27,867 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 21:09:27,867 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 21:09:27,869 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 21:09:27,869 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 21:09:27,869 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 21:09:27,870 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 21:09:27,870 [INFO] 策略已掛載: QQQ_price
+2026-02-14 21:09:27,870 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 21:09:27,870 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 21:09:27,871 [INFO] [Portfolio] 無狀態檔，將初始化為全新狀態。
+2026-02-14 21:09:29,456 [INFO] 監控 1h K 線...
+2026-02-14 21:09:29,514 [INFO] [ETL] 處理新 K 線: 2026-02-14 12:00:00
+2026-02-14 21:09:29,912 [ERROR] 核心崩潰: 'MockExecutor' object has no attribute 'get_account_info'
+2026-02-14 21:12:11,127 [INFO] 設定檔載入成功: config.json
+2026-02-14 21:12:11,139 [ERROR]  [DB ERROR] 初始化資料庫表失敗: near "realized_pnl": syntax error
+2026-02-14 21:12:11,518 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 21:12:11,524 [INFO] [BACKFILL] 上次收盤: 2026-02-14 13:00:00 | 現在時間: 2026-02-14 13:12:11.523000 | 缺少 K 線: 0 根
+2026-02-14 21:12:11,524 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 21:12:11,945 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 21:12:11,946 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 21:12:11,946 [INFO]  外部數據背景更新啟動
+2026-02-14 21:12:11,947 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 21:12:11,949 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 21:12:11,949 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 21:12:11,949 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 21:12:11,949 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 21:12:11,949 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 21:12:11,951 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 21:12:11,951 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 21:12:11,951 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 21:12:11,951 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 21:12:11,951 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 21:12:11,951 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 21:12:11,952 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 21:12:11,952 [INFO] 策略已掛載: QQQ_price
+2026-02-14 21:12:11,952 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 21:12:11,952 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 21:12:11,952 [INFO] [Portfolio] 無狀態檔，將初始化為全新狀態。
+2026-02-14 21:12:13,481 [INFO] 監控 1h K 線...
+2026-02-14 21:12:13,540 [INFO] [ETL] 處理新 K 線: 2026-02-14 12:00:00
+2026-02-14 21:12:13,924 [INFO] [Portfolio]  週期 (30天) 到達，執行 Sharpe Rebalance...
+2026-02-14 21:12:13,924 [ERROR] [DB Error] 查詢每日損益失敗: no such column: realized_pnl
+2026-02-14 21:12:13,924 [WARNING] [Portfolio] 無歷史數據，維持現狀
+2026-02-14 21:12:13,925 [INFO] [Portfolio] 狀態已儲存至 portfolio_state.json
+2026-02-14 21:12:13,925 [ERROR] 核心崩潰: no such table: strategy_states
+2026-02-14 21:15:22,505 [INFO] 設定檔載入成功: config.json
+2026-02-14 21:15:22,517 [ERROR]  [DB ERROR] 初始化資料庫表失敗: near "realized_pnl": syntax error
+2026-02-14 21:15:23,246 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 21:15:23,251 [INFO] [BACKFILL] 上次收盤: 2026-02-14 13:00:00 | 現在時間: 2026-02-14 13:15:23.250000 | 缺少 K 線: 0 根
+2026-02-14 21:15:23,251 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 21:15:23,661 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 21:15:23,662 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 21:15:23,663 [INFO]  外部數據背景更新啟動
+2026-02-14 21:15:23,663 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 21:15:23,665 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 21:15:23,666 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 21:15:23,666 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 21:15:23,666 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 21:15:23,666 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 21:15:23,667 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 21:15:23,667 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 21:15:23,668 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 21:15:23,668 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 21:15:23,668 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 21:15:23,669 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 21:15:23,669 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 21:15:23,669 [INFO] 策略已掛載: QQQ_price
+2026-02-14 21:15:23,669 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 21:15:23,669 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 21:15:23,680 [INFO] [Portfolio] 狀態載入成功。上次 Rebalance: 2026-02-14 21:12:13.924805
+2026-02-14 21:15:26,398 [INFO] 監控 1h K 線...
+2026-02-14 21:15:26,458 [INFO] [ETL] 處理新 K 線: 2026-02-14 12:00:00
+2026-02-14 21:15:26,842 [ERROR] 核心崩潰: no such table: strategy_states
+2026-02-14 21:22:18,798 [INFO] 設定檔載入成功: config.json
+2026-02-14 21:22:18,812 [ERROR]  [DB ERROR] 初始化資料庫表失敗: near "realized_pnl": syntax error
+2026-02-14 21:22:19,474 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 21:22:19,479 [INFO] [BACKFILL] 上次收盤: 2026-02-14 13:00:00 | 現在時間: 2026-02-14 13:22:19.478000 | 缺少 K 線: 0 根
+2026-02-14 21:22:19,479 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 21:22:19,929 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 21:22:19,930 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 21:22:19,930 [INFO]  外部數據背景更新啟動
+2026-02-14 21:22:19,931 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 21:22:19,932 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 21:22:19,932 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 21:22:19,933 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 21:22:19,933 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 21:22:19,933 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 21:22:19,934 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 21:22:19,934 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 21:22:19,934 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 21:22:19,934 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 21:22:19,934 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 21:22:19,936 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 21:22:19,936 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 21:22:19,936 [INFO] 策略已掛載: QQQ_price
+2026-02-14 21:22:19,936 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 21:22:19,936 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 21:22:19,937 [INFO] [Portfolio] 狀態載入成功。上次 Rebalance: 2026-02-14 21:12:13.924805
+2026-02-14 21:22:21,523 [INFO] 監控 1h K 線...
+2026-02-14 21:22:21,579 [INFO] [ETL] 處理新 K 線: 2026-02-14 12:00:00
+2026-02-14 21:22:22,003 [ERROR] 核心崩潰: no such table: strategy_states
+2026-02-14 21:22:54,935 [WARNING] 停止運行
+2026-02-14 21:26:52,091 [INFO] 設定檔載入成功: config.json
+2026-02-14 21:26:52,749 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 21:26:52,754 [INFO] [BACKFILL] 上次收盤: 2026-02-14 13:00:00 | 現在時間: 2026-02-14 13:26:52.753000 | 缺少 K 線: 0 根
+2026-02-14 21:26:52,754 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 21:26:53,108 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 21:26:53,109 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 21:26:53,109 [INFO]  外部數據背景更新啟動
+2026-02-14 21:26:53,110 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 21:26:53,111 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 21:26:53,112 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 21:26:53,112 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 21:26:53,113 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 21:26:53,113 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 21:26:53,113 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 21:26:53,113 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 21:26:53,114 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 21:26:53,114 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 21:26:53,114 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 21:26:53,114 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 21:26:53,115 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 21:26:53,115 [INFO] 策略已掛載: QQQ_price
+2026-02-14 21:26:53,115 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 21:26:53,115 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 21:26:53,116 [INFO] [Portfolio] 狀態載入成功。上次 Rebalance: 2026-02-14 21:12:13.924805
+2026-02-14 21:26:54,662 [INFO] 監控 1h K 線...
+2026-02-14 21:26:54,721 [INFO] [ETL] 處理新 K 線: 2026-02-14 12:00:00
+2026-02-14 21:26:55,124 [ERROR] 核心崩潰: 'TradeManager' object has no attribute 'log_snapshot'
+2026-02-14 21:31:13,166 [INFO] 設定檔載入成功: config.json
+2026-02-14 21:31:13,793 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 21:31:13,796 [INFO] [BACKFILL] 上次收盤: 2026-02-14 13:00:00 | 現在時間: 2026-02-14 13:31:13.796000 | 缺少 K 線: 0 根
+2026-02-14 21:31:13,797 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 21:31:14,227 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 21:31:14,229 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 21:31:14,229 [INFO]  外部數據背景更新啟動
+2026-02-14 21:31:14,229 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 21:31:14,231 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 21:31:14,232 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 21:31:14,232 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 21:31:14,232 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 21:31:14,233 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 21:31:14,233 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 21:31:14,233 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 21:31:14,234 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 21:31:14,234 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 21:31:14,235 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 21:31:14,235 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 21:31:14,236 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 21:31:14,236 [INFO] 策略已掛載: QQQ_price
+2026-02-14 21:31:14,236 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 21:31:14,236 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 21:31:14,237 [INFO] [Portfolio] 狀態載入成功。上次 Rebalance: 2026-02-14 21:12:13.924805
+2026-02-14 21:31:15,807 [INFO] 監控 1h K 線...
+2026-02-14 21:31:15,868 [INFO] [ETL] 處理新 K 線: 2026-02-14 12:00:00
+2026-02-14 21:31:16,254 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 21:31:32,816 [WARNING] 停止運行
+2026-02-14 21:33:46,380 [INFO] 設定檔載入成功: config.json
+2026-02-14 21:33:47,081 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 21:33:47,086 [INFO] [BACKFILL] 上次收盤: 2026-02-14 13:00:00 | 現在時間: 2026-02-14 13:33:47.085000 | 缺少 K 線: 0 根
+2026-02-14 21:33:47,086 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 21:33:47,493 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 21:33:47,496 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 21:33:47,496 [INFO]  外部數據背景更新啟動
+2026-02-14 21:33:47,497 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 21:33:47,499 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 21:33:47,499 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 21:33:47,500 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 21:33:47,500 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 21:33:47,500 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 21:33:47,500 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 21:33:47,501 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 21:33:47,501 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 21:33:47,501 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 21:33:47,501 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 21:33:47,502 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 21:33:47,502 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 21:33:47,502 [INFO] 策略已掛載: QQQ_price
+2026-02-14 21:33:47,502 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 21:33:47,502 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 21:33:47,503 [INFO] [Portfolio] 狀態載入成功。上次 Rebalance: 2026-02-14 21:12:13.924805
+2026-02-14 21:33:49,085 [INFO] 監控 1h K 線...
+2026-02-14 21:33:49,144 [INFO] [ETL] 處理新 K 線: 2026-02-14 12:00:00
+2026-02-14 21:33:49,536 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 21:34:11,167 [WARNING] 停止運行
+2026-02-14 21:44:09,187 [INFO] 設定檔載入成功: config.json
+2026-02-14 21:44:09,884 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 21:44:09,889 [INFO] [BACKFILL] 上次收盤: 2026-02-14 13:00:00 | 現在時間: 2026-02-14 13:44:09.888000 | 缺少 K 線: 0 根
+2026-02-14 21:44:09,889 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 21:44:10,274 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 21:44:10,274 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 21:44:10,275 [INFO]  外部數據背景更新啟動
+2026-02-14 21:44:10,275 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 21:44:10,277 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 21:44:10,278 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 21:44:10,278 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 21:44:10,278 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 21:44:10,279 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 21:44:10,279 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 21:44:10,279 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 21:44:10,280 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 21:44:10,280 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 21:44:10,281 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 21:44:10,281 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 21:44:10,281 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 21:44:10,281 [INFO] 策略已掛載: QQQ_price
+2026-02-14 21:44:10,282 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 21:44:10,282 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 21:44:10,282 [INFO] [Portfolio] 狀態載入成功。上次 Rebalance: 2026-02-14 21:12:13.924805
+2026-02-14 21:44:13,326 [INFO] 監控 1h K 線...
+2026-02-14 21:44:13,384 [INFO] [ETL] 處理新 K 線: 2026-02-14 12:00:00
+2026-02-14 21:44:13,763 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉/無需動作
+2026-02-14 21:44:13,764 [INFO] [SIGNAL] Price_Volume2 (0) | CLOSE | Exit: OBV(-905424.6)<MA or ATR<MA
+2026-02-14 21:44:13,764 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉/無需動作
+2026-02-14 21:44:13,764 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (0) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-14 21:44:13,764 [INFO] [SKIP] Strategy5_HighVol_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 21:44:13,764 [INFO] [SIGNAL] Strategy5_HighVol_Momentum (0) | CLOSE | Vol_Drop & Mom_Weak
+2026-02-14 21:44:13,764 [INFO] [SKIP] Strategy8_Vol_BuyPressure 目前空手，無法平倉/無需動作
+2026-02-14 21:44:13,764 [INFO] [SIGNAL] Strategy8_Vol_BuyPressure (0) | CLOSE | Vol_Cool & Buy_Weak
+2026-02-14 21:44:13,764 [INFO] [SKIP] Strategy10_Volume_Diff_Reversion 目前空手，無法平倉/無需動作
+2026-02-14 21:44:13,764 [INFO] [SIGNAL] Strategy10_Volume_Diff_Reversion (0) | CLOSE | Vol_Trend_Spike & Non_US_Time
+2026-02-14 21:44:13,765 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 21:44:41,603 [WARNING] 停止運行
+2026-02-14 21:46:53,084 [INFO] 設定檔載入成功: config.json
+2026-02-14 21:46:53,740 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 21:46:53,744 [INFO] [BACKFILL] 上次收盤: 2026-02-14 13:00:00 | 現在時間: 2026-02-14 13:46:53.744000 | 缺少 K 線: 0 根
+2026-02-14 21:46:53,745 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 21:46:54,148 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 21:46:54,149 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 21:46:54,149 [INFO]  外部數據背景更新啟動
+2026-02-14 21:46:54,150 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 21:46:54,151 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 21:46:54,152 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 21:46:54,153 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 21:46:54,153 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 21:46:54,153 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 21:46:54,153 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 21:46:54,155 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 21:46:54,155 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 21:46:54,155 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 21:46:54,156 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 21:46:54,156 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 21:46:54,156 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 21:46:54,157 [INFO] 策略已掛載: QQQ_price
+2026-02-14 21:46:54,157 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 21:46:54,157 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 21:46:54,158 [INFO] [Portfolio] 狀態載入成功。上次 Rebalance: 2026-02-14 21:12:13.924805
+2026-02-14 21:46:57,460 [INFO] 監控 1h K 線...
+2026-02-14 21:46:57,520 [INFO] [ETL] 處理新 K 線: 2026-02-14 12:00:00
+2026-02-14 21:46:57,907 [INFO] [SIGNAL] Price_Volume2 (69478.0) | CLOSE | Exit: OBV(-905439.5)<MA or ATR<MA
+2026-02-14 21:46:57,907 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉/無需動作
+2026-02-14 21:46:57,907 [INFO] [SIGNAL] Price_Volume2 (0) | CLOSE | Exit: OBV(-905439.5)<MA or ATR<MA
+2026-02-14 21:46:57,908 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (69478.0) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-14 21:46:57,908 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉/無需動作
+2026-02-14 21:46:57,908 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (0) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-14 21:46:57,908 [INFO] [SIGNAL] Strategy5_HighVol_Momentum (69478.0) | CLOSE | Vol_Drop & Mom_Weak
+2026-02-14 21:46:57,908 [INFO] [SKIP] Strategy5_HighVol_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 21:46:57,908 [INFO] [SIGNAL] Strategy5_HighVol_Momentum (0) | CLOSE | Vol_Drop & Mom_Weak
+2026-02-14 21:46:57,908 [INFO] [SIGNAL] Strategy8_Vol_BuyPressure (69478.0) | CLOSE | Vol_Cool & Buy_Weak
+2026-02-14 21:46:57,908 [INFO] [SKIP] Strategy8_Vol_BuyPressure 目前空手，無法平倉/無需動作
+2026-02-14 21:46:57,909 [INFO] [SIGNAL] Strategy8_Vol_BuyPressure (0) | CLOSE | Vol_Cool & Buy_Weak
+2026-02-14 21:46:57,909 [INFO] [SIGNAL] Strategy10_Volume_Diff_Reversion (69478.0) | CLOSE | Vol_Trend_Spike & Non_US_Time
+2026-02-14 21:46:57,909 [INFO] [SKIP] Strategy10_Volume_Diff_Reversion 目前空手，無法平倉/無需動作
+2026-02-14 21:46:57,909 [INFO] [SIGNAL] Strategy10_Volume_Diff_Reversion (0) | CLOSE | Vol_Trend_Spike & Non_US_Time
+2026-02-14 21:46:57,910 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 21:47:08,710 [WARNING] 停止運行
+2026-02-14 21:54:32,183 [INFO] 設定檔載入成功: config.json
+2026-02-14 21:54:32,833 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 21:54:32,839 [INFO] [BACKFILL] 上次收盤: 2026-02-14 13:00:00 | 現在時間: 2026-02-14 13:54:32.838000 | 缺少 K 線: 0 根
+2026-02-14 21:54:32,839 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 21:54:33,652 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 21:54:33,653 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 21:54:33,653 [INFO]  外部數據背景更新啟動
+2026-02-14 21:54:33,653 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 21:54:33,654 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 21:54:33,655 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 21:54:33,655 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 21:54:33,655 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 21:54:33,655 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 21:54:33,657 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 21:54:33,657 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 21:54:33,657 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 21:54:33,658 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 21:54:33,658 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 21:54:33,658 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 21:54:33,659 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 21:54:33,659 [INFO] 策略已掛載: QQQ_price
+2026-02-14 21:54:33,659 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 21:54:33,659 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 21:54:33,660 [INFO] [Portfolio] 狀態載入成功。上次 Rebalance: 2026-02-14 21:12:13.924805
+2026-02-14 21:54:40,434 [INFO] 監控 1h K 線...
+2026-02-14 21:54:40,515 [INFO] [ETL] 處理新 K 線: 2026-02-14 12:00:00
+2026-02-14 21:54:40,800 [ERROR] 策略 Strategy11_Trend_ZScore 產生訊號時發生錯誤: 'NoneType' object is not callable
+2026-02-14 21:54:40,955 [ERROR] 策略 Strategy13_QQQ_Wavelet_Trend 產生訊號時發生錯誤: 'NoneType' object is not callable
+2026-02-14 21:54:40,955 [INFO] [SIGNAL] Price_Volume2 (69326.0) | CLOSE | Exit: OBV(-905508.7)<MA or ATR<MA
+2026-02-14 21:54:40,955 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉/無需動作
+2026-02-14 21:54:40,956 [INFO] [SIGNAL] Price_Volume2 (0) | CLOSE | Exit: OBV(-905508.7)<MA or ATR<MA
+2026-02-14 21:54:40,956 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (69326.0) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-14 21:54:40,956 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉/無需動作
+2026-02-14 21:54:40,956 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (0) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-14 21:54:40,956 [INFO] [SIGNAL] Strategy5_HighVol_Momentum (69326.0) | CLOSE | Vol_Drop & Mom_Weak
+2026-02-14 21:54:40,956 [INFO] [SKIP] Strategy5_HighVol_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 21:54:40,956 [INFO] [SIGNAL] Strategy5_HighVol_Momentum (0) | CLOSE | Vol_Drop & Mom_Weak
+2026-02-14 21:54:40,958 [INFO] [SIGNAL] Strategy8_Vol_BuyPressure (69326.0) | CLOSE | Vol_Cool & Buy_Weak
+2026-02-14 21:54:40,958 [INFO] [SKIP] Strategy8_Vol_BuyPressure 目前空手，無法平倉/無需動作
+2026-02-14 21:54:40,958 [INFO] [SIGNAL] Strategy8_Vol_BuyPressure (0) | CLOSE | Vol_Cool & Buy_Weak
+2026-02-14 21:54:40,958 [INFO] [SIGNAL] Strategy10_Volume_Diff_Reversion (69326.0) | CLOSE | Vol_Trend_Spike & Non_US_Time
+2026-02-14 21:54:40,958 [INFO] [SKIP] Strategy10_Volume_Diff_Reversion 目前空手，無法平倉/無需動作
+2026-02-14 21:54:40,958 [INFO] [SIGNAL] Strategy10_Volume_Diff_Reversion (0) | CLOSE | Vol_Trend_Spike & Non_US_Time
+2026-02-14 21:54:40,959 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 21:55:16,632 [WARNING] 停止運行
+2026-02-14 22:20:11,214 [INFO] 設定檔載入成功: config.json
+2026-02-14 22:20:11,837 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 22:20:11,843 [INFO] [BACKFILL] 上次收盤: 2026-02-14 13:00:00 | 現在時間: 2026-02-14 14:20:11.842000 | 缺少 K 線: 1 根
+2026-02-14 22:20:11,843 [INFO] [BACKFILL] 開始回補 3 根 K 線...
+2026-02-14 22:20:12,222 [INFO] [BACKFILL] 成功寫入 3 筆數據！斷層修復完成。
+2026-02-14 22:20:12,224 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 22:20:12,224 [INFO]  外部數據背景更新啟動
+2026-02-14 22:20:12,224 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 22:20:12,226 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 22:20:12,227 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 22:20:12,227 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 22:20:12,227 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 22:20:12,228 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 22:20:12,228 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 22:20:12,228 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 22:20:12,229 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 22:20:12,229 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 22:20:12,229 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 22:20:12,230 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 22:20:12,230 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 22:20:12,230 [INFO] 策略已掛載: QQQ_price
+2026-02-14 22:20:12,230 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 22:20:12,231 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 22:20:12,231 [INFO] [Portfolio] 狀態載入成功。上次 Rebalance: 2026-02-14 21:12:13.924805
+2026-02-14 22:20:14,791 [INFO] 監控 1h K 線...
+2026-02-14 22:20:14,847 [INFO] [ETL] 處理新 K 線: 2026-02-14 13:00:00
+2026-02-14 22:20:15,137 [ERROR] 策略 Strategy11_Trend_ZScore 產生訊號時發生錯誤: 'NoneType' object is not callable
+2026-02-14 22:20:15,265 [ERROR] 策略 Strategy13_QQQ_Wavelet_Trend 產生訊號時發生錯誤: 'NoneType' object is not callable
+2026-02-14 22:20:15,266 [INFO] [SIGNAL] Price_Volume2 (69499.1) | CLOSE | Exit: OBV(-903407.1)<MA or ATR<MA
+2026-02-14 22:20:15,266 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉/無需動作
+2026-02-14 22:20:15,266 [INFO] [SIGNAL] Price_Volume2 (0) | CLOSE | Exit: OBV(-903407.1)<MA or ATR<MA
+2026-02-14 22:20:15,266 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (69499.1) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-14 22:20:15,266 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉/無需動作
+2026-02-14 22:20:15,267 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (0) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-14 22:20:15,267 [INFO] [SIGNAL] Strategy4_High_Momentum (69499.1) | CLOSE | Momentum_Collapsed
+2026-02-14 22:20:15,267 [INFO] [SKIP] Strategy4_High_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 22:20:15,267 [INFO] [SIGNAL] Strategy4_High_Momentum (0) | CLOSE | Momentum_Collapsed
+2026-02-14 22:20:15,267 [INFO] [SIGNAL] Strategy5_HighVol_Momentum (69499.1) | CLOSE | Vol_Drop & Mom_Weak
+2026-02-14 22:20:15,267 [INFO] [SKIP] Strategy5_HighVol_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 22:20:15,267 [INFO] [SIGNAL] Strategy5_HighVol_Momentum (0) | CLOSE | Vol_Drop & Mom_Weak
+2026-02-14 22:20:15,267 [INFO] [SIGNAL] Strategy8_Vol_BuyPressure (69499.1) | CLOSE | Vol_Cool & Buy_Weak
+2026-02-14 22:20:15,268 [INFO] [SKIP] Strategy8_Vol_BuyPressure 目前空手，無法平倉/無需動作
+2026-02-14 22:20:15,268 [INFO] [SIGNAL] Strategy8_Vol_BuyPressure (0) | CLOSE | Vol_Cool & Buy_Weak
+2026-02-14 22:20:15,268 [INFO] [SIGNAL] Strategy9_Mom_VROC_Shock (69499.1) | CLOSE | Mom_Fade & Vol_Normal
+2026-02-14 22:20:15,268 [INFO] [SKIP] Strategy9_Mom_VROC_Shock 目前空手，無法平倉/無需動作
+2026-02-14 22:20:15,268 [INFO] [SIGNAL] Strategy9_Mom_VROC_Shock (0) | CLOSE | Mom_Fade & Vol_Normal
+2026-02-14 22:20:15,269 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 22:20:17,768 [WARNING] 停止運行
+2026-02-14 22:26:32,169 [INFO] 設定檔載入成功: config.json
+2026-02-14 22:26:32,845 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 22:26:32,850 [INFO] [BACKFILL] 上次收盤: 2026-02-14 14:00:00 | 現在時間: 2026-02-14 14:26:32.850000 | 缺少 K 線: 0 根
+2026-02-14 22:26:32,850 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 22:26:33,265 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 22:26:33,267 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 22:26:33,267 [INFO]  外部數據背景更新啟動
+2026-02-14 22:26:33,267 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 22:26:33,269 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 22:26:33,269 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 22:26:33,269 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 22:26:33,271 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 22:26:33,271 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 22:26:33,271 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 22:26:33,272 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 22:26:33,272 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 22:26:33,272 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 22:26:33,273 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 22:26:33,273 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 22:26:33,274 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 22:26:33,274 [INFO] 策略已掛載: QQQ_price
+2026-02-14 22:26:33,274 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 22:26:33,274 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 22:26:33,274 [INFO] [Portfolio] 狀態載入成功。上次 Rebalance: 2026-02-14 21:12:13.924805
+2026-02-14 22:26:35,996 [INFO] 監控 1h K 線...
+2026-02-14 22:26:36,064 [INFO] [ETL] 處理新 K 線: 2026-02-14 13:00:00
+2026-02-14 22:26:36,334 [ERROR] 策略 Strategy11_Trend_ZScore 產生訊號時發生錯誤: 'NoneType' object is not callable
+2026-02-14 22:26:36,457 [INFO] [SIGNAL] Price_Volume2 (69393.5) | CLOSE | Exit: OBV(-903624.5)<MA or ATR<MA
+2026-02-14 22:26:36,458 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉/無需動作
+2026-02-14 22:26:36,458 [INFO] [SIGNAL] Price_Volume2 (0) | CLOSE | Exit: OBV(-903624.5)<MA or ATR<MA
+2026-02-14 22:26:36,458 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (69393.5) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-14 22:26:36,458 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉/無需動作
+2026-02-14 22:26:36,458 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (0) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-14 22:26:36,458 [INFO] [SIGNAL] Strategy4_High_Momentum (69393.5) | CLOSE | Momentum_Collapsed
+2026-02-14 22:26:36,459 [INFO] [SKIP] Strategy4_High_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 22:26:36,459 [INFO] [SIGNAL] Strategy4_High_Momentum (0) | CLOSE | Momentum_Collapsed
+2026-02-14 22:26:36,459 [INFO] [SIGNAL] Strategy5_HighVol_Momentum (69393.5) | CLOSE | Vol_Drop & Mom_Weak
+2026-02-14 22:26:36,459 [INFO] [SKIP] Strategy5_HighVol_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 22:26:36,459 [INFO] [SIGNAL] Strategy5_HighVol_Momentum (0) | CLOSE | Vol_Drop & Mom_Weak
+2026-02-14 22:26:36,459 [INFO] [SIGNAL] Strategy6_Climax_Momentum (69393.5) | CLOSE | Vol_CoolDown & OBV_Drop
+2026-02-14 22:26:36,459 [INFO] [SKIP] Strategy6_Climax_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 22:26:36,460 [INFO] [SIGNAL] Strategy6_Climax_Momentum (0) | CLOSE | Vol_CoolDown & OBV_Drop
+2026-02-14 22:26:36,460 [INFO] [SIGNAL] Strategy7_Mom_LowVolFilter (69393.5) | CLOSE | Mom_Weak & Vol_Dead
+2026-02-14 22:26:36,460 [INFO] [SKIP] Strategy7_Mom_LowVolFilter 目前空手，無法平倉/無需動作
+2026-02-14 22:26:36,460 [INFO] [SIGNAL] Strategy7_Mom_LowVolFilter (0) | CLOSE | Mom_Weak & Vol_Dead
+2026-02-14 22:26:36,460 [INFO] [SIGNAL] Strategy8_Vol_BuyPressure (69393.5) | CLOSE | Vol_Cool & Buy_Weak
+2026-02-14 22:26:36,460 [INFO] [SKIP] Strategy8_Vol_BuyPressure 目前空手，無法平倉/無需動作
+2026-02-14 22:26:36,461 [INFO] [SIGNAL] Strategy8_Vol_BuyPressure (0) | CLOSE | Vol_Cool & Buy_Weak
+2026-02-14 22:26:36,461 [INFO] [SIGNAL] Strategy9_Mom_VROC_Shock (69393.5) | CLOSE | Mom_Fade & Vol_Normal
+2026-02-14 22:26:36,461 [INFO] [SKIP] Strategy9_Mom_VROC_Shock 目前空手，無法平倉/無需動作
+2026-02-14 22:26:36,461 [INFO] [SIGNAL] Strategy9_Mom_VROC_Shock (0) | CLOSE | Mom_Fade & Vol_Normal
+2026-02-14 22:26:36,462 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 22:26:38,379 [WARNING] 停止運行
+2026-02-14 22:50:46,497 [INFO] 設定檔載入成功: config.json
+2026-02-14 22:50:47,108 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 22:50:47,112 [INFO] [BACKFILL] 上次收盤: 2026-02-14 14:00:00 | 現在時間: 2026-02-14 14:50:47.112000 | 缺少 K 線: 0 根
+2026-02-14 22:50:47,112 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 22:50:47,492 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 22:50:47,493 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 22:50:47,493 [INFO]  外部數據背景更新啟動
+2026-02-14 22:50:47,494 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 22:50:47,495 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 22:50:47,496 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 22:50:47,496 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 22:50:47,496 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 22:50:47,496 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 22:50:47,497 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 22:50:47,497 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 22:50:47,497 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 22:50:47,498 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 22:50:47,498 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 22:50:47,499 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 22:50:47,499 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 22:50:47,499 [INFO] 策略已掛載: QQQ_price
+2026-02-14 22:50:47,499 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 22:50:47,500 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 22:50:47,500 [INFO] [Portfolio] 狀態載入成功。上次 Rebalance: 2026-02-14 21:12:13.924805
+2026-02-14 22:50:49,527 [INFO] 監控 1h K 線...
+2026-02-14 22:50:49,584 [INFO] [ETL] 處理新 K 線: 2026-02-14 13:00:00
+2026-02-14 22:50:50,003 [INFO] [SIGNAL] Price_Volume2 (69655.0) | CLOSE | Exit: OBV(-903272.7)<MA or ATR<MA
+2026-02-14 22:50:50,004 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉/無需動作
+2026-02-14 22:50:50,004 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (69655.0) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-14 22:50:50,004 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉/無需動作
+2026-02-14 22:50:50,004 [INFO] [SIGNAL] Strategy5_HighVol_Momentum (69655.0) | CLOSE | Vol_Drop & Mom_Weak
+2026-02-14 22:50:50,004 [INFO] [SKIP] Strategy5_HighVol_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 22:50:50,005 [INFO] [SIGNAL] Strategy9_Mom_VROC_Shock (69655.0) | CLOSE | Mom_Fade & Vol_Normal
+2026-02-14 22:50:50,005 [INFO] [SKIP] Strategy9_Mom_VROC_Shock 目前空手，無法平倉/無需動作
+2026-02-14 22:50:50,007 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 22:50:52,504 [WARNING] 停止運行
+2026-02-14 22:53:40,577 [INFO] 設定檔載入成功: config.json
+2026-02-14 22:53:41,185 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 22:53:41,190 [INFO] [BACKFILL] 上次收盤: 2026-02-14 14:00:00 | 現在時間: 2026-02-14 14:53:41.189000 | 缺少 K 線: 0 根
+2026-02-14 22:53:41,190 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 22:53:41,551 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 22:53:41,553 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 22:53:41,553 [INFO]  外部數據背景更新啟動
+2026-02-14 22:53:41,554 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 22:53:41,556 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 22:53:41,556 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 22:53:41,557 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 22:53:41,557 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 22:53:41,557 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 22:53:41,557 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 22:53:41,558 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 22:53:41,558 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 22:53:41,558 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 22:53:41,558 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 22:53:41,559 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 22:53:41,559 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 22:53:41,559 [INFO] 策略已掛載: QQQ_price
+2026-02-14 22:53:41,559 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 22:53:41,559 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 22:53:41,560 [INFO] [Portfolio] 狀態載入成功。上次 Rebalance: 2026-02-14 21:12:13.924805
+2026-02-14 22:53:44,112 [INFO] 監控 1h K 線...
+2026-02-14 22:53:44,169 [INFO] [ETL] 處理新 K 線: 2026-02-14 13:00:00
+2026-02-14 22:53:44,572 [INFO] [SIGNAL] Price_Volume2 (69778.9) | CLOSE | Exit: OBV(-903239.3)<MA or ATR<MA
+2026-02-14 22:53:44,572 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉/無需動作
+2026-02-14 22:53:44,573 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (69778.9) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-14 22:53:44,573 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉/無需動作
+2026-02-14 22:53:44,573 [INFO] [SIGNAL] Strategy5_HighVol_Momentum (69778.9) | CLOSE | Vol_Drop & Mom_Weak
+2026-02-14 22:53:44,573 [INFO] [SKIP] Strategy5_HighVol_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 22:53:44,573 [INFO] [SIGNAL] Strategy9_Mom_VROC_Shock (69778.9) | CLOSE | Mom_Fade & Vol_Normal
+2026-02-14 22:53:44,573 [INFO] [SKIP] Strategy9_Mom_VROC_Shock 目前空手，無法平倉/無需動作
+2026-02-14 22:53:44,575 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 22:54:02,743 [WARNING] 停止運行
+2026-02-14 23:14:44,393 [INFO] 設定檔載入成功: config.json
+2026-02-14 23:14:45,078 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 23:14:45,083 [INFO] [BACKFILL] 上次收盤: 2026-02-14 14:00:00 | 現在時間: 2026-02-14 15:14:45.082000 | 缺少 K 線: 1 根
+2026-02-14 23:14:45,083 [INFO] [BACKFILL] 開始回補 3 根 K 線...
+2026-02-14 23:14:45,610 [INFO] [BACKFILL] 成功寫入 3 筆數據！斷層修復完成。
+2026-02-14 23:14:45,611 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 23:14:45,611 [INFO]  外部數據背景更新啟動
+2026-02-14 23:14:45,611 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 23:14:45,613 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 23:14:45,614 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 23:14:45,614 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 23:14:45,615 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 23:14:45,615 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 23:14:45,616 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 23:14:45,616 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 23:14:45,616 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 23:14:45,618 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 23:14:45,618 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 23:14:45,618 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 23:14:45,619 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 23:14:45,619 [INFO] 策略已掛載: QQQ_price
+2026-02-14 23:14:45,619 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 23:14:45,619 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 23:14:45,620 [INFO] [Portfolio] 狀態載入成功。上次 Rebalance: 2026-02-14 21:12:13.924805
+2026-02-14 23:14:47,287 [INFO] 監控 1h K 線...
+2026-02-14 23:14:47,348 [INFO] [ETL] 處理新 K 線: 2026-02-14 14:00:00
+2026-02-14 23:14:47,626 [ERROR] 策略 Strategy12_GnF_Yield_Ratio 產生訊號時發生錯誤: 'NoneType' object is not callable
+2026-02-14 23:14:47,740 [INFO] [SIGNAL] Price_Volume2 (69612.1) | CLOSE | Exit: OBV(-908064.5)<MA or ATR<MA
+2026-02-14 23:14:47,741 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉/無需動作
+2026-02-14 23:14:47,741 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (69612.1) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-14 23:14:47,741 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉/無需動作
+2026-02-14 23:14:47,741 [INFO] [SIGNAL] Strategy4_High_Momentum (69612.1) | CLOSE | Momentum_Collapsed
+2026-02-14 23:14:47,741 [INFO] [SKIP] Strategy4_High_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 23:14:47,742 [INFO] [SIGNAL] Strategy5_HighVol_Momentum (69612.1) | CLOSE | Vol_Drop & Mom_Weak
+2026-02-14 23:14:47,742 [INFO] [SKIP] Strategy5_HighVol_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 23:14:47,742 [INFO] [SIGNAL] Strategy6_Climax_Momentum (69612.1) | CLOSE | Vol_CoolDown & OBV_Drop
+2026-02-14 23:14:47,742 [INFO] [SKIP] Strategy6_Climax_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 23:14:47,742 [INFO] [SIGNAL] Strategy8_Vol_BuyPressure (69612.1) | CLOSE | Vol_Cool & Buy_Weak
+2026-02-14 23:14:47,743 [INFO] [SKIP] Strategy8_Vol_BuyPressure 目前空手，無法平倉/無需動作
+2026-02-14 23:14:47,744 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 23:14:59,739 [WARNING] [AlphaVantage] 抓取失敗: We have detected your API key as E5VUD2IG0AV6U3WM and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits.
+2026-02-14 23:14:59,740 [INFO] [US_STOCK] AlphaVantage 失敗，切換至備用源 Tiingo 抓取 QQQ...
+2026-02-14 23:15:02,147 [INFO] [US_STOCK] Tiingo 抓取成功！
+2026-02-14 23:21:33,672 [WARNING] 停止運行
+2026-02-14 23:21:36,345 [INFO] 設定檔載入成功: config.json
+2026-02-14 23:21:36,983 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 23:21:36,988 [INFO] [BACKFILL] 上次收盤: 2026-02-14 15:00:00 | 現在時間: 2026-02-14 15:21:36.987000 | 缺少 K 線: 0 根
+2026-02-14 23:21:36,988 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 23:21:37,367 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 23:21:37,369 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 23:21:37,369 [INFO]  外部數據背景更新啟動
+2026-02-14 23:21:37,369 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 23:21:37,371 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 23:21:37,371 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 23:21:37,372 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 23:21:37,372 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 23:21:37,373 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 23:21:37,373 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 23:21:37,374 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 23:21:37,374 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 23:21:37,374 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 23:21:37,375 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 23:21:37,375 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 23:21:37,376 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 23:21:37,376 [INFO] 策略已掛載: QQQ_price
+2026-02-14 23:21:37,376 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 23:21:37,377 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 23:21:37,377 [INFO] [Portfolio] 狀態載入成功。上次 Rebalance: 2026-02-14 21:12:13.924805
+2026-02-14 23:21:38,937 [INFO] 監控 1h K 線...
+2026-02-14 23:21:39,019 [INFO] [ETL] 處理新 K 線: 2026-02-14 14:00:00
+2026-02-14 23:21:39,415 [INFO] [SIGNAL] Price_Volume2 (69730.9) | CLOSE | Exit: OBV(-907934.5)<MA or ATR<MA
+2026-02-14 23:21:39,416 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉/無需動作
+2026-02-14 23:21:39,416 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (69730.9) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-14 23:21:39,416 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉/無需動作
+2026-02-14 23:21:39,416 [INFO] [SIGNAL] Strategy4_High_Momentum (69730.9) | CLOSE | Momentum_Collapsed
+2026-02-14 23:21:39,417 [INFO] [SKIP] Strategy4_High_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 23:21:39,417 [INFO] [SIGNAL] Strategy5_HighVol_Momentum (69730.9) | CLOSE | Vol_Drop & Mom_Weak
+2026-02-14 23:21:39,417 [INFO] [SKIP] Strategy5_HighVol_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 23:21:39,417 [INFO] [SIGNAL] Strategy8_Vol_BuyPressure (69730.9) | CLOSE | Vol_Cool & Buy_Weak
+2026-02-14 23:21:39,418 [INFO] [SKIP] Strategy8_Vol_BuyPressure 目前空手，無法平倉/無需動作
+2026-02-14 23:21:39,418 [INFO] [SIGNAL] Strategy11_Trend_ZScore (69730.9) | LONG | Ratio(1.02)>Th(0.72) & Z(0.78)>Th(0.27)
+2026-02-14 23:21:39,418 [INFO] [Shadow] Strategy11_Trend_ZScore 處於觀察期，執行模擬調倉: 0.07170422294850634
+2026-02-14 23:21:39,428 [ERROR]  [DB ERROR] 寫入交易失敗: table trades has no column named realized_pnl
+2026-02-14 23:21:39,429 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 23:21:54,222 [WARNING] [AlphaVantage] 抓取失敗: We have detected your API key as E5VUD2IG0AV6U3WM and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits.
+2026-02-14 23:21:54,224 [INFO] [US_STOCK] AlphaVantage 失敗，切換至備用源 Tiingo 抓取 QQQ...
+2026-02-14 23:21:55,512 [INFO] [US_STOCK] Tiingo 抓取成功！
+2026-02-14 23:21:57,087 [WARNING] 停止運行
+2026-02-14 23:35:47,331 [INFO] 設定檔載入成功: config.json
+2026-02-14 23:35:48,014 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 23:35:48,019 [INFO] [BACKFILL] 上次收盤: 2026-02-14 15:00:00 | 現在時間: 2026-02-14 15:35:48.018000 | 缺少 K 線: 0 根
+2026-02-14 23:35:48,019 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 23:35:48,450 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 23:35:48,451 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 23:35:48,452 [INFO]  外部數據背景更新啟動
+2026-02-14 23:35:48,452 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 23:35:48,454 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 23:35:48,454 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 23:35:48,454 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 23:35:48,455 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 23:35:48,455 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 23:35:48,455 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 23:35:48,456 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 23:35:48,456 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 23:35:48,456 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 23:35:48,456 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 23:35:48,457 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 23:35:48,457 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 23:35:48,457 [INFO] 策略已掛載: QQQ_price
+2026-02-14 23:35:48,457 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 23:35:48,458 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 23:35:48,458 [INFO] [Portfolio] 狀態載入成功。上次 Rebalance: 2026-02-14 21:12:13.924805
+2026-02-14 23:35:50,439 [INFO] 監控 1h K 線...
+2026-02-14 23:35:50,496 [INFO] [ETL] 處理新 K 線: 2026-02-14 14:00:00
+2026-02-14 23:35:50,901 [INFO] [SIGNAL] Price_Volume2 (69880.2) | CLOSE | Exit: OBV(-907838.4)<MA or ATR<MA
+2026-02-14 23:35:50,902 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉/無需動作
+2026-02-14 23:35:50,902 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (69880.2) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-14 23:35:50,902 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉/無需動作
+2026-02-14 23:35:50,903 [INFO] [SIGNAL] Strategy4_High_Momentum (69880.2) | CLOSE | Momentum_Collapsed
+2026-02-14 23:35:50,903 [INFO] [SKIP] Strategy4_High_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 23:35:50,903 [INFO] [SIGNAL] Strategy5_HighVol_Momentum (69880.2) | CLOSE | Vol_Drop & Mom_Weak
+2026-02-14 23:35:50,903 [INFO] [SKIP] Strategy5_HighVol_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 23:35:50,904 [INFO] [SIGNAL] Strategy8_Vol_BuyPressure (69880.2) | CLOSE | Vol_Cool & Buy_Weak
+2026-02-14 23:35:50,904 [INFO] [SKIP] Strategy8_Vol_BuyPressure 目前空手，無法平倉/無需動作
+2026-02-14 23:35:50,904 [INFO] [SIGNAL] Strategy11_Trend_ZScore (69880.2) | LONG | Ratio(1.16)>Th(0.72) & Z(0.88)>Th(0.27)
+2026-02-14 23:35:50,904 [INFO] [Shadow] Strategy11_Trend_ZScore 處於觀察期，執行模擬調倉: -0.000153197049896997
+2026-02-14 23:35:50,905 [ERROR]  [DB ERROR] 寫入交易失敗: table trades has no column named realized_pnl
+2026-02-14 23:35:50,907 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 23:35:53,072 [WARNING] 停止運行
+2026-02-14 23:45:55,291 [INFO] 設定檔載入成功: config.json
+2026-02-14 23:45:55,929 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 23:45:55,933 [INFO] [BACKFILL] 上次收盤: 2026-02-14 15:00:00 | 現在時間: 2026-02-14 15:45:55.933000 | 缺少 K 線: 0 根
+2026-02-14 23:45:55,933 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 23:45:56,305 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 23:45:56,307 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 23:45:56,307 [INFO]  外部數據背景更新啟動
+2026-02-14 23:45:56,307 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 23:45:56,309 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 23:45:56,309 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 23:45:56,310 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 23:45:56,310 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 23:45:56,310 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 23:45:56,310 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 23:45:56,311 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 23:45:56,311 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 23:45:56,312 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 23:45:56,312 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 23:45:56,312 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 23:45:56,313 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 23:45:56,313 [INFO] 策略已掛載: QQQ_price
+2026-02-14 23:45:56,313 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 23:45:56,314 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 23:45:56,314 [INFO] [Portfolio] 狀態載入成功。上次 Rebalance: 2026-02-14 21:12:13.924805
+2026-02-14 23:45:58,254 [INFO] 監控 1h K 線...
+2026-02-14 23:45:58,316 [INFO] [ETL] 處理新 K 線: 2026-02-14 14:00:00
+2026-02-14 23:45:58,720 [INFO] [SIGNAL] Price_Volume2 (69802.6) | CLOSE | Exit: OBV(-907808.0)<MA or ATR<MA
+2026-02-14 23:45:58,721 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉/無需動作
+2026-02-14 23:45:58,721 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (69802.6) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-14 23:45:58,721 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉/無需動作
+2026-02-14 23:45:58,721 [INFO] [SIGNAL] Strategy4_High_Momentum (69802.6) | CLOSE | Momentum_Collapsed
+2026-02-14 23:45:58,721 [INFO] [SKIP] Strategy4_High_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 23:45:58,721 [INFO] [SIGNAL] Strategy5_HighVol_Momentum (69802.6) | CLOSE | Vol_Drop & Mom_Weak
+2026-02-14 23:45:58,722 [INFO] [SKIP] Strategy5_HighVol_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 23:45:58,722 [INFO] [SIGNAL] Strategy8_Vol_BuyPressure (69802.6) | CLOSE | Vol_Cool & Buy_Weak
+2026-02-14 23:45:58,722 [INFO] [SKIP] Strategy8_Vol_BuyPressure 目前空手，無法平倉/無需動作
+2026-02-14 23:45:58,722 [INFO] [SIGNAL] Strategy11_Trend_ZScore (69802.6) | LONG | Ratio(1.16)>Th(0.72) & Z(0.83)>Th(0.27)
+2026-02-14 23:45:58,722 [INFO] [Shadow] Strategy11_Trend_ZScore 處於觀察期，執行模擬調倉: 7.954373633262124e-05
+2026-02-14 23:45:58,723 [ERROR]  [DB ERROR] 寫入交易失敗: table trades has no column named realized_pnl
+2026-02-14 23:45:58,724 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 23:46:08,389 [WARNING] [AlphaVantage] 抓取失敗: We have detected your API key as E5VUD2IG0AV6U3WM and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits.
+2026-02-14 23:46:08,391 [INFO] [US_STOCK] AlphaVantage 失敗，切換至備用源 Tiingo 抓取 QQQ...
+2026-02-14 23:46:09,860 [INFO] [US_STOCK] Tiingo 抓取成功！
+2026-02-14 23:46:16,494 [WARNING] 停止運行
+2026-02-14 23:48:13,810 [INFO] 設定檔載入成功: config.json
+2026-02-14 23:48:14,422 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 23:48:14,427 [INFO] [BACKFILL] 上次收盤: 2026-02-14 15:00:00 | 現在時間: 2026-02-14 15:48:14.427000 | 缺少 K 線: 0 根
+2026-02-14 23:48:14,428 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 23:48:14,834 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 23:48:14,835 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 23:48:14,835 [INFO]  外部數據背景更新啟動
+2026-02-14 23:48:14,836 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 23:48:14,837 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 23:48:14,838 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 23:48:14,838 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 23:48:14,839 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 23:48:14,839 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 23:48:14,839 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 23:48:14,840 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 23:48:14,840 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 23:48:14,840 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 23:48:14,840 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 23:48:14,841 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 23:48:14,841 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 23:48:14,841 [INFO] 策略已掛載: QQQ_price
+2026-02-14 23:48:14,841 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 23:48:14,843 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 23:48:14,843 [INFO] [Portfolio] 狀態載入成功。上次 Rebalance: 2026-02-14 21:12:13.924805
+2026-02-14 23:48:16,452 [INFO] 監控 1h K 線...
+2026-02-14 23:48:16,511 [INFO] [ETL] 處理新 K 線: 2026-02-14 14:00:00
+2026-02-14 23:48:16,935 [INFO] [SIGNAL] Price_Volume2 (69826.3) | CLOSE | Exit: OBV(-907804.4)<MA or ATR<MA
+2026-02-14 23:48:16,935 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉/無需動作
+2026-02-14 23:48:16,935 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (69826.3) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-14 23:48:16,936 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉/無需動作
+2026-02-14 23:48:16,936 [INFO] [SIGNAL] Strategy4_High_Momentum (69826.3) | CLOSE | Momentum_Collapsed
+2026-02-14 23:48:16,936 [INFO] [SKIP] Strategy4_High_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 23:48:16,936 [INFO] [SIGNAL] Strategy5_HighVol_Momentum (69826.3) | CLOSE | Vol_Drop & Mom_Weak
+2026-02-14 23:48:16,936 [INFO] [SKIP] Strategy5_HighVol_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 23:48:16,936 [INFO] [SIGNAL] Strategy8_Vol_BuyPressure (69826.3) | CLOSE | Vol_Cool & Buy_Weak
+2026-02-14 23:48:16,937 [INFO] [SKIP] Strategy8_Vol_BuyPressure 目前空手，無法平倉/無需動作
+2026-02-14 23:48:16,937 [INFO] [SIGNAL] Strategy11_Trend_ZScore (69826.3) | LONG | Ratio(1.13)>Th(0.72) & Z(0.84)>Th(0.27)
+2026-02-14 23:48:16,937 [INFO] [Shadow] Strategy11_Trend_ZScore 處於觀察期，執行模擬調倉: -2.4312393759204354e-05
+2026-02-14 23:48:16,939 [ERROR]  [DB ERROR] 寫入交易失敗: table trades has no column named realized_pnl
+2026-02-14 23:48:16,940 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 23:48:30,307 [WARNING] 停止運行
+2026-02-14 23:52:14,960 [INFO] 設定檔載入成功: config.json
+2026-02-14 23:52:15,611 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 23:52:15,616 [INFO] [BACKFILL] 上次收盤: 2026-02-14 15:00:00 | 現在時間: 2026-02-14 15:52:15.616000 | 缺少 K 線: 0 根
+2026-02-14 23:52:15,616 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-14 23:52:16,088 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-14 23:52:16,089 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 23:52:16,089 [INFO]  外部數據背景更新啟動
+2026-02-14 23:52:16,091 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 23:52:16,092 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 23:52:16,093 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 23:52:16,093 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 23:52:16,093 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 23:52:16,094 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 23:52:16,094 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 23:52:16,094 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 23:52:16,095 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 23:52:16,095 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 23:52:16,095 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 23:52:16,096 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 23:52:16,096 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 23:52:16,096 [INFO] 策略已掛載: QQQ_price
+2026-02-14 23:52:16,096 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 23:52:16,096 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 23:52:16,097 [INFO] [Portfolio] 狀態載入成功。上次 Rebalance: 2026-02-14 21:12:13.924805
+2026-02-14 23:52:18,157 [INFO] 監控 1h K 線...
+2026-02-14 23:52:18,217 [INFO] [ETL] 處理新 K 線: 2026-02-14 14:00:00
+2026-02-14 23:52:18,609 [INFO] [SIGNAL] Price_Volume2 (69777.4) | CLOSE | Exit: OBV(-907793.8)<MA or ATR<MA
+2026-02-14 23:52:18,610 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉/無需動作
+2026-02-14 23:52:18,610 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (69777.4) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-14 23:52:18,610 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉/無需動作
+2026-02-14 23:52:18,610 [INFO] [SIGNAL] Strategy4_High_Momentum (69777.4) | CLOSE | Momentum_Collapsed
+2026-02-14 23:52:18,610 [INFO] [SKIP] Strategy4_High_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 23:52:18,610 [INFO] [SIGNAL] Strategy5_HighVol_Momentum (69777.4) | CLOSE | Vol_Drop & Mom_Weak
+2026-02-14 23:52:18,610 [INFO] [SKIP] Strategy5_HighVol_Momentum 目前空手，無法平倉/無需動作
+2026-02-14 23:52:18,611 [INFO] [SIGNAL] Strategy8_Vol_BuyPressure (69777.4) | CLOSE | Vol_Cool & Buy_Weak
+2026-02-14 23:52:18,611 [INFO] [SKIP] Strategy8_Vol_BuyPressure 目前空手，無法平倉/無需動作
+2026-02-14 23:52:18,611 [INFO] [SIGNAL] Strategy11_Trend_ZScore (69777.4) | LONG | Ratio(1.06)>Th(0.72) & Z(0.81)>Th(0.27)
+2026-02-14 23:52:18,611 [INFO] [Shadow] Strategy11_Trend_ZScore 處於觀察期，執行模擬調倉: 5.018166310430394e-05
+2026-02-14 23:52:18,612 [ERROR]  [DB ERROR] 寫入交易失敗: table trades has no column named realized_pnl
+2026-02-14 23:52:18,613 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 23:52:25,549 [WARNING] 停止運行

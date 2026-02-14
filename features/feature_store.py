@@ -45,6 +45,7 @@ class FeatureStore:
         try:
             # 對應原本的 compute
             feat_df = feature_obj.compute(data_board)
+            feat_df = feat_df.ffill()
             return fid, feat_df, None
         except Exception as e:
             # 對應原本的 logging.error

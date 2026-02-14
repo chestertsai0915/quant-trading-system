@@ -52,6 +52,9 @@ class SentimentStrategyV2(BaseStrategy):
         # ==========================================
         
         # A. 取得已經廣播好的序列 (Hourly Series)
+        # 確保 df 的 index 是 open_time
+        if 'open_time' in df.columns:
+             df = df.set_index('open_time') # <--- 這裡 df 變成了時間索引
         fg_series = df[fid_fg]
         yield_series = df[fid_yield]
         
@@ -60,7 +63,7 @@ class SentimentStrategyV2(BaseStrategy):
         # 這裡混合了日線特徵 (fg_series) 和小時線特徵 (df['volume'])
         # 這就是所謂的 "廣播後計算"
         # 注意：load_features 回傳的 df 包含了原始 K 線數據 (close, volume...)
-        log_volume = np.log(self.kline_data['volume'].replace(0, 1))
+        
         
         # 為了對齊長度，我們只取 load_features 回傳的部分
         # 因為 df 已經是與 kline 對齊的結果
@@ -105,11 +108,11 @@ class SentimentStrategyV2(BaseStrategy):
         
         curr_yield_entry = yield_entry_th.iloc[-1]
         curr_yield_exit = yield_exit_th.iloc[-1]
-
+        
         # 檢查 NaN
         if np.isnan(curr_gnf_entry) or np.isnan(curr_yield_entry):
             return None
-
+        print(f" [Debug] GnF Ratio: {curr_gnf:.2e}, Yield: {curr_yield:.2f}")  # Debug: 查看當前值和閾值
         # 進場
         long_condition = (curr_gnf > curr_gnf_entry) and (curr_yield > curr_yield_entry)
         
