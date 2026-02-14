@@ -1,0 +1,18 @@
+{
+    "last_rebalance_time": "2026-02-15T04:49:23.833933",
+    "weights": {
+        "PriceVolume1": 0.07692307692307693,
+        "PriceVolume2": 0.07692307692307693,
+        "PriceVolume3": 0.07692307692307693,
+        "PriceVolume4": 0.07692307692307693,
+        "PriceVolume5": 0.07692307692307693,
+        "PriceVolume6": 0.07692307692307693,
+        "PriceVolume7": 0.07692307692307693,
+        "PriceVolume8": 0.07692307692307693,
+        "PriceVolume9": 0.07692307692307693,
+        "SentimentStrategyV3": 0.07692307692307693,
+        "SentimentStrategyV2": 0.07692307692307693,
+        "PriceVolume10": 0.07692307692307693,
+        "QQQ_price": 0.07692307692307693
+    }
+}

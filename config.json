@@ -1,7 +1,7 @@
 {
     "system": {
         "mode": "TESTNET", 
-        "paper_trading": "False",
+        "paper_trading": "true",
         "log_level": "INFO"
     },
     "trading": {

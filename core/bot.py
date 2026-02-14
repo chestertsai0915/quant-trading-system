@@ -66,11 +66,16 @@ class TradingBot:
                         # 3. Strategy Manager 計算訊號 (傳入 data_board)
                         signals = self.strategy_manager.generate_signals(data_board)
                         
-                        # 4. Trade Manager 執行交易
+                        #  4. [Batch Update] 先更新所有策略的虛擬帳本
                         for signal in signals:
-                            self.trade_manager.process_signal(signal)
-                        # 5. 記錄快照 (包含參考價格)
+                            self.trade_manager.update_virtual_signal(signal)
+                        
+                        #  5. [Global Execution] 迴圈結束後，只執行一次總調倉
+                        # 即使 signals 為空，我們也執行一次 (因為幣價變動可能導致權重偏移)
                         ref_price = data_board.main_kline['close'].iloc[-1]
+                        self.trade_manager.execute_global_rebalance(ref_price)
+
+                        # 6. 記錄快照
                         self.trade_manager.log_snapshot(ref_price)
                     
                     logging.info("本週期結束，等待下一次收盤...")

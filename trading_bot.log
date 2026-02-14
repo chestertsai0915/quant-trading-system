@@ -4658,3 +4658,125 @@ AttributeError: 'DatabaseHandler' object has no attribute 'save_market_data'
 2026-02-15 02:03:37,087 [INFO]  [DB] 交易已儲存: CLOSE 1.6673171692946354e-05 BTCUSDT | PnL: -0.00
 2026-02-15 02:03:37,088 [INFO] 本週期結束，等待下一次收盤...
 2026-02-15 02:03:40,051 [WARNING] 停止運行
+2026-02-15 04:33:22,232 [INFO] 設定檔載入成功: config.json
+2026-02-15 04:33:22,844 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-15 04:33:22,850 [INFO] [BACKFILL] 上次收盤: 2026-02-14 18:00:00 | 現在時間: 2026-02-14 20:33:22.849000 | 缺少 K 線: 2 根
+2026-02-15 04:33:22,850 [INFO] [BACKFILL] 開始回補 4 根 K 線...
+2026-02-15 04:33:23,349 [INFO] [BACKFILL] 成功寫入 4 筆數據！斷層修復完成。
+2026-02-15 04:33:23,351 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-15 04:33:23,351 [INFO]  外部數據背景更新啟動
+2026-02-15 04:33:23,351 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-15 04:33:23,353 [INFO] 策略已掛載: PriceVolume1
+2026-02-15 04:33:23,354 [INFO] 策略已掛載: PriceVolume2
+2026-02-15 04:33:23,354 [INFO] 策略已掛載: PriceVolume3
+2026-02-15 04:33:23,355 [INFO] 策略已掛載: PriceVolume4
+2026-02-15 04:33:23,355 [INFO] 策略已掛載: PriceVolume5
+2026-02-15 04:33:23,355 [INFO] 策略已掛載: PriceVolume6
+2026-02-15 04:33:23,356 [INFO] 策略已掛載: PriceVolume7
+2026-02-15 04:33:23,356 [INFO] 策略已掛載: PriceVolume8
+2026-02-15 04:33:23,356 [INFO] 策略已掛載: PriceVolume9
+2026-02-15 04:33:23,357 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-15 04:33:23,357 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-15 04:33:23,358 [INFO] 策略已掛載: PriceVolume10
+2026-02-15 04:33:23,358 [INFO] 策略已掛載: QQQ_price
+2026-02-15 04:33:23,359 [INFO] 目前運行策略列表: ['PriceVolume1', 'PriceVolume2', 'PriceVolume3', 'PriceVolume4', 'PriceVolume5', 'PriceVolume6', 'PriceVolume7', 'PriceVolume8', 'PriceVolume9', 'SentimentStrategyV3', 'SentimentStrategyV2', 'PriceVolume10', 'QQQ_price']
+2026-02-15 04:33:23,359 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-15 04:33:24,699 [INFO] 監控 1h K 線...
+2026-02-15 04:33:24,917 [INFO] [ETL] 處理新 K 線: 2026-02-14 19:00:00
+2026-02-15 04:33:25,360 [INFO] [Portfolio] ⏳ 週期到達，執行分配...
+2026-02-15 04:33:25,361 [INFO]  分配完成. 晉級: ['PriceVolume1', 'PriceVolume2', 'PriceVolume3', 'PriceVolume4', 'PriceVolume5', 'PriceVolume6', 'PriceVolume7', 'PriceVolume8', 'PriceVolume9', 'SentimentStrategyV3', 'SentimentStrategyV2', 'PriceVolume10', 'QQQ_price']
+2026-02-15 04:33:25,361 [INFO] [Global] 權益:100000 | 曝險:0.00% | 目標:0.0000 | 現有:0.0000
+2026-02-15 04:33:25,361 [INFO] [Global] 權益:100000 | 曝險:0.00% | 目標:0.0000 | 現有:0.0000
+2026-02-15 04:33:25,361 [INFO] [Global] 權益:100000 | 曝險:0.00% | 目標:0.0000 | 現有:0.0000
+2026-02-15 04:33:25,361 [INFO] [Global] 權益:100000 | 曝險:0.00% | 目標:0.0000 | 現有:0.0000
+2026-02-15 04:33:25,361 [INFO] [Global] 權益:100000 | 曝險:0.00% | 目標:0.0000 | 現有:0.0000
+2026-02-15 04:33:25,362 [INFO] [Global] 權益:100000 | 曝險:0.00% | 目標:0.0000 | 現有:0.0000
+2026-02-15 04:33:25,362 [INFO] [Global] 權益:100000 | 曝險:0.00% | 目標:0.0000 | 現有:0.0000
+2026-02-15 04:33:25,362 [INFO] [Virtual] SentimentStrategyV3 狀態更新: 0.0 -> 1.0
+2026-02-15 04:33:25,362 [INFO] [Global] 權益:100000 | 曝險:7.69% | 目標:0.1102 | 現有:0.0000
+2026-02-15 04:33:25,362 [INFO] [EXEC] 差額調倉: BUY 0.1102
+2026-02-15 04:33:25,363 [INFO]  [Mock] 收到訂單: BUY 0.11021635028695928 BTCUSDT
+2026-02-15 04:33:26,871 [INFO] 本週期結束，等待下一次收盤...
+2026-02-15 04:33:36,224 [WARNING] [AlphaVantage] 抓取失敗: We have detected your API key as E5VUD2IG0AV6U3WM and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits.
+2026-02-15 04:33:36,226 [INFO] [US_STOCK] AlphaVantage 失敗，切換至備用源 Tiingo 抓取 QQQ...
+2026-02-15 04:33:37,149 [INFO] [US_STOCK] Tiingo 抓取成功！
+2026-02-15 04:33:42,602 [WARNING] 停止運行
+2026-02-15 04:49:20,861 [INFO] 設定檔載入成功: config.json
+2026-02-15 04:49:21,500 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-15 04:49:21,504 [INFO] [BACKFILL] 上次收盤: 2026-02-14 20:00:00 | 現在時間: 2026-02-14 20:49:21.504000 | 缺少 K 線: 0 根
+2026-02-15 04:49:21,505 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-15 04:49:21,978 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-15 04:49:21,978 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-15 04:49:21,978 [INFO]  外部數據背景更新啟動
+2026-02-15 04:49:21,979 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-15 04:49:21,981 [INFO] 策略已掛載: PriceVolume1
+2026-02-15 04:49:21,981 [INFO] 策略已掛載: PriceVolume2
+2026-02-15 04:49:21,981 [INFO] 策略已掛載: PriceVolume3
+2026-02-15 04:49:21,982 [INFO] 策略已掛載: PriceVolume4
+2026-02-15 04:49:21,982 [INFO] 策略已掛載: PriceVolume5
+2026-02-15 04:49:21,982 [INFO] 策略已掛載: PriceVolume6
+2026-02-15 04:49:21,983 [INFO] 策略已掛載: PriceVolume7
+2026-02-15 04:49:21,983 [INFO] 策略已掛載: PriceVolume8
+2026-02-15 04:49:21,983 [INFO] 策略已掛載: PriceVolume9
+2026-02-15 04:49:21,984 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-15 04:49:21,984 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-15 04:49:21,984 [INFO] 策略已掛載: PriceVolume10
+2026-02-15 04:49:21,985 [INFO] 策略已掛載: QQQ_price
+2026-02-15 04:49:21,985 [INFO] 目前運行策略列表: ['PriceVolume1', 'PriceVolume2', 'PriceVolume3', 'PriceVolume4', 'PriceVolume5', 'PriceVolume6', 'PriceVolume7', 'PriceVolume8', 'PriceVolume9', 'SentimentStrategyV3', 'SentimentStrategyV2', 'PriceVolume10', 'QQQ_price']
+2026-02-15 04:49:21,985 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-15 04:49:23,364 [INFO] 監控 1h K 線...
+2026-02-15 04:49:23,424 [INFO] [ETL] 處理新 K 線: 2026-02-14 19:00:00
+2026-02-15 04:49:23,833 [INFO] [Portfolio] ⏳ 週期到達，執行分配...
+2026-02-15 04:49:23,835 [INFO]  分配完成. 晉級: ['PriceVolume1', 'PriceVolume2', 'PriceVolume3', 'PriceVolume4', 'PriceVolume5', 'PriceVolume6', 'PriceVolume7', 'PriceVolume8', 'PriceVolume9', 'SentimentStrategyV3', 'SentimentStrategyV2', 'PriceVolume10', 'QQQ_price']
+2026-02-15 04:49:23,836 [INFO] [Global] 權益:100000 | 曝險:7.69% | 目標:0.1100 | 現有:0.0000
+2026-02-15 04:49:23,836 [INFO] [EXEC] 差額調倉: BUY 0.1100
+2026-02-15 04:49:23,836 [INFO]  [Mock] 收到訂單: BUY 0.10996331403917026 BTCUSDT
+2026-02-15 04:49:25,357 [INFO] 本週期結束，等待下一次收盤...
+2026-02-15 04:49:37,960 [WARNING] [AlphaVantage] 抓取失敗: We have detected your API key as E5VUD2IG0AV6U3WM and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits.
+2026-02-15 04:49:37,962 [INFO] [US_STOCK] AlphaVantage 失敗，切換至備用源 Tiingo 抓取 QQQ...
+2026-02-15 04:49:38,948 [INFO] [US_STOCK] Tiingo 抓取成功！
+2026-02-15 04:50:03,247 [WARNING] 停止運行
+2026-02-15 04:58:39,131 [INFO] 設定檔載入成功: config.json
+2026-02-15 04:58:39,732 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-15 04:58:39,737 [INFO] [BACKFILL] 上次收盤: 2026-02-14 20:00:00 | 現在時間: 2026-02-14 20:58:39.737000 | 缺少 K 線: 0 根
+2026-02-15 04:58:39,737 [INFO] [BACKFILL] 開始回補 2 根 K 線...
+2026-02-15 04:58:40,128 [INFO] [BACKFILL] 成功寫入 2 筆數據！斷層修復完成。
+2026-02-15 04:58:40,130 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-15 04:58:40,130 [INFO]  外部數據背景更新啟動
+2026-02-15 04:58:40,130 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-15 04:58:40,132 [INFO] 策略已掛載: PriceVolume1
+2026-02-15 04:58:40,132 [INFO] 策略已掛載: PriceVolume2
+2026-02-15 04:58:40,132 [INFO] 策略已掛載: PriceVolume3
+2026-02-15 04:58:40,133 [INFO] 策略已掛載: PriceVolume4
+2026-02-15 04:58:40,133 [INFO] 策略已掛載: PriceVolume5
+2026-02-15 04:58:40,134 [INFO] 策略已掛載: PriceVolume6
+2026-02-15 04:58:40,134 [INFO] 策略已掛載: PriceVolume7
+2026-02-15 04:58:40,134 [INFO] 策略已掛載: PriceVolume8
+2026-02-15 04:58:40,135 [INFO] 策略已掛載: PriceVolume9
+2026-02-15 04:58:40,135 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-15 04:58:40,135 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-15 04:58:40,135 [INFO] 策略已掛載: PriceVolume10
+2026-02-15 04:58:40,136 [INFO] 策略已掛載: QQQ_price
+2026-02-15 04:58:40,136 [INFO] 目前運行策略列表: ['PriceVolume1', 'PriceVolume2', 'PriceVolume3', 'PriceVolume4', 'PriceVolume5', 'PriceVolume6', 'PriceVolume7', 'PriceVolume8', 'PriceVolume9', 'SentimentStrategyV3', 'SentimentStrategyV2', 'PriceVolume10', 'QQQ_price']
+2026-02-15 04:58:40,136 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-15 04:58:41,496 [INFO] 監控 1h K 線...
+2026-02-15 04:58:41,552 [INFO] [ETL] 處理新 K 線: 2026-02-14 19:00:00
+2026-02-15 04:58:41,964 [INFO] [SIGNAL] PriceVolume2 (69992.9) | CLOSE | Exit: OBV(-909456.0)<MA or ATR<MA
+2026-02-15 04:58:41,965 [INFO] [SKIP] PriceVolume2 目前空手，無法平倉/無需動作
+2026-02-15 04:58:41,965 [INFO] [SIGNAL] PriceVolume3 (69992.9) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-15 04:58:41,965 [INFO] [SKIP] PriceVolume3 目前空手，無法平倉/無需動作
+2026-02-15 04:58:41,965 [INFO] [SIGNAL] PriceVolume4 (69992.9) | CLOSE | Momentum_Collapsed
+2026-02-15 04:58:41,965 [INFO] [SKIP] PriceVolume4 目前空手，無法平倉/無需動作
+2026-02-15 04:58:41,965 [INFO] [SIGNAL] PriceVolume5 (69992.9) | CLOSE | Vol_Drop & Mom_Weak
+2026-02-15 04:58:41,965 [INFO] [SKIP] PriceVolume5 目前空手，無法平倉/無需動作
+2026-02-15 04:58:41,965 [INFO] [SIGNAL] PriceVolume6 (69992.9) | CLOSE | Vol_CoolDown & OBV_Drop
+2026-02-15 04:58:41,966 [INFO] [SKIP] PriceVolume6 目前空手，無法平倉/無需動作
+2026-02-15 04:58:41,966 [INFO] [SIGNAL] PriceVolume9 (69992.9) | CLOSE | Mom_Fade & Vol_Normal
+2026-02-15 04:58:41,966 [INFO] [SKIP] PriceVolume9 目前空手，無法平倉/無需動作
+2026-02-15 04:58:41,966 [INFO] [SIGNAL] SentimentStrategyV3 (69992.9) | LONG | Ratio(0.94)>Th(0.72) & Z(1.02)>Th(0.27)
+2026-02-15 04:58:41,967 [INFO] [Virtual] SentimentStrategyV3 狀態更新: 0.0 -> 1.0
+2026-02-15 04:58:41,967 [INFO] [Global] 權益:100000 | 曝險:7.69% | 目標:0.1099 | 現有:0.0000
+2026-02-15 04:58:41,967 [INFO] [EXEC] 差額調倉: BUY 0.1099
+2026-02-15 04:58:41,967 [INFO]  [Mock] 收到訂單: BUY 0.1099012570176074 BTCUSDT
+2026-02-15 04:58:43,512 [INFO] 本週期結束，等待下一次收盤...
+2026-02-15 04:58:46,549 [WARNING] 停止運行

@@ -482,3 +482,16 @@ class DatabaseHandler:
         except Exception as e:
             logging.error(f"[DB Error] 查詢每日損益失敗: {e}")
             return {}
+        
+    def get_all_virtual_positions(self):
+        """
+        回傳: {'StrategyA': 1.0, 'StrategyB': -1.0, 'StrategyC': 0.0}
+        """
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute("SELECT strategy, position FROM strategy_states")
+            rows = cursor.fetchall()
+            return {row[0]: row[1] for row in rows}
+        except Exception as e:
+            logging.error(f"[DB Error] 批量讀取策略狀態失敗: {e}")
+            return {}
