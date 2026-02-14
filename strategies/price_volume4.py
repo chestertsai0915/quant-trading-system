@@ -3,7 +3,7 @@ import pandas as pd
 
 class PriceVolume4(BaseStrategy):
     def __init__(self):
-        super().__init__(name="Strategy4_High_Momentum")
+        super().__init__()
         
         # --- 參數映射 ---
         self.obv_smooth = 20   # OBV 平滑週期

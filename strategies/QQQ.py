@@ -4,7 +4,7 @@ import numpy as np
 
 class QQQ_price(BaseStrategy):
     def __init__(self):
-        super().__init__(name="Strategy13_QQQ_Wavelet_Trend")
+        super().__init__()
         
         # --- 策略參數 ---
         self.target_source = 'us_stock_qqq'

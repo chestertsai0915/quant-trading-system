@@ -3,7 +3,7 @@ import pandas as pd
 
 class PriceVolume1(BaseStrategy):
     def __init__(self):
-        super().__init__(name="Strategy1_MAD_BSR")
+        super().__init__()
         
         # --- 參數設定 (對應 Feature ID 的參數) ---
         self.mad_ma = 10       # MAD 的均線週期

@@ -3,7 +3,7 @@ import pandas as pd
 
 class PriceVolume6(BaseStrategy):
     def __init__(self):
-        super().__init__(name="Strategy6_Climax_Momentum")
+        super().__init__()
         
         # --- 參數映射 ---
         self.atr_window = 16   # ATR 計算週期

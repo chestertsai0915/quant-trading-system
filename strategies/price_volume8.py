@@ -3,7 +3,7 @@ import pandas as pd
 
 class PriceVolume8(BaseStrategy):
     def __init__(self):
-        super().__init__(name="Strategy8_Vol_BuyPressure")
+        super().__init__()
         
         # --- 參數映射 ---
         self.mad_period = 10   # MAD 計算週期

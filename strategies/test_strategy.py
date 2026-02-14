@@ -3,7 +3,7 @@ from .base_strategy import BaseStrategy
 
 class TestStrategy(BaseStrategy):
     def __init__(self):
-        super().__init__(name="TEST_FORCE_BUY")
+        super().__init__()
 
     def generate_signal(self):
         # 無論如何，直接回傳買入訊號

@@ -3,7 +3,7 @@ import pandas as pd
 
 class PriceVolume10(BaseStrategy):
     def __init__(self):
-        super().__init__(name="Strategy10_Volume_Diff_Reversion")
+        super().__init__()
         
         # --- 策略參數 ---
         self.mean_window = 15     # 成交量均線週期

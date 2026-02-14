@@ -3,7 +3,7 @@ import pandas as pd
 
 class PriceVolume3(BaseStrategy):
     def __init__(self):
-        super().__init__(name="Strategy3_MAD_OBV_Quantile")
+        super().__init__()
         
         # --- 參數映射 ---
         self.mad_period = 10   # MAD 計算本身需要的週期

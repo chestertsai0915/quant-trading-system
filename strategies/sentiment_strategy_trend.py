@@ -4,7 +4,7 @@ import numpy as np
 
 class SentimentStrategyV3(BaseStrategy):
     def __init__(self):
-        super().__init__(name="Strategy11_Trend_ZScore")
+        super().__init__()
         
         # --- 策略參數 ---
         self.rolling_window = 1000  # 滾動視窗 (1000小時)

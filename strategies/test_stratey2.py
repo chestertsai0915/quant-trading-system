@@ -2,7 +2,7 @@ from .base_strategy import BaseStrategy
 
 class TestStrategy2(BaseStrategy):
     def __init__(self):
-        super().__init__(name="TEST_LOOP")
+        super().__init__()
         # 設定一個開關，用來切換多空
         # True = 下一次發 LONG, False = 下一次發 CLOSE
         self.next_action_is_long = True

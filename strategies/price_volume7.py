@@ -3,7 +3,7 @@ import pandas as pd
 
 class PriceVolume7(BaseStrategy):
     def __init__(self):
-        super().__init__(name="Strategy7_Mom_LowVolFilter")
+        super().__init__()
         
         # --- 參數映射 ---
         self.mom_period = 10   # Momentum 週期

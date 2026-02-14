@@ -3,7 +3,7 @@ import pandas as pd
 
 class PriceVolume2(BaseStrategy):
     def __init__(self):
-        super().__init__(name="Price_Volume2")
+        super().__init__()
         
         # --- 參數區 (對應 Feature ID) ---
         self.atr_win = 16        # ATR 窗口

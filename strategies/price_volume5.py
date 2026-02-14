@@ -3,7 +3,7 @@ import pandas as pd
 
 class PriceVolume5(BaseStrategy):
     def __init__(self):
-        super().__init__(name="Strategy5_HighVol_Momentum")
+        super().__init__()
         
         # --- 參數映射 ---
         self.atr_window = 16   # ATR 計算週期

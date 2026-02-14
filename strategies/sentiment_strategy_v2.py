@@ -4,7 +4,7 @@ import numpy as np
 
 class SentimentStrategyV2(BaseStrategy):
     def __init__(self):
-        super().__init__(name="Strategy12_GnF_Yield_Ratio")
+        super().__init__()
         
         # --- 策略參數 ---
         self.gnf_window = 100       # GnF Ratio 滾動視窗 (小時)

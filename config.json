@@ -1,7 +1,7 @@
 {
     "system": {
         "mode": "TESTNET", 
-        "paper_trading": "True",
+        "paper_trading": "False",
         "log_level": "INFO"
     },
     "trading": {
@@ -10,7 +10,7 @@
         "strategies": ["PriceVolume1","PriceVolume2","PriceVolume3","PriceVolume4","PriceVolume5","PriceVolume6","PriceVolume7","PriceVolume8","PriceVolume9","SentimentStrategyV3","SentimentStrategyV2","PriceVolume10","QQQ_price"]
     },
     "risk": {
-        "leverage": 5,
+        "leverage": 1,
         "allocation_mode": "SHARPE_REBALANCE",
         "total_strategies": 13,
         "default_amount": 100, 
