@@ -112,7 +112,7 @@ class SentimentStrategyV2(BaseStrategy):
         # 檢查 NaN
         if np.isnan(curr_gnf_entry) or np.isnan(curr_yield_entry):
             return None
-        print(f" [Debug] GnF Ratio: {curr_gnf:.2e}, Yield: {curr_yield:.2f}")  # Debug: 查看當前值和閾值
+        
         # 進場
         long_condition = (curr_gnf > curr_gnf_entry) and (curr_yield > curr_yield_entry)
         

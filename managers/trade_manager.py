@@ -31,71 +31,65 @@ class TradeManager:
 
     def process_signal(self, signal_data):
         """
-        處理訊號的核心邏輯 (支援多策略互抵 + 影子交易模式)
+        處理訊號的核心邏輯 (固定數量模式 + 多策略互抵 + 影子交易)
         """
         strategy_name = signal_data['strategy_name']
         action = signal_data['action'] # 'LONG', 'SHORT', 'CLOSE', 'FLAT'
         ref_price = signal_data['ref_price']
         
-        # A. 取得當前帳戶總權益 (Real Equity)
+        # A. 取得當前帳戶總權益
         account_info = self.executor.get_account_info()
         total_equity = float(account_info['totalWalletBalance']) if account_info else 1000.0
         
-        # B. 計算該策略「目標持有金額」
-        # 如果是被淘汰的策略，這裡會回傳 0
-        allocated_usdt = self.portfolio_manager.calculate_allocation(strategy_name, total_equity)
+        # 用 get_strategy_base_quantity 獲取 "固定下單數量"
+        # PortfolioManager 會判斷是否過期並更新數量
+        # 注意：這裡回傳的是 (數量, 權重)
+        base_qty, weight = self.portfolio_manager.get_strategy_base_quantity(strategy_name, total_equity, ref_price)
         
-        #  判斷是否進入「影子模式 (Shadow Mode)」
-        is_shadow_mode = (allocated_usdt == 0)
-        
-        # C. 計算「本次計算用的本金」
-        # 如果是真交易 -> 用分配到的錢
-        # 如果是影子交易 -> 用「模擬本金 (1000U)」來計算「假設我有錢會買多少」
-        # 這樣才能累積 PnL，讓它有機會敗部復活
-        trading_capital = allocated_usdt if not is_shadow_mode else 1000.0
+        # 判斷是否為影子模式 (權重為 0)
+        is_shadow_mode = (weight == 0)
 
-        # D. 計算該策略「目標持倉數量 (Virtual Target Qty)」
+        # B. 計算目標持倉 (Target Position)
+        # 邏輯變簡單了：要嘛是正的固定量，要嘛是負的，要嘛是 0
+        # 不再隨價格浮動！
         target_strategy_qty = 0.0
         
         if action == 'LONG':
-            target_strategy_qty = self.risk_manager.calculate_quantity(ref_price, trading_capital)
+            target_strategy_qty = base_qty
         elif action == 'SHORT':
-            target_strategy_qty = -self.risk_manager.calculate_quantity(ref_price, trading_capital)
+            target_strategy_qty = -base_qty
         elif action == 'CLOSE' or action == 'FLAT':
             target_strategy_qty = 0.0
             
-        # E. 讀取該策略「目前虛擬持倉」
-        #  注意：改用 get_strategy_state (讀取新表) 而不是 get_strategy_position
+        # C. 讀取該策略「目前虛擬持倉」
         current_strategy_qty, _, _ = self.db.get_strategy_state(strategy_name)
+        
         logging.info(f"[SIGNAL] {strategy_name} ({ref_price}) | {action} | {signal_data.get('reason', 'No Reason')}")
-        # 如果目標跟現在一樣，就不做動作
+
+        # D. 如果目標跟現在一樣，就不做動作
         if target_strategy_qty == current_strategy_qty:
-            # 情境 1: 訊號是平倉 (CLOSE/FLAT)，但目前是空手 (0)
+            # log 邏輯保持不變...
             if current_strategy_qty == 0 and (action == 'CLOSE' or action == 'FLAT'):
                 logging.info(f"[SKIP] {strategy_name} 目前空手，無法平倉/無需動作")
-            
-            # 情境 2: 訊號是開倉 (LONG/SHORT)，但已經持倉且數量沒變 (可能是沒錢加倉，或訊號重複)
             elif current_strategy_qty != 0:
                 logging.info(f"[SKIP] {strategy_name} 已有持倉 {current_strategy_qty}，部位無變化")
-            
-            # 情境 3: 其他 (例如 Shadow Mode 權重為 0，導致 target=0 且 current=0)
             else:
-                if is_shadow_mode:
-                     logging.info(f"[SKIP] {strategy_name} (觀察中) 無動作")
-                else:
-                     logging.info(f"[SKIP] {strategy_name} 無需調倉")
-
+                logging.info(f"[SKIP] {strategy_name} 無需調倉")
             return
 
-        # F. 計算「策略需要調整的量 (Delta)」
+        # E. 計算「策略需要調整的量 (Delta)」
         delta_qty = target_strategy_qty - current_strategy_qty
         
-        # G. 分流執行
+        # [可選] 過濾極微小的浮點數誤差 (例如 0.00000001 BTC)
+        if abs(delta_qty) < 1e-6 and target_strategy_qty != 0: 
+            return
+
+        # F. 分流執行
         if is_shadow_mode:
-            logging.info(f"[Shadow] {strategy_name} 處於觀察期，執行模擬調倉: {delta_qty}")
+            logging.info(f"[Shadow] {strategy_name} (觀察中) 固定量交易: {delta_qty}")
             self._execute_shadow_order(strategy_name, delta_qty, ref_price)
         else:
-            logging.info(f"[Portfolio] {strategy_name} 執行真實調倉: {current_strategy_qty} -> {target_strategy_qty} (Delta: {delta_qty})")
+            logging.info(f"[Portfolio] {strategy_name} (權重{weight:.2f}) 固定量交易: {delta_qty}")
             self._execute_net_order(strategy_name, delta_qty, ref_price)
 
     def log_snapshot(self, ref_price):
