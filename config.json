@@ -11,7 +11,8 @@
     },
     "risk": {
         "leverage": 5,
-        "max_open_positions": 5,
+        "allocation_mode": "EQUAL_WEIGHT",
+        "total_strategies": 13,
         "default_amount": 100, 
         "strategy_allocations": {
             "PriceVolume2": 100, 

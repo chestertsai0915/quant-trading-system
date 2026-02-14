@@ -97,6 +97,16 @@ class DatabaseHandler:
                     PRIMARY KEY (timestamp, symbol, metric)
                 )
             ''')
+
+            cursor.execute('''
+            CREATE TABLE IF NOT EXISTS strategy_states (
+                strategy TEXT PRIMARY KEY,
+                position REAL DEFAULT 0,      
+                entry_price REAL DEFAULT 0,  
+                realized_pnl REAL DEFAULT 0   
+                )
+            ''')
+        
             
             self.conn.commit()
         except Exception as e:
@@ -391,3 +401,24 @@ class DatabaseHandler:
                 
         except Exception as e:
             print(f"[Backup Error] 啟動備份失敗: {e}")
+
+    def get_strategy_state(self, strategy):
+        """ [單純讀取] """
+        cursor = self.conn.cursor()
+        cursor.execute("SELECT position, entry_price, realized_pnl FROM strategy_states WHERE strategy=?", (strategy,))
+        row = cursor.fetchone()
+        if row:
+            return row[0], row[1], row[2]
+        return 0.0, 0.0, 0.0
+
+    def save_strategy_state(self, strategy, position, entry_price, realized_pnl):
+        """ [單純寫入] 不做任何計算，給什麼存什麼 """
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute('''
+                INSERT OR REPLACE INTO strategy_states (strategy, position, entry_price, realized_pnl)
+                VALUES (?, ?, ?, ?)
+            ''', (strategy, position, entry_price, realized_pnl))
+            self.conn.commit()
+        except Exception as e:
+            logging.error(f"[DB Error] 儲存策略狀態失敗: {e}")

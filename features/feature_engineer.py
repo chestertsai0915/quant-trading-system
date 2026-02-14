@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import logging
-import indicators as ind
+
 class FeatureEngineer:
     def __init__(self):
         pass

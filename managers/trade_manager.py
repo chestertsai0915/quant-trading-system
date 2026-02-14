@@ -1,141 +1,139 @@
+# managers/trade_manager.py
 import logging
 import time
 from utils.notifier import send_tg_msg
 from execution.risk_manager import RiskManager
 from execution.binance_executor import BinanceExecutor
 from execution.mock_executor import MockExecutor
+from .portfolio_manager import PortfolioManager  # <--- 新增引用
 
 class TradeManager:
     def __init__(self, client, db, config, symbol, is_paper=False):
         self.client = client
         self.db = db
+        self.config = config
         self.symbol = symbol
         self.is_paper = is_paper
         
-        # 初始化執行器
+        # 1. 初始化執行器
         if self.is_paper:
             self.executor = MockExecutor()
         else:
             self.executor = BinanceExecutor(self.client)
             
-        # 初始化風控
-        # 1. 讀取風控設定
-        self.leverage = config.get("risk", "leverage", 1)
+        # 2. 初始化管理器
+        self.risk_manager = RiskManager(leverage=config.get("risk", "leverage", 1))
+        self.portfolio_manager = PortfolioManager(config) # <--- 初始化 PortfolioManager
         
-        # 2. 讀取資金分配設定
-        self.default_amount = config.get("risk", "default_amount", 100)
-        self.allocations = config.get("risk", "strategy_allocations", {})
-        
-        self.risk_manager = RiskManager(leverage=self.leverage)
-        
-        # 設定交易所槓桿 (只需設一次)
+        # 設定交易所槓桿
         if not self.is_paper:
-            self.executor.set_leverage(self.symbol, self.leverage)
-    
-    def _get_strategy_amount(self, strategy_name):
-        """ 取得該策略分配的金額 """
-        return self.allocations.get(strategy_name, self.default_amount)
+            self.executor.set_leverage(self.symbol, config.get("risk", "leverage", 1))
 
-    def log_snapshot(self, current_price):
-        """ 
-        [修改] 這裡顯示的是「交易所總持倉」，但也要加上「策略持倉分布」
+    def process_signal(self, signal_data):
         """
-        details = self.executor.get_position_details(self.symbol)
-        total_amt = details['amt'] if details else 0.0
-        
-        logging.info(f"[SNAPSHOT] 交易所總持倉: {total_amt} BTC | 現價: {current_price}")
-        return total_amt
-
-    def process_signal(self, signal_data, current_pos_amt):
-        """ 
-        [核心修改] 
-        不再看 current_pos_amt (總持倉)，
-        而是去 DB 查這個策略自己有沒有持倉 
+        處理訊號的核心邏輯 (支援多策略互抵)
         """
         strategy_name = signal_data['strategy_name']
-        action = signal_data['action']
-        reason = signal_data['reason']
+        action = signal_data['action'] # 'LONG', 'SHORT', 'CLOSE', 'FLAT'
         ref_price = signal_data['ref_price']
-
-        # 1. 查詢該策略目前的「虛擬持倉」
-        strat_pos_qty, strat_entry_price = self.db.get_strategy_position(strategy_name, self.symbol)
         
-        logging.info(f"[SIGNAL] {strategy_name} ({strat_pos_qty} BTC) | {action} | {reason}")
-        self.db.log_signal(strategy_name, self.symbol, action, ref_price, reason)
-
-        target_qty = 0
-        should_trade = False
-
+        # A. 取得當前帳戶總權益 (Real Equity)
+        # 用於計算等權重金額
+        account_info = self.executor.get_account_info()
+        total_equity = float(account_info['totalWalletBalance']) if account_info else 1000.0 # 預設值防呆
+        
+        # B. 計算該策略「目標持有金額」
+        allocated_usdt = self.portfolio_manager.calculate_allocation(strategy_name, total_equity)
+        
+        # C. 計算該策略「目標持倉數量 (Virtual Target Qty)」
+        # 這裡簡化邏輯：LONG 就是滿倉，FLAT/CLOSE 就是空手
+        target_strategy_qty = 0.0
+        
         if action == 'LONG':
-            # 策略自己沒倉位才能開 (忽略別的策略有沒有單)
-            if strat_pos_qty > 0:
-                logging.info(f"[SKIP] {strategy_name} 已有持倉 {strat_pos_qty}，跳過開倉")
-            else:
-                # 取得該策略分配的金額
-                amount = self._get_strategy_amount(strategy_name)
-                # 計算下單量
-                target_qty = self.risk_manager.calculate_quantity(ref_price, amount)
-                should_trade = True
+            target_strategy_qty = self.risk_manager.calculate_quantity(ref_price, allocated_usdt)
+        elif action == 'SHORT':
+            target_strategy_qty = -self.risk_manager.calculate_quantity(ref_price, allocated_usdt)
+        elif action == 'CLOSE' or action == 'FLAT':
+            target_strategy_qty = 0.0
+            
+        # D. 讀取該策略「目前虛擬持倉 (Current Virtual Qty)」
+        current_strategy_qty, _ = self.db.get_strategy_position(strategy_name, self.symbol)
         
-        elif action == 'CLOSE':
-            # 策略自己有倉位才能平
-            if strat_pos_qty > 0:
-                # 平倉數量 = 該策略持有的數量 (確保一一對應)
-                target_qty = strat_pos_qty
-                should_trade = True
-            else:
-                logging.info(f"[SKIP] {strategy_name} 目前空手，無法平倉")
-        
-        # 執行交易
-        if should_trade and target_qty > 0:
-            self._execute_order(strategy_name, action, target_qty, ref_price)
+        # 如果目標跟現在一樣，就不做動作
+        if target_strategy_qty == current_strategy_qty:
+            return
 
-    def _execute_order(self, strategy_name, action, quantity, market_price):
-        """ 底層下單邏輯 (不變) """
-        side = 'BUY' if action == 'LONG' else 'SELL'
-        is_reduce = (action == 'CLOSE')
+        # E. 計算「策略需要調整的量 (Delta)」
+        delta_qty = target_strategy_qty - current_strategy_qty
         
-        # 這裡發送給幣安的是「淨操作」
+        logging.info(f"[Portfolio] {strategy_name} 調整倉位: {current_strategy_qty} -> {target_strategy_qty} (Delta: {delta_qty})")
+
+        # F. 執行「淨部位」下單 (Netting Execution)
+        # 這裡我們做一個簡化：直接假設交易所可以執行這個 Delta
+        # (完整的 Netting 系統會去算所有策略的總和，這裡為了相容性，我們先用 Delta 執行)
+        self._execute_net_order(strategy_name, delta_qty, ref_price)
+
+    def _execute_net_order(self, strategy_name, delta_qty, price):
+        """
+        執行差額下單，並分別紀錄「虛擬交易」與「真實成交」
+        """
+        if delta_qty == 0: return
+        
+        # 1. [新增] 先查詢該策略目前的持倉 (為了判斷是 LONG 還是 CLOSE)
+        # 注意：這裡要用 get_strategy_state，因為這是最新的狀態
+        current_pos, _, _ = self.db.get_strategy_state(strategy_name)
+
+        side = 'BUY' if delta_qty > 0 else 'SELL'
+        qty_abs = abs(delta_qty)
+        
+        # 2. 發送真實訂單到幣安 (Real Order)
+        logging.info(f"[EXEC] 發送訂單: {side} {qty_abs} (由 {strategy_name} 觸發)")
+        
         response = self.executor.execute_order(
-            self.symbol, side, quantity, reduce_only=is_reduce, market_price=market_price
+            self.symbol, side, qty_abs, reduce_only=False, market_price=price
         )
         
-        if not response: return
+        if response and response.get('orderId'):
+            # 3. 紀錄「虛擬交易」到資料庫 (Virtual Log)
+            
+            # 模擬成交價
+            avg_price = float(response.get('avgPrice', price))
+            if avg_price == 0: avg_price = price
+            
+            # 4. [修改] 智慧判斷 db_side (LONG / SHORT / CLOSE)
+            # 邏輯：看這次的 delta_qty 是否讓持倉絕對值變小？
+            
+            db_side = ''
+            
+            # A. 如果原本做多 (Pos > 0) 且 這次賣出 (Delta < 0) -> 平倉 (CLOSE)
+            if current_pos > 0 and delta_qty < 0:
+                db_side = 'CLOSE'
+            
+            # B. 如果原本做空 (Pos < 0) 且 這次買入 (Delta > 0) -> 平倉 (CLOSE)
+            elif current_pos < 0 and delta_qty > 0:
+                db_side = 'CLOSE'
+            
+            # C. 其他情況 (原本是 0，或是加倉) -> 根據方向決定 LONG 或 SHORT
+            else:
+                db_side = 'LONG' if delta_qty > 0 else 'SHORT'
 
-        order_id = response.get('orderId')
-        logging.info(f"[{strategy_name}] 訂單已發送 ID: {order_id}")
-        time.sleep(3) 
-
-        # 查證訂單
-        final_record = self._verify_order(order_id, response)
-        
-        if final_record and final_record['executedQty'] > 0:
-            # 這裡 DB 寫入時已經有 strategy_name 了，所以紀錄是分開的
-            self._log_trade_success(strategy_name, action, final_record, order_id)
-        else:
-            logging.warning(f"訂單 {order_id} 未完全成交")
-
-    def _verify_order(self, order_id, response):
-        """ 查證訂單狀態 """
-        if self.is_paper:
-            return {
-                'avgPrice': float(response.get('cumQuote', 0)) / float(response.get('executedQty', 1)),
-                'executedQty': float(response.get('executedQty', 0)),
-                'notional': float(response.get('cumQuote', 0))
-            }
-        return self.executor.fetch_order_status(self.symbol, order_id)
-
-    def _log_trade_success(self, strategy_name, action, record, order_id):
-        avg_price = record['avgPrice']
-        qty = record['executedQty']
-        
-        # DB 紀錄
-        self.db.log_trade(
-            strategy=strategy_name, symbol=self.symbol, side=action,
-            price=avg_price, quantity=qty, order_id=str(order_id),
-            notional=record['notional']
-        )
-        
-        # TG 通知
-        send_tg_msg(f"[成交] {action} {self.symbol}\n策略: {strategy_name}\n數量: {qty}\n均價: {avg_price:.2f}")
-        logging.info(f"[VERIFIED] 成交確認 | 均價: {avg_price}")
+            # 5. 寫入資料庫
+            self.db.log_trade(
+                strategy=strategy_name,
+                symbol=self.symbol,
+                side=db_side,   # 這裡現在會是正確的 LONG/SHORT/CLOSE
+                price=avg_price,
+                quantity=qty_abs,
+                order_id=f"v_{response['orderId']}",
+                notional=avg_price * qty_abs
+            )
+            
+            # 6. [新增] 同步呼叫 PortfolioManager 更新帳本與損益 (這是我們上一段加的)
+            # 這樣才會把 realized_pnl 算出來存進 strategy_states
+            pnl = self.portfolio_manager.update_position_record(strategy_name, delta_qty, avg_price)
+            
+            msg = f"[調倉] {strategy_name}\n動作: {db_side} {qty_abs}\n價格: {avg_price}"
+            if pnl != 0:
+                msg += f"\n已實現損益: {pnl:.2f} U"
+                
+            send_tg_msg(msg)

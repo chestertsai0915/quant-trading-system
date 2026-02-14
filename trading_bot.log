@@ -3509,3 +3509,41 @@ AttributeError: 'DatabaseHandler' object has no attribute 'save_market_data'
 2026-02-14 01:06:45,619 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 68911.8
 2026-02-14 01:06:45,619 [INFO] 本週期結束，等待下一次收盤...
 2026-02-14 01:07:00,331 [WARNING] 停止運行
+2026-02-14 16:45:12,590 [INFO] 設定檔載入成功: config.json
+2026-02-14 16:45:13,251 [INFO] [BACKFILL] 正在檢查 BTCUSDT 數據完整性...
+2026-02-14 16:45:13,256 [INFO] [BACKFILL] 上次收盤: 2026-02-13 17:00:00 | 現在時間: 2026-02-14 08:45:13.255000 | 缺少 K 線: 15 根
+2026-02-14 16:45:13,256 [INFO] [BACKFILL] 開始回補 17 根 K 線...
+2026-02-14 16:45:13,678 [INFO] [BACKFILL] 成功寫入 17 筆數據！斷層修復完成。
+2026-02-14 16:45:13,680 [INFO] [BG-TASK] 開始更新外部數據...
+2026-02-14 16:45:13,680 [INFO]  外部數據背景更新啟動
+2026-02-14 16:45:13,681 [INFO] 載入外部數據源: ['fear_greed', 'google_trends', 'fred_macro', 'us_stock_qqq']
+2026-02-14 16:45:13,682 [INFO] 策略已掛載: PriceVolume1
+2026-02-14 16:45:13,683 [INFO] 策略已掛載: PriceVolume2
+2026-02-14 16:45:13,683 [INFO] 策略已掛載: PriceVolume3
+2026-02-14 16:45:13,684 [INFO] 策略已掛載: PriceVolume4
+2026-02-14 16:45:13,684 [INFO] 策略已掛載: PriceVolume5
+2026-02-14 16:45:13,684 [INFO] 策略已掛載: PriceVolume6
+2026-02-14 16:45:13,685 [INFO] 策略已掛載: PriceVolume7
+2026-02-14 16:45:13,685 [INFO] 策略已掛載: PriceVolume8
+2026-02-14 16:45:13,685 [INFO] 策略已掛載: PriceVolume9
+2026-02-14 16:45:13,686 [INFO] 策略已掛載: SentimentStrategyV3
+2026-02-14 16:45:13,686 [INFO] 策略已掛載: SentimentStrategyV2
+2026-02-14 16:45:13,686 [INFO] 策略已掛載: PriceVolume10
+2026-02-14 16:45:13,686 [INFO] 策略已掛載: QQQ_price
+2026-02-14 16:45:13,687 [INFO] 目前運行策略列表: ['Strategy1_MAD_BSR', 'Price_Volume2', 'Strategy3_MAD_OBV_Quantile', 'Strategy4_High_Momentum', 'Strategy5_HighVol_Momentum', 'Strategy6_Climax_Momentum', 'Strategy7_Mom_LowVolFilter', 'Strategy8_Vol_BuyPressure', 'Strategy9_Mom_VROC_Shock', 'Strategy11_Trend_ZScore', 'Strategy12_GnF_Yield_Ratio', 'Strategy10_Volume_Diff_Reversion', 'Strategy13_QQQ_Wavelet_Trend']
+2026-02-14 16:45:13,687 [INFO]  [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。
+2026-02-14 16:45:15,230 [INFO] 監控 1h K 線...
+2026-02-14 16:45:15,284 [INFO] [ETL] 處理新 K 線: 2026-02-14 07:00:00
+2026-02-14 16:45:19,256 [INFO] [SIGNAL] Price_Volume2 (0.0 BTC) | CLOSE | Exit: OBV(-908796.7)<MA or ATR<MA
+2026-02-14 16:45:19,257 [INFO] [SKIP] Price_Volume2 目前空手，無法平倉
+2026-02-14 16:45:19,257 [INFO] [SIGNAL] Strategy3_MAD_OBV_Quantile (0.0 BTC) | CLOSE | MAD_CoolDown or OBV_Weak
+2026-02-14 16:45:19,258 [INFO] [SKIP] Strategy3_MAD_OBV_Quantile 目前空手，無法平倉
+2026-02-14 16:45:19,258 [INFO] [SIGNAL] Strategy4_High_Momentum (0.0 BTC) | CLOSE | Momentum_Collapsed
+2026-02-14 16:45:19,259 [INFO] [SKIP] Strategy4_High_Momentum 目前空手，無法平倉
+2026-02-14 16:45:19,259 [INFO] [SIGNAL] Strategy5_HighVol_Momentum (0.0 BTC) | CLOSE | Vol_Drop & Mom_Weak
+2026-02-14 16:45:19,259 [INFO] [SKIP] Strategy5_HighVol_Momentum 目前空手，無法平倉
+2026-02-14 16:45:19,259 [INFO] [SIGNAL] Strategy9_Mom_VROC_Shock (0.0 BTC) | CLOSE | Mom_Fade & Vol_Normal
+2026-02-14 16:45:19,260 [INFO] [SKIP] Strategy9_Mom_VROC_Shock 目前空手，無法平倉
+2026-02-14 16:45:19,261 [INFO] [SNAPSHOT] 交易所總持倉: 0.0 BTC | 現價: 69650.0
+2026-02-14 16:45:19,261 [INFO] 本週期結束，等待下一次收盤...
+2026-02-14 16:46:27,755 [WARNING] 停止運行
