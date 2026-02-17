@@ -8,7 +8,7 @@ import logging
 import pandas as pd 
 
 class DatabaseHandler:
-    def __init__(self, db_path="trading_data.db"):
+    def __init__(self, db_path="trading_data.db", skip_backup=False):
         self.db_path = db_path
         
         # =建立持久連線，並允許跨執行緒存取
@@ -18,7 +18,10 @@ class DatabaseHandler:
         self.conn.execute("PRAGMA journal_mode=WAL;")
         
         self._init_tables()
-        self._backup_on_startup()
+        # [修改] 只有當 skip_backup=False 時才備份
+        if not skip_backup:
+            self._backup_on_startup()
+        
 
     def _init_tables(self):
         """ 初始化資料庫表結構 """

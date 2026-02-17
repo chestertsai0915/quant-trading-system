@@ -15,7 +15,7 @@ from managers.data_manager import DataBoard
 
 class BacktestDataFactory:
     def __init__(self, db_path="trading_data.db"):
-        self.db = DatabaseHandler(db_path)
+        self.db = DatabaseHandler(db_path, skip_backup=True)
         self.feature_store = FeatureStore()
 
     def _load_all_external_data(self, start_time=None):

@@ -21,21 +21,33 @@ def run(row, account):
 
     # === 執行邏輯 (狀態機) ===
     
-    # 如果目前持有 多單 (Position > 0)
-    if account.position > 0:
-        if exit_signal or short_signal:
-            return 'SELL', 1.0  # 平多 (若 short_signal 觸發，這裡只會平倉，下一根 K 線才會開空，或者你可以寫複雜點直接反手)
-            
-    # 如果目前持有 空單 (Position < 0)
-    elif account.position < 0:
-        if exit_signal or long_signal:
-            return 'BUY', 1.0   # 平空 (Cover)
+   # === 4. 執行 ===
+    pos = account.position
 
-    # 如果目前 空手 (Position == 0)
-    else:
-        if long_signal:
-            return 'BUY', 0.98  # 開多
-        elif short_signal:
-            return 'SELL', 0.98 # 開空 (Short)
+    # ===== 開多 =====
+    if long_signal and pos <= 0:
+        if pos < 0:
+            return 'BUY_TO_COVER', 1.0   # 先平空
+        else:
+            return 'BUY', 0.98           # 開多
+
+
+    # ===== 開空 =====
+    elif short_signal and pos >= 0:
+        if pos > 0:
+            return 'SELL', 1.0           # 先平多
+        else:
+            return 'SHORT', 0.98         # 開空
+
+
+    # ===== 平多 =====
+    elif exit_signal and pos > 0:
+        return 'SELL', 1.0
+
+
+    # ===== 平空 =====
+    elif exit_signal and pos < 0:
+        return 'BUY_TO_COVER', 1.0
+
 
     return 'HOLD', 0
