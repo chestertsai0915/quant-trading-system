@@ -9,7 +9,7 @@ class BaseStrategy(ABC):
             self.name = self.__class__.__name__ 
         else:
             self.name = name
-            
+               
         self.kline_data = pd.DataFrame() 
         self.data_board = None 
         
@@ -24,13 +24,3 @@ class BaseStrategy(ABC):
     @abstractmethod
     def generate_signal(self):
         pass
-    
-    # --- [NEW] 策略專用的特徵載入方法 ---
-    def load_features(self, feature_list):
-        """
-        策略只需要給清單，剩下的髒活 (計算、對齊、合併) 全由底層處理。
-        """
-        if not self.data_board:
-            return pd.DataFrame()
-            
-        return self.feature_store.load_features(feature_list, self.data_board)
