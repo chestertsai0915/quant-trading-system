@@ -5,7 +5,7 @@ import importlib.util
 import sys
 import os
 import argparse
-from scipy import stats  # 用於 T 檢定
+from scipy import stats  # 引入統計模組
 
 # 引用模組
 sys.path.append(os.getcwd())
@@ -17,29 +17,94 @@ except ImportError as e:
     sys.exit(1)
 
 # ==========================================
-# 1. 進階績效計算 (核心邏輯)
+# 1. 統計檢定工具箱 (Statistical Tools)
+# ==========================================
+def test_sharpe_difference(rets_is, rets_os):
+    """
+    檢定 Sharpe Ratio 是否顯著衰退
+    H0: SR_is <= SR_os
+    H1: SR_is > SR_os (衰退)
+    Reference: Lo (2002), The Statistics of Sharpe Ratios
+    """
+    n_is, n_os = len(rets_is), len(rets_os)
+    if n_is < 2 or n_os < 2: return np.nan, np.nan, "N/A"
+
+    # 計算 Sharpe (未年化，因為統計檢定用單期即可)
+    mean_is, std_is = rets_is.mean(), rets_is.std()
+    mean_os, std_os = rets_os.mean(), rets_os.std()
+    
+    if std_is == 0 or std_os == 0: return np.nan, np.nan, "Std=0"
+
+    sr_is = mean_is / std_is
+    sr_os = mean_os / std_os
+
+    # 計算 Sharpe 的變異數近似值
+    # Var(SR) approx (1 + 0.5 * SR^2) / N
+    var_is = (1 + 0.5 * sr_is**2) / n_is
+    var_os = (1 + 0.5 * sr_os**2) / n_os
+
+    # Z-Test
+    diff = sr_is - sr_os
+    std_diff = np.sqrt(var_is + var_os)
+    z_score = diff / std_diff
+    
+    # 單尾檢定 (我們只在意 IS > OS 的情況)
+    p_value = 1 - stats.norm.cdf(z_score)
+    
+    result = " 無顯著差異"
+    if p_value < 0.05: result = " 顯著衰退 (Significant)"
+    elif p_value < 0.1: result = " 疑似衰退 (Potential)"
+
+    return z_score, p_value, result
+
+def test_correlation_difference(r_is, n_is, r_os, n_os):
+    """
+    檢定 IC (相關係數) 是否顯著衰退 (Fisher Z Transformation)
+    H0: Corr_is <= Corr_os
+    H1: Corr_is > Corr_os
+    """
+    if n_is < 4 or n_os < 4: return np.nan, np.nan, "N/A"
+    
+    # Fisher Z 轉換 (處理 r=1 或 r=-1 的邊界情況)
+    r_is = np.clip(r_is, -0.999, 0.999)
+    r_os = np.clip(r_os, -0.999, 0.999)
+
+    z_is = 0.5 * np.log((1 + r_is) / (1 - r_is))
+    z_os = 0.5 * np.log((1 + r_os) / (1 - r_os))
+
+    # 標準誤
+    se = np.sqrt(1/(n_is-3) + 1/(n_os-3))
+
+    # Z-Score
+    z_stat = (z_is - z_os) / se
+    p_value = 1 - stats.norm.cdf(z_stat)
+
+    result = " 無顯著差異"
+    if p_value < 0.05: result = " 顯著衰退 (Significant)"
+    elif p_value < 0.1: result = " 疑似衰退 (Potential)"
+
+    return z_stat, p_value, result
+
+# ==========================================
+# 2. 進階績效計算
 # ==========================================
 class PerformanceAnalyzer:
     def __init__(self, history_df, benchmark_series):
-        """
-        :param history_df: 包含 datetime, equity, position 的 DataFrame
-        :param benchmark_series: 基準價格序列 (Series), index需為 datetime
-        """
         self.hist = history_df.copy()
         self.hist.set_index('datetime', inplace=True)
         self.benchmark = benchmark_series.copy()
         
-        # [修復] 這裡計算的 returns 只存在 self.hist，不會影響外部傳進來的 df
+        # 基礎報酬率
         self.hist['returns'] = self.hist['equity'].pct_change().fillna(0)
-        
-        # 對齊基準收益率
         self.benchmark_returns = self.benchmark.pct_change().reindex(self.hist.index).fillna(0)
         
+        # 超額報酬 (Active Return) -> 用於算 IR
+        self.hist['active_returns'] = self.hist['returns'] - self.benchmark_returns
+
     def get_basic_metrics(self):
         if self.hist.empty: return {}
         total_ret = (self.hist['equity'].iloc[-1] / self.hist['equity'].iloc[0]) - 1
         
-        # MDD
         roll_max = self.hist['equity'].cummax()
         dd = (self.hist['equity'] - roll_max) / roll_max
         max_dd = dd.min()
@@ -65,69 +130,93 @@ class PerformanceAnalyzer:
 
     def get_advanced_metrics(self):
         if self.hist.empty: return {}
-        # 1. IC (Information Coefficient)
+        # IC
         pos = self.hist['position']
         future_ret = self.benchmark_returns.shift(-1)
+        valid = pd.DataFrame({'pos': pos, 'ret': future_ret}).dropna()
         
-        valid_data = pd.DataFrame({'pos': pos, 'ret': future_ret}).dropna()
-        if not valid_data.empty and valid_data['pos'].std() != 0:
-            ic_pearson = valid_data['pos'].corr(valid_data['ret'], method='pearson')
-            ic_spearman = valid_data['pos'].corr(valid_data['ret'], method='spearman')
-        else:
-            ic_pearson = 0
-            ic_spearman = 0
+        ic_sp = 0
+        if not valid.empty and valid['pos'].std() != 0:
+            ic_sp = valid['pos'].corr(valid['ret'], method='spearman')
 
-        # 2. IR (Information Ratio)
-        active_ret = self.hist['returns'] - self.benchmark_returns
-        tracking_error = active_ret.std()
+        # IR (Information Ratio)
+        active_ret = self.hist['active_returns']
+        tracking_err = active_ret.std()
         ir = 0
-        if tracking_error != 0:
-            ir = (active_ret.mean() / tracking_error) * np.sqrt(24*365)
-
-        # 3. Sharpe Stability
-        window = 24 * 30 
-        rolling_mean = self.hist['returns'].rolling(window).mean()
-        rolling_std = self.hist['returns'].rolling(window).std()
-        rolling_sharpe = (rolling_mean / rolling_std) * np.sqrt(24*365)
-        sharpe_stability = rolling_sharpe.std()
+        if tracking_err != 0:
+            ir = (active_ret.mean() / tracking_err) * np.sqrt(24*365)
 
         return {
-            "IC (Pearson)": ic_pearson,
-            "IC (Spearman)": ic_spearman,
+            "IC (Spearman)": ic_sp,
             "IR": ir,
-            "Sharpe Stability": sharpe_stability
+            "n_samples": len(valid) # 用於 IC 檢定
         }
 
-def perform_ttest(is_returns, os_returns):
-    """ Welch's t-test """
-    if len(is_returns) < 2 or len(os_returns) < 2:
-        return np.nan, np.nan, "數據不足"
+# ==========================================
+# 3. 完整健檢邏輯 (Robustness Check)
+# ==========================================
+def perform_robustness_check(hist_is, hist_os, benchmark_series):
+    """
+    執行完整的衰退檢定 (Return, Sharpe, IC, IR, Volatility)
+    """
+    results = {}
+    
+    # 建立 Analyzer 以取得運算所需的數據
+    analyzer_is = PerformanceAnalyzer(hist_is, benchmark_series)
+    analyzer_os = PerformanceAnalyzer(hist_os, benchmark_series)
+    
+    adv_is = analyzer_is.get_advanced_metrics()
+    adv_os = analyzer_os.get_advanced_metrics()
 
-    # 檢定 H1: IS Mean > OS Mean (衰退)
-    t_stat, p_value_2tail = stats.ttest_ind(is_returns, os_returns, equal_var=False, alternative='greater')
+    # 取得原始序列 (Series)
+    rets_is = analyzer_is.hist['returns']
+    rets_os = analyzer_os.hist['returns']
+    active_is = analyzer_is.hist['active_returns']
+    active_os = analyzer_os.hist['active_returns']
+
+    if len(rets_is) < 10 or len(rets_os) < 10:
+        return {"error": "數據不足"}
+
+    # --- 1. 收益率檢定 (T-Test) ---
+    t_stat, p_val_mean = stats.ttest_ind(rets_is, rets_os, equal_var=False, alternative='greater')
+    mean_res = " 通過"
+    if p_val_mean < 0.05: mean_res = " 顯著衰退"
+    results['return'] = {'stat': t_stat, 'p': p_val_mean, 'res': mean_res, 'name': '收益率 (Return)'}
+
+    # --- 2. 波動率檢定 (Levene Test) ---
+    stat_var, p_val_var = stats.levene(rets_is, rets_os, center='median')
+    is_std, os_std = rets_is.std(), rets_os.std()
+    var_res = " 通過"
+    if p_val_var < 0.05 and os_std > is_std: var_res = " 風險顯著擴大"
+    results['volatility'] = {'stat': stat_var, 'p': p_val_var, 'res': var_res, 'name': '波動率 (Volatility)'}
+
+    # --- 3. Sharpe 衰退檢定 (Lo's Statistic) ---
+    z_shp, p_shp, res_shp = test_sharpe_difference(rets_is, rets_os)
+    results['sharpe'] = {'stat': z_shp, 'p': p_shp, 'res': res_shp, 'name': '夏普值 (Sharpe)'}
+
+    # --- 4. IR 衰退檢定 (同 Sharpe 邏輯，但用 Active Returns) ---
+    z_ir, p_ir, res_ir = test_sharpe_difference(active_is, active_os)
+    results['ir'] = {'stat': z_ir, 'p': p_ir, 'res': res_ir, 'name': '資訊率 (IR)'}
+
+    # --- 5. IC 衰退檢定 (Fisher Z) ---
+    ic_is = adv_is.get('IC (Spearman)', 0)
+    ic_os = adv_os.get('IC (Spearman)', 0)
+    n_is = adv_is.get('n_samples', 0)
+    n_os = adv_os.get('n_samples', 0)
     
-    result_text = "無顯著差異 (Pass)"
-    if p_value_2tail < 0.05:
-        result_text = "⚠️ 顯著衰退 (Significant Decay)"
-    elif p_value_2tail < 0.1:
-        result_text = "⚠️ 輕微衰退 (Potential Decay)"
-    
-    return t_stat, p_value_2tail, result_text
+    z_ic, p_ic, res_ic = test_correlation_difference(ic_is, n_is, ic_os, n_os)
+    results['ic'] = {'stat': z_ic, 'p': p_ic, 'res': res_ic, 'name': '預測力 (IC)'}
+
+    return results
 
 # ==========================================
-# 2. 報告產生器 (寫入檔案版)
+# 4. 報告產生器 (寫入檔案)
 # ==========================================
 def save_report_to_file(df_full, hist_is, hist_os, split_date, strategy_name):
     filename = f"report_{strategy_name}.txt"
-    
-    # 計算 returns 用於 T-test (修復 KeyError 的關鍵)
-    # 這裡直接操作 series，不依賴 PerformanceAnalyzer 的內部狀態
-    is_rets = hist_is.set_index('datetime')['equity'].pct_change().dropna()
-    os_rets = hist_os.set_index('datetime')['equity'].pct_change().dropna()
-
     benchmark_series = df_full.set_index('datetime')['close']
 
-    # 準備分析器
+    # 計算基礎指標
     analyzer_is = PerformanceAnalyzer(hist_is, benchmark_series)
     basic_is = analyzer_is.get_basic_metrics()
     adv_is = analyzer_is.get_advanced_metrics()
@@ -137,79 +226,78 @@ def save_report_to_file(df_full, hist_is, hist_os, split_date, strategy_name):
         analyzer_os = PerformanceAnalyzer(hist_os, benchmark_series)
         basic_os = analyzer_os.get_basic_metrics()
         adv_os = analyzer_os.get_advanced_metrics()
+        
+        # 執行全方位檢定
+        checks = perform_robustness_check(hist_is, hist_os, benchmark_series)
 
     with open(filename, "w", encoding="utf-8") as f:
-        def w(text=""): 
-            f.write(text + "\n")
+        def w(text=""): f.write(text + "\n")
 
         w("="*60)
-        w(f"{'★ QUANT BRAIN 完整回測報告 ★':^56}")
+        w(f"{' QUANT BRAIN 全方位體檢報告 ':^56}")
         w("="*60)
-        w(f"策略名稱: {strategy_name}")
-        w(f"回測時間: {df_full['datetime'].min()} ~ {df_full['datetime'].max()}")
-        w(f"切割日期: {split_date}")
+        w(f"策略代號: {strategy_name}")
+        w(f"樣本切割: {split_date}")
         w("-" * 60)
 
-        # --- In-Sample ---
-        w(f"\n[{'In-Sample (訓練集)':^20}]")
-        w(f"  Return: {basic_is.get('Total Return', 0):>8.2%} | Sharpe: {basic_is.get('Sharpe Ratio', 0):>6.2f} | MaxDD: {basic_is.get('Max Drawdown', 0):>7.2%}")
-        w(f"  IC(Sp): {adv_is.get('IC (Spearman)', 0):>8.4f} | IR: {adv_is.get('IR', 0):>10.4f} | Stability: {adv_is.get('Sharpe Stability', 0):>6.2f}")
-
-        # --- Out-Sample ---
-        w(f"\n[{'Out-Sample (測試集)':^20}]")
+        # --- 1. 數據對比 ---
+        w(f"\n【數據對比 (Metrics Comparison)】")
+        headers = f"{'Metric':<12} | {'IS (Train)':<12} | {'OS (Test)':<12} | {'Delta':<10}"
+        w(headers)
+        w("-" * 55)
+        
         if has_os:
-            w(f"  Return: {basic_os.get('Total Return', 0):>8.2%} | Sharpe: {basic_os.get('Sharpe Ratio', 0):>6.2f} | MaxDD: {basic_os.get('Max Drawdown', 0):>7.2%}")
-            w(f"  IC(Sp): {adv_os.get('IC (Spearman)', 0):>8.4f} | IR: {adv_os.get('IR', 0):>10.4f} | Stability: {adv_os.get('Sharpe Stability', 0):>6.2f}")
+            # 輔助函式：安全取值
+            def get_fmt(dic, key, is_pct=False):
+                val = dic.get(key, 0)
+                return f"{val:>12.2%}" if is_pct else f"{val:>12.4f}"
+            
+            w(f"{'Return':<12} | {get_fmt(basic_is, 'Total Return', True)} | {get_fmt(basic_os, 'Total Return', True)} |")
+            w(f"{'Sharpe':<12} | {get_fmt(basic_is, 'Sharpe Ratio')} | {get_fmt(basic_os, 'Sharpe Ratio')} |")
+            w(f"{'IC (Sp)':<12} | {get_fmt(adv_is, 'IC (Spearman)')} | {get_fmt(adv_os, 'IC (Spearman)')} |")
+            w(f"{'IR':<12} | {get_fmt(adv_is, 'IR')} | {get_fmt(adv_os, 'IR')} |")
+            w(f"{'MaxDD':<12} | {get_fmt(basic_is, 'Max Drawdown', True)} | {get_fmt(basic_os, 'Max Drawdown', True)} |")
         else:
             w("  (無 OS 數據)")
 
-        # --- Robustness Check ---
-        w("\n" + "-"*60)
-        w(f"{'過擬合檢定 (Robustness Check)':^56}")
-        w("-"*60)
+        # --- 2. 統計檢定結果 ---
+        w("\n" + "="*60)
+        w(f"{' 統計衰退檢定 (Statistical Decay Tests) ':^56}")
+        w("="*60)
+        w("檢定假設 H0: 策略在 OS 的表現 <= IS (無顯著衰退)")
+        w("P-Value < 0.05 代表拒絕 H0 -> 確認發生顯著衰退\n")
 
-        if has_os:
-            # 1. T-Test
-            t_stat, p_val, res_text = perform_ttest(is_rets, os_rets)
-            w(f"1. 收益率分佈檢定 (T-Test):")
-            w(f"   T-Stat: {t_stat:.4f} (IS Mean - OS Mean)")
-            w(f"   P-Value: {p_val:.4f}")
-            w(f"   >> 結論: {res_text}")
-
-            # 2. Sharpe Decay
-            sharpe_is = basic_is.get('Sharpe Ratio', 0)
-            sharpe_os = basic_os.get('Sharpe Ratio', 0)
+        if has_os and "error" not in checks:
+            # 遍歷所有檢定項目
+            test_order = ['return', 'volatility', 'sharpe', 'ic', 'ir']
             
-            w(f"\n2. Sharpe 變動:")
-            w(f"   IS: {sharpe_is:.2f} -> OS: {sharpe_os:.2f}")
-            
-            if sharpe_is > 0:
-                decay = (sharpe_os - sharpe_is) / sharpe_is
-                w(f"   衰退率: {decay:.2%}")
-                if decay < -0.5: w("   >> 警告: Sharpe 衰退嚴重 (>50%)")
-            
-            # 3. IC Check
-            ic_is = adv_is.get('IC (Spearman)', 0)
-            ic_os = adv_os.get('IC (Spearman)', 0)
-            w(f"\n3. 預測力 (IC) 變動:")
-            w(f"   IS: {ic_is:.4f} -> OS: {ic_os:.4f}")
-            if ic_os < 0.01: w("   >> 警告: OS IC 接近 0 或負值，預測失效")
+            for key in test_order:
+                item = checks.get(key)
+                if not item: continue
+                
+                w(f"[{item['name']}]")
+                w(f"   結果: {item['res']}")
+                w(f"   數據: Stat={item['stat']:.4f}, P-Value={item['p']:.4f}")
+                
+                # 針對特定結果加註解
+                if item['p'] < 0.05:
+                    w("   >> 警告: 統計上顯著變差")
+                w("-" * 30)
 
         else:
-            w("無法執行檢定 (缺 OS 數據)")
+            w("  (無法執行檢定)")
 
         w("="*60)
 
-    print(f"[BRAIN] 文字報告已儲存至: {filename}")
+    print(f"[BRAIN] 完整體檢報告已儲存至: {filename}")
 
 def plot_performance_advanced(df_full, hist_is, hist_os, split_date, strategy_name):
-    # 保持原樣，這會生成圖片
+    # (繪圖函式保持不變，節省篇幅)
     plt.style.use('ggplot')
     fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(14, 12), sharex=True, gridspec_kw={'height_ratios': [3, 1, 1]})
     
     full_time = pd.to_datetime(df_full['datetime'])
-    benchmark = df_full['close'] * (10000 / df_full['close'].iloc[0])
-    ax1.plot(full_time, benchmark, color='gray', alpha=0.3, label='Benchmark (BTC)')
+    
 
     if not hist_is.empty:
         ax1.plot(pd.to_datetime(hist_is['datetime']), hist_is['equity'], label='IS Equity', color='#1f77b4')
@@ -221,7 +309,6 @@ def plot_performance_advanced(df_full, hist_is, hist_os, split_date, strategy_na
     ax1.set_ylabel('Equity')
     ax1.legend(loc='upper left')
 
-    # Rolling Sharpe
     full_hist = pd.concat([hist_is, hist_os]).drop_duplicates(subset=['datetime']).sort_values('datetime')
     if not full_hist.empty:
         full_hist.set_index('datetime', inplace=True)
@@ -230,7 +317,9 @@ def plot_performance_advanced(df_full, hist_is, hist_os, split_date, strategy_na
         window = 24 * 30 
         roll_mean = full_hist['returns'].rolling(window).mean()
         roll_std = full_hist['returns'].rolling(window).std()
-        roll_sharpe = (roll_mean / roll_std) * np.sqrt(24*365)
+        
+        with np.errstate(divide='ignore', invalid='ignore'):
+            roll_sharpe = (roll_mean / roll_std) * np.sqrt(24*365)
         
         ax2.plot(roll_sharpe.index, roll_sharpe, color='purple', linewidth=1, label='Rolling Sharpe (30D)')
         ax2.axhline(0, color='black', linewidth=0.5, linestyle='--')
@@ -238,7 +327,6 @@ def plot_performance_advanced(df_full, hist_is, hist_os, split_date, strategy_na
         ax2.set_ylabel('Sharpe')
         ax2.legend(loc='upper left')
 
-        # Drawdown
         roll_max = full_hist['equity'].cummax()
         dd = (full_hist['equity'] - roll_max) / roll_max
         ax3.fill_between(dd.index, dd, 0, color='#d62728', alpha=0.3, label='Drawdown')
@@ -254,7 +342,7 @@ def plot_performance_advanced(df_full, hist_is, hist_os, split_date, strategy_na
     print(f"[BRAIN] 圖表報告已儲存至: {output_file}")
 
 # ==========================================
-# 3. 主流程
+# 5. 主流程
 # ==========================================
 def load_strategy_from_file(filepath):
     if not os.path.exists(filepath):
@@ -300,7 +388,7 @@ def main():
 
     # 3. 執行全域回測
     print("--- 執行全域回測 ---")
-    engine = PureBacktestEngine(df, initial_balance=10000)
+    engine = PureBacktestEngine(df, initial_balance=10000, mode='next_open')
     engine.run(strategy_func)
     
     full_hist = pd.DataFrame(engine.account.equity_curve)
@@ -317,6 +405,8 @@ def main():
     
     # 5. 繪圖
     plot_performance_advanced(df, hist_is, hist_os, SPLIT_DATE, strategy_name)
+
+
 
 if __name__ == "__main__":
     main()
