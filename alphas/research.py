@@ -22,7 +22,7 @@ class ResearchEnvironment:
 
         # 2. 載入數據 (只做一次)
         print("[Research] 正在載入 IS 數據...")
-        factory = BacktestDataFactory(skip_backup=True)
+        factory = BacktestDataFactory()
         
         # 這裡直接用策略裡寫死的 requirements 去撈資料
         full_df = factory.prepare_features(

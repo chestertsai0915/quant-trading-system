@@ -39,7 +39,6 @@ class VirtualAccount:
         fee = notional * self.taker_fee
 
         if side == 'BUY':
-            cost = fee 
             # 平空邏輯
             if self.position < 0: 
                 cover_qty = min(quantity, abs(self.position))
@@ -96,7 +95,10 @@ class PureBacktestEngine:
         self.df = df
         self.account = VirtualAccount(initial_balance)
         self.mode = mode
-        self.pending_action = None # 用於存儲 T 時刻產生的訊號，留到 T+1 執行
+        
+        # 狀態暫存
+        self.pending_action = None # Legacy: (action, pct)
+        self.pending_target = None # New: target_pct (float)
 
     def run(self, strategy_func):
         # logging.info(f"--- 開始回測 (Mode: {self.mode}) ---")
@@ -107,55 +109,84 @@ class PureBacktestEngine:
             current_time = row['datetime']
             
             # ==========================================
-            # 1. 執行 Pending Order (這是 T-1 時刻產生的訊號)
+            # 1. 執行 Pending Order (Next Open Mode)
             # ==========================================
-            if self.mode == 'next_open' and self.pending_action:
-                action, pct = self.pending_action
-                
-                # 在 T 時刻的 Open 執行交易
-                # 因為是在 Open 成交，我們用 Open Price 計算權益來決定下單量
+            if self.mode == 'next_open':
+                # 計算開盤時的權益 (用於計算張數)
                 equity_at_open = self.account.mark_to_market(current_open, current_time)
                 
-                # 注意：mark_to_market 會寫入 equity_curve，但我們希望 equity_curve 紀錄的是收盤狀況
-                # 所以這裡只是暫時計算，稍後會被 step 2 的收盤 mark 覆蓋或新增
-                # 為了避免重複紀錄，我們可以不呼叫 mark_to_market，而是手動算 equity，
-                # 但為了簡單起見，VirtualAccount 會 append 兩次，畫圖時通常取最後一次 (resample) 或是忽略中間過程
-                # 這裡最簡單的做法是：直接用上一步的 equity 估算，或是只在執行時不紀錄 curve
+                # A. 處理目標倉位 (Target Position)
+                if self.pending_target is not None:
+                    self._rebalance(self.pending_target, current_open, equity_at_open)
+                    self.pending_target = None
                 
-                # 修正：直接執行，execute 內部會更新 balance/position
-                self._process_order(action, pct, current_open, equity_at_open)
-                
-                self.pending_action = None # 清空訂單
+                # B. 處理傳統訊號 (Action, Pct)
+                elif self.pending_action is not None:
+                    action, pct = self.pending_action
+                    self._process_legacy_order(action, pct, current_open, equity_at_open)
+                    self.pending_action = None
 
             # ==========================================
             # 2. 更新權益 (Mark to Market) - 用收盤價結算
             # ==========================================
-            # 這一步確保 equity_curve 紀錄的是每一根 K 線「收盤時」的狀態
             equity = self.account.mark_to_market(current_close, current_time)
             
             # ==========================================
             # 3. 呼叫策略 (產生訊號)
             # ==========================================
-            res = strategy_func(row, self.account)
-            if res is None: res = ('HOLD', 0)
-            action, pct = res
-
-            if action == 'HOLD' or pct <= 0:
-                continue
+            signal = strategy_func(row, self.account)
 
             # ==========================================
-            # 4. 處理訊號
+            # 4. 處理訊號 (分流處理)
             # ==========================================
-            if self.mode == 'close':
-                # [舊模式] 當下立刻用 Close 成交
-                self._process_order(action, pct, current_close, equity)
             
-            elif self.mode == 'next_open':
-                # [新模式] 存起來，下一根 Open 才成交
-                self.pending_action = (action, pct)
+            # --- 情境 A: 新版 Target Position (回傳 float/int) ---
+            if isinstance(signal, (int, float, np.number)):
+                target_pct = float(signal)
+                
+                if self.mode == 'close':
+                    self._rebalance(target_pct, current_close, equity)
+                elif self.mode == 'next_open':
+                    self.pending_target = target_pct
 
-    def _process_order(self, action, pct, price, equity):
-        """ 統一的下單處理邏輯 """
+            # --- 情境 B: 舊版 Action Tuple (回傳 tuple) ---
+            elif isinstance(signal, (tuple, list)):
+                if signal is None: continue
+                action, pct = signal
+                if action == 'HOLD' or pct <= 0: continue
+
+                if self.mode == 'close':
+                    self._process_legacy_order(action, pct, current_close, equity)
+                elif self.mode == 'next_open':
+                    self.pending_action = (action, pct)
+
+    def _rebalance(self, target_pct, price, equity):
+        """
+        核心調倉邏輯：計算 目標價值 vs 當前價值 的差額，自動買賣
+        """
+        # 1. 計算目標持倉價值
+        target_val = equity * target_pct
+        
+        # 2. 計算目標數量
+        target_qty = target_val / price
+        
+        # 3. 計算需要變動的數量 (Delta)
+        current_qty = self.account.position
+        delta_qty = target_qty - current_qty
+        
+        # 4. 執行交易
+        # 設定一個極小閾值，避免浮點數誤差導致微小交易 (例如 0.000001 BTC)
+        # 這裡假設小於 10 USDT 的變動就忽略 (可自行調整)
+        if abs(delta_qty * price) < 10:
+            return
+
+        if delta_qty > 0:
+            self.account.execute('BUY', delta_qty, price, "Rebalance Buy")
+        elif delta_qty < 0:
+            self.account.execute('SELL', abs(delta_qty), price, "Rebalance Sell")
+
+    def _process_legacy_order(self, action, pct, price, equity):
+        """ 舊版相容邏輯 """
         if action in ['LONG', 'SHORT']:
             target_notional = equity * pct
             qty = target_notional / price

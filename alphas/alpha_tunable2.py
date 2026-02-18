@@ -47,12 +47,9 @@ def run(row, account, params=None):
     
 
     # === 4. 執行 ===
-    if position>0.4:
-        if account.position == 0:
-            return 'BUY', 0.98
-            
-    elif position<0.4:
-        if account.position > 0:
-            return 'SELL', 1.0
+    target_pos = position
+    
 
-    return 'HOLD', 0
+
+    # 回傳 float，引擎會自動調倉到這個比例
+    return float(target_pos)
