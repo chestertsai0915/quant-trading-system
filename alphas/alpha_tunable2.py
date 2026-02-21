@@ -1,12 +1,40 @@
-# alphas/alpha_tunable.py
 import numpy as np
 # 1. 定義所有可能用到的特徵
 # (優化時通常會把所有可能用到的特徵都先載入)
+def get_tiered_position(raw_signal, th_weak=0.5, pos_weak=0.5, th_strong=0.8, pos_strong=1.0):
+    """
+    將連續訊號 (通常介於 -1.0 到 1.0 之間) 轉換為階梯式的目標倉位。
+    支援多空對稱邏輯。
+    
+    :param raw_signal: 原始連續訊號 (正為多，負為空)
+    :param th_weak: 弱訊號的門檻值 (預設 0.5)
+    :param pos_weak: 弱訊號的對應倉位 (預設 0.5 = 半倉)
+    :param th_strong: 強訊號的門檻值 (預設 0.8)
+    :param pos_strong: 強訊號的對應倉位 (預設 1.0 = 滿倉)
+    :return: 目標持倉比例 (float)
+    """
+    # === 處理多單 (Long) ===
+    if raw_signal >= th_strong:
+        return pos_strong
+    elif raw_signal >= th_weak:
+        return pos_weak
+        
+    # === 處理空單 (Short) ===
+    elif raw_signal <= -th_strong:
+        return -pos_strong
+    elif raw_signal <= -th_weak:
+        return -pos_weak
+        
+    # === 訊號太弱：空手 (Neutral) ===
+    else:
+        return 0.0
+    
 requirements = [
     "sma_20_close_v1", 
     "sma_60_close_v1",
     "custom_atr_ma_16_30_v1 ",
-    "zscore_close_100_v1"
+    "zscore_close_100_v1",
+    "is_us_trade_time"
 ]
 
 # 2. 定義預設參數 (Default Hyperparameters)
@@ -41,15 +69,19 @@ def run(row, account, params=None):
 
     # === 3. 交易邏輯 ===
     
-    # 進場條件：RSI 低於參數 AND Z-Score 低於參數
-    position =np.tanh(rsi_val - p_rsi_low) 
-    
+   
+    raw_signal =np.tanh(rsi_val - p_rsi_low) 
+    print(rsi_val - p_rsi_low)
     
 
     # === 4. 執行 ===
-    target_pos = position
+    target_pos = get_tiered_position(
+        raw_signal, 
+        th_weak=0.5, pos_weak=0.5,   # 訊號達到 0.5 就開半倉 (多空皆適用)
+        th_strong=0.8, pos_strong=1.0 # 訊號達到 0.8 就開滿倉 (多空皆適用)
+    )
+
+    # 5. 時間濾網
     
 
-
-    # 回傳 float，引擎會自動調倉到這個比例
     return float(target_pos)

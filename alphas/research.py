@@ -40,20 +40,33 @@ class ResearchEnvironment:
         spec = importlib.util.spec_from_file_location(module_name, filepath)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
-        reqs = getattr(module, 'requirements', [])
-        return module.run, reqs
+        if hasattr(module, 'Strategy'):
+            StrategyClass = getattr(module, 'Strategy')
+            # 回傳：(策略類別, 該類別需要的 requirements)
+            return StrategyClass, StrategyClass.requirements
+        else:
+            raise ValueError("策略檔必須包含 'class Strategy(BaseAlpha):'")
 
     def evaluate(self, params):
         """
         傳入參數 -> 跑回測 -> 回傳 Sharpe
         """
-        # 包裝策略，注入參數
-        def strategy_wrapper(row, account):
-            return self.strategy_func(row, account, params=params)
 
-        # 執行回測 (Next Open 模式，確保精準)
-        engine = PureBacktestEngine(self.df_is, initial_balance=10000, mode='next_open')
-        engine.run(strategy_wrapper)
+        # 1. 複製乾淨的原始數據
+        df = self.df_is.copy()
+
+        
+        # 注意：這裡的 self.strategy_class 就是上面 _load_strategy 回傳的 StrategyClass
+        strategy_instance = self.strategy_class(params)
+
+        # 【修改點 3】呼叫物件的現炒函數
+        df = strategy_instance.prepare_features(df)
+            
+        # 【修改點 4】執行回測 (注意：這裡傳入的是加工好的 df，不是 self.df_is)
+        engine = PureBacktestEngine(df, initial_balance=10000, mode='next_open')
+        
+        # 直接把 strategy_instance.run 交給引擎
+        engine.run(strategy_instance.run)
         
         equity_curve = engine.account.equity_curve
         if len(equity_curve) < 2: return -999.0

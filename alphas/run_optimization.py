@@ -1,13 +1,12 @@
-# run_optimization.py
 import itertools
 import time
 from research import ResearchEnvironment
 
 def main():
-    strategy_file = "alphas/alpha_tunable.py"
+    strategy_file = "alphas/alpha_tunable3.py"
     
     # 1. 初始化環境
-    # 這時候會去載入 alpha_tunable.py 裡寫死的 requirements
+    # 寫死的 requirements
     env = ResearchEnvironment(strategy_file, split_date="2025-06-01")
 
     # 2. 定義參數網格 (這些名稱要跟策略裡的 params.get 對應)
@@ -21,7 +20,7 @@ def main():
     keys, values = zip(*param_grid.items())
     combinations = [dict(zip(keys, v)) for v in itertools.product(*values)]
     
-    print(f"開始優化... 共 {len(combinations)} 組參數")
+    print(f"開始優化共 {len(combinations)} 組參數")
     print(f"{'Params':<55} | {'Sharpe':<8} | {'Return':<8}")
     print("-" * 80)
 

@@ -12,9 +12,9 @@ class PriceVolume1(BaseStrategy):
         self.th2 = 0.9         # BS 閾值分位數
 
     def generate_signal(self):
-        # ==========================================
+        
         # 1. 定義需要的特徵 ID (點菜單)
-        # ==========================================
+        
         
         # A. 數值本身
         fid_mad = f"mad_close_{self.mad_ma}_v1"  # 需確保 feature_definitions.py 有 MAD_V1 且 id 規則一致
@@ -27,9 +27,9 @@ class PriceVolume1(BaseStrategy):
         # C. 濾網
         fid_time = "is_us_trade_time_v1"
 
-        # ==========================================
+        
         # 2. 向 Feature Store 請求數據
-        # ==========================================
+       
         # 這會自動計算、快取並對齊所有特徵
         df = self.load_features([fid_mad, fid_bs, fid_mad_th, fid_bs_th, fid_time])
         
@@ -42,9 +42,9 @@ class PriceVolume1(BaseStrategy):
         if not all(col in df.columns for col in required_cols):
             return None
 
-        # ==========================================
+       
         # 3. 交易邏輯 (只剩下單純的比大小)
-        # ==========================================
+        
         
         # 取出最新一筆 (Current Step)
         curr = df.iloc[-1]

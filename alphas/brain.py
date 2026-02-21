@@ -85,9 +85,9 @@ def test_correlation_difference(r_is, n_is, r_os, n_os):
 
     return z_stat, p_value, result
 
-# ==========================================
+
 # 2. 進階績效計算
-# ==========================================
+
 class PerformanceAnalyzer:
     def __init__(self, history_df, benchmark_series):
         self.hist = history_df.copy()
@@ -377,7 +377,14 @@ def main():
         print(f"[Error] 數據準備失敗: {e}")
         return
 
-    # 切分點
+
+    strategy_module = sys.modules[strategy_func.__module__]
+    if hasattr(strategy_module, 'prepare_features'):
+        print("[BRAIN] 執行策略動態特徵加工 (On-the-fly Calculation)...")
+        # brain.py 不跑優化，所以直接用策略預設的 default_params
+        default_params = getattr(strategy_module, 'default_params', {})
+        df = strategy_module.prepare_features(df, default_params)
+
     target_split = pd.to_datetime("2025-06-01")
     if df['datetime'].max() < target_split:
         split_idx = int(len(df) * 0.7)
@@ -389,7 +396,6 @@ def main():
     # 3. 執行全域回測
     print("--- 執行全域回測 ---")
     engine = PureBacktestEngine(df, initial_balance=10000, mode='next_open')
-    engine.run(strategy_func)
     
     full_hist = pd.DataFrame(engine.account.equity_curve)
     
