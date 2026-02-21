@@ -7,7 +7,7 @@ class BaseAlpha:
     所有新策略都繼承此類別，可以省去大量重複代碼。
     """
     # 1.
-    requirements = ["open", "high", "low", "close", "volume", "is_us_trade_time_v1"]
+    requirements = [ "is_us_trade_time_v1"]
     
     # 2. 預設參數 (由子類別覆寫)
     default_params = {}

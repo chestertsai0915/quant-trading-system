@@ -57,7 +57,41 @@ class BaseFeature(ABC):
             return cls(*typed_args)
         except Exception:
             return None
+#基礎k線
+class RawKlineColumn(BaseFeature):
+    """
+    用來直接提取原始 K 線的 OHLCV 欄位
+    攔截對應的 ID: 'open', 'high', 'low', 'close', 'volume'
+    """
+    feature_prefix = "raw_kline" # 只是為了符合介面規範，實際透過 from_id 攔截
 
+    def __init__(self, column='close'):
+        self.column = column
+
+    @property
+    def feature_id(self):
+        # 直接回傳原始欄位名稱 (例如 'close')，不加後綴
+        return self.column
+
+    @classmethod
+    def from_id(cls, fid):
+        # 覆寫攔截邏輯：只要 ID 是這五個單字之一，就建立實例
+        if fid in ['open', 'high', 'low', 'close', 'volume']:
+            return cls(column=fid)
+        return None
+
+    def compute(self, data_board) -> pd.DataFrame:
+        df = data_board.main_kline
+        if df is None or df.empty: return pd.DataFrame()
+        
+        # 檢查欄位是否存在
+        if self.column not in df.columns:
+            return pd.DataFrame()
+            
+        return pd.DataFrame({
+            'open_time': df['open_time'] if 'open_time' in df.columns else df.index,
+            self.feature_id: df[self.column]
+        })
 # ==========================================
 # 1. 基礎價量與波動率因子
 # ==========================================

@@ -17,7 +17,7 @@ class ResearchEnvironment:
         self.split_date = pd.to_datetime(split_date)
         
         # 1. 載入策略
-        self.strategy_func, self.requirements = self._load_strategy(strategy_file)
+        self.strategy_class, self.requirements = self._load_strategy(strategy_file)
         print(f"[Research] 載入策略完成，需求特徵: {self.requirements}")
 
         # 2. 載入數據 (只做一次)

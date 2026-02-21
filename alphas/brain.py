@@ -16,9 +16,10 @@ except ImportError as e:
     print(f"[Error] 模組引用失敗: {e}")
     sys.exit(1)
 
-# ==========================================
+
+
 # 1. 統計檢定工具箱 (Statistical Tools)
-# ==========================================
+
 def test_sharpe_difference(rets_is, rets_os):
     """
     檢定 Sharpe Ratio 是否顯著衰退
@@ -84,6 +85,7 @@ def test_correlation_difference(r_is, n_is, r_os, n_os):
     elif p_value < 0.1: result = " 疑似衰退 (Potential)"
 
     return z_stat, p_value, result
+
 
 
 # 2. 進階績效計算
@@ -152,9 +154,10 @@ class PerformanceAnalyzer:
             "n_samples": len(valid) # 用於 IC 檢定
         }
 
-# ==========================================
-# 3. 完整健檢邏輯 (Robustness Check)
-# ==========================================
+
+
+# 3. 完整健檢邏輯 
+
 def perform_robustness_check(hist_is, hist_os, benchmark_series):
     """
     執行完整的衰退檢定 (Return, Sharpe, IC, IR, Volatility)
@@ -209,9 +212,9 @@ def perform_robustness_check(hist_is, hist_os, benchmark_series):
 
     return results
 
-# ==========================================
-# 4. 報告產生器 (寫入檔案)
-# ==========================================
+
+# 4. 報告與繪圖
+
 def save_report_to_file(df_full, hist_is, hist_os, split_date, strategy_name):
     filename = f"report_{strategy_name}.txt"
     benchmark_series = df_full.set_index('datetime')['close']
@@ -227,7 +230,6 @@ def save_report_to_file(df_full, hist_is, hist_os, split_date, strategy_name):
         basic_os = analyzer_os.get_basic_metrics()
         adv_os = analyzer_os.get_advanced_metrics()
         
-        # 執行全方位檢定
         checks = perform_robustness_check(hist_is, hist_os, benchmark_series)
 
     with open(filename, "w", encoding="utf-8") as f:
@@ -292,13 +294,12 @@ def save_report_to_file(df_full, hist_is, hist_os, split_date, strategy_name):
     print(f"[BRAIN] 完整體檢報告已儲存至: {filename}")
 
 def plot_performance_advanced(df_full, hist_is, hist_os, split_date, strategy_name):
-    # (繪圖函式保持不變，節省篇幅)
+   
     plt.style.use('ggplot')
     fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(14, 12), sharex=True, gridspec_kw={'height_ratios': [3, 1, 1]})
     
     full_time = pd.to_datetime(df_full['datetime'])
     
-
     if not hist_is.empty:
         ax1.plot(pd.to_datetime(hist_is['datetime']), hist_is['equity'], label='IS Equity', color='#1f77b4')
     if not hist_os.empty:
@@ -341,77 +342,97 @@ def plot_performance_advanced(df_full, hist_is, hist_os, split_date, strategy_na
     plt.savefig(output_file)
     print(f"[BRAIN] 圖表報告已儲存至: {output_file}")
 
+
 # ==========================================
-# 5. 主流程
+# 5. 主流程與策略載入 (全新 Class 架構)
 # ==========================================
 def load_strategy_from_file(filepath):
+    """
+    動態載入策略檔案，僅支援繼承 BaseAlpha 的 Strategy 類別。
+    """
+    import os, importlib.util
     if not os.path.exists(filepath):
         raise FileNotFoundError(f"找不到檔案: {filepath}")
+        
     module_name = os.path.basename(filepath).replace(".py", "")
     spec = importlib.util.spec_from_file_location(module_name, filepath)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    if not hasattr(module, 'run'):
-        raise ValueError("策略檔案必須包含 'def run(row, account):'")
-    reqs = getattr(module, 'requirements', [])
-    return module.run, reqs, module_name
+
+    # 僅接受 Strategy 類別
+    if hasattr(module, 'Strategy'):
+        StrategyClass = getattr(module, 'Strategy')
+        reqs = getattr(StrategyClass, 'requirements', [])
+        return StrategyClass, reqs, module_name
+    else:
+        raise ValueError(f"[Error] 策略檔案 '{filepath}' 必須包含 'class Strategy(BaseAlpha):'")
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('strategy_file', type=str)
     args = parser.parse_args()
 
-    # 1. 載入策略
+    # 1. 載入策略類別與特徵需求
     try:
-        strategy_func, requirements, strategy_name = load_strategy_from_file(args.strategy_file)
-        print(f"[BRAIN] 載入策略: {strategy_name}")
+        StrategyClass, requirements, strategy_name = load_strategy_from_file(args.strategy_file)
+        print(f"[BRAIN] 成功載入策略類別: {strategy_name}")
     except Exception as e:
         print(f"[Error] {e}")
         return
 
-    # 2. 準備數據
+    # 2. 準備原始數據
     try:
-        factory = BacktestDataFactory() # skip_backup=True
+        factory = BacktestDataFactory()
         df = factory.prepare_features("BTCUSDT", "1h", feature_ids=requirements)
+        print(f"[BRAIN] 原始特徵載入完成，共 {len(df)} 筆。")
     except Exception as e:
         print(f"[Error] 數據準備失敗: {e}")
         return
 
+    # 3. 實例化策略並進行動態加工
+    print("[BRAIN] 實例化策略並進行動態特徵加工 (On-the-fly Calculation)...")
+    strategy_instance = StrategyClass() # 使用預設參數
+    df = strategy_instance.prepare_features(df)
 
-    strategy_module = sys.modules[strategy_func.__module__]
-    if hasattr(strategy_module, 'prepare_features'):
-        print("[BRAIN] 執行策略動態特徵加工 (On-the-fly Calculation)...")
-        # brain.py 不跑優化，所以直接用策略預設的 default_params
-        default_params = getattr(strategy_module, 'default_params', {})
-        df = strategy_module.prepare_features(df, default_params)
-
+    # 自動設定切分點 (若最後日期小於目標切分日，則取前 70%)
     target_split = pd.to_datetime("2025-06-01")
     if df['datetime'].max() < target_split:
         split_idx = int(len(df) * 0.7)
         SPLIT_DATE = df['datetime'].iloc[split_idx]
-        print(f"[BRAIN] 自動調整切分點: {SPLIT_DATE}")
+        print(f"[BRAIN] 歷史數據不足以使用目標日期，自動調整切分點為: {SPLIT_DATE}")
     else:
         SPLIT_DATE = target_split
 
-    # 3. 執行全域回測
+    # 4. 執行全域回測
     print("--- 執行全域回測 ---")
     engine = PureBacktestEngine(df, initial_balance=10000, mode='next_open')
     
+    # 將實例化後的 run 方法交給引擎執行
+    engine.run(strategy_instance.run)
+    
+    # 取得回測歷史
     full_hist = pd.DataFrame(engine.account.equity_curve)
     
     if full_hist.empty:
-        print("[Error] 回測結果為空")
+        print("[Error] 回測結果為空 (可能完全沒有交易產生)")
         return
 
+    # 切割 IS/OS 以供報告分析
     hist_is = full_hist[full_hist['datetime'] < SPLIT_DATE].copy()
     hist_os = full_hist[full_hist['datetime'] >= SPLIT_DATE].copy()
 
-    # 4. 生成報告 (檔案版)
+    # 5. 生成報告與繪圖
+    print("[BRAIN] 產生最終報告與視覺化圖表...")
     save_report_to_file(df, hist_is, hist_os, SPLIT_DATE, strategy_name)
-    
-    # 5. 繪圖
     plot_performance_advanced(df, hist_is, hist_os, SPLIT_DATE, strategy_name)
+    print("[BRAIN] 回測流程全部完成！")
 
+    # [可選功能] 如果你之前有加入 custom_logs，可以在此匯出 CSV 供除錯
+    if hasattr(engine.account, 'custom_logs') and len(engine.account.custom_logs) > 0:
+        debug_df = pd.DataFrame(engine.account.custom_logs)
+        debug_csv_name = f"debug_data_{strategy_name}.csv"
+        debug_df.to_csv(debug_csv_name, index=False, encoding='utf-8-sig')
+        print(f"[BRAIN]  已匯出詳細變數日誌: {debug_csv_name}")
 
 
 if __name__ == "__main__":
