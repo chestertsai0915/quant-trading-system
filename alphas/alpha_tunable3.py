@@ -4,40 +4,62 @@ import alphas.alpha_tools as tls
 
 # 只要定義一個 Strategy 類別並繼承 BaseAlpha 即可！
 class Strategy(BaseAlpha):
+    # 1. 把所有「可能被選到」的特徵都寫進來！
+    # 這樣 DataFactory 才會在回測前把資料都準備好
     requirements = BaseAlpha.requirements + [
-        "bs_ratio_v1","close"
+        "close",
+        "bs_ratio_v1", 
+        "custom_atr_7_v1",
+        "custom_atr_10_v1",
+        "custom_atr_14_v1",
+        "custom_atr_20_v1",
+        "custom_atr_30_v1",
+        "custom_atr_50_v1",
+        "smooth_obv_10_v1",
+        "vroc_20_v1",
     ]
-    # 1. 只需要定義這個策略專屬的參數
+    
     default_params = {
         "mad_ma_window": 25,
-        "quanti_window":150,
-        "weiht1":0.2,
-
+        "quanti_window": 150,
+        "weiht1": 0.2,
+        
+        # 2. 把特徵變成參數！(這裡寫預設值)
+        "factor_x": "bs_ratio_v1"  
     }
 
-    # 2. 呼叫廚具算指標
     def prepare_features(self, df):
-        df = tls.add_mad(df, window=self.params["mad_ma_window"], out_name='mad_close_10')
-        df = tls.add_zscore(df, column='mad_close_10', window=self.params["quanti_window"],out_name='mad_z')
-        df = tls.add_zscore(df, column='bs_ratio_v1', window=self.params["quanti_window"],out_name='bs_z')
+        # 算 MAD 的 Z-score
+        df = tls.add_mad(df, window=self.params["mad_ma_window"], out_name='dyn_mad')
+        df = tls.add_zscore(df, column='dyn_mad', window=self.params["quanti_window"], out_name='mad_z')
+        
+        # 3. 動態讀取選中的特徵來算 Z-score
+        selected_factor = self.params["factor_x"]
+        
+        # 不管優化器選了 bs_ratio 還是 funding_rate，我們都對它做 Z-score 標準化！
+        df = tls.add_zscore(df, column=selected_factor, window=self.params["quanti_window"], out_name='factor_x_z')
         return df
 
-    # 3. 專注寫交易邏輯就好
     def generate_target_position(self, row, account):
-        #row['column']沒有這個欄位，程式直接崩潰報錯。row.get沒有這個欄位，程式不會報錯
         fid_mad_z = row.get('mad_z', 0)
-        fid_bs_z = row.get('bs_z', 0)
+        
+        # 4. 讀取動態算出來的 Z-score
+        fid_x_z = row.get('factor_x_z', 0) 
         trade_time = row['is_us_trade_time_v1']
 
-        # 防呆
-        if np.isnan(fid_bs_z): 
+        if np.isnan(fid_x_z) or np.isnan(fid_mad_z): 
             return 0.0
 
-        raw_signal = 0.0
-        # 你的核心邏輯
+        w1 = self.params["weiht1"]
         
-        raw_signal = self.params["weiht1"]*np.clip(fid_mad_z+0.05*trade_time, -1, 1)+(1-self.params["weiht1"])*np.clip(fid_bs_z+0.05*trade_time, -1, 1)
-       
-
-        # 轉成階梯倉位
-        return tls.get_tiered_position(raw_signal)
+        # 核心邏輯 (稍微幫你整理了一下數學式，讓權重更對稱乾淨)
+        signal_mad = np.clip(fid_mad_z, -1, 1) * 0.9
+        signal_x = np.tanh(fid_x_z) * 0.9
+        
+        raw_signal = (w1 * signal_mad) + ((1 - w1) * signal_x)
+        
+        # 加上交易時間濾網
+        if trade_time:
+            raw_signal += 0.1 
+            
+        return tls.get_tiered_position_2(raw_signal)

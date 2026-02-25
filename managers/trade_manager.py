@@ -83,6 +83,14 @@ class TradeManager:
         
         # 5. 取得目前真實持倉
         current_real_qty = self.executor.get_current_position(self.symbol)
+        #新增：比例容忍度防呆 (避免因價格浮動而微調倉)
+        current_exposure_ratio = (current_real_qty * price) / (total_equity * leverage) if total_equity > 0 else 0
+        TOLERANCE = 0.05 # 5% 的容忍度 (可寫進 config)
+        
+        # 如果目標不是要完全平倉，且目前的曝險比例與目標差距在容忍度內，則直接跳過
+        if abs(net_exposure_ratio) > 1e-6 and abs(net_exposure_ratio - current_exposure_ratio) < TOLERANCE:
+            # logging.info(f"[SKIP] 曝險偏移在容忍度內 ({current_exposure_ratio:.2%} vs 目標 {net_exposure_ratio:.2%})")
+            return
         
         # 6. 計算差額
         delta_qty = target_qty - current_real_qty

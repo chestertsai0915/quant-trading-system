@@ -168,15 +168,42 @@ class PureBacktestEngine:
                         self.pending_action = (action, pct)
 
     def _rebalance(self, target_pct, price, equity):
+        """
+        核心調倉邏輯：包含比例容忍度與微小價值過濾
+        """
+        # 1. 避免權益為 0 導致除以零錯誤
+        if equity <= 0: 
+            return
+
+        # 2. 計算目前的實際倉位比例 (Current Weight)
+        current_val = self.account.position * price
+        current_pct = current_val / equity
+
+        # 3. 核心升級：加入容忍度 (Tolerance Threshold)
+        # 設定 5% (0.05) 的容忍度。只要倉位偏移不超過 5%，就不浪費手續費調倉
+        TOLERANCE = 0.05 
+
+        # 如果目標不是要完全平倉 (0.0)，且目前的曝險比例與目標差距在容忍度內，直接跳過！
+        if abs(target_pct) > 1e-6 and abs(target_pct - current_pct) < TOLERANCE:
+            return
+
+        # 4. 正常計算目標數量與差額
         target_val = equity * target_pct
         target_qty = target_val / price
-        
         current_qty = self.account.position
         delta_qty = target_qty - current_qty
         
-        if abs(delta_qty * price) < 10:
-            return
+        # 5. 執行門檻過濾 (低於 10U 的變動不交易)
+        MIN_TRADE_VALUE = 10.0
+        delta_value = abs(delta_qty * price)
 
+        # 實盤級別的細節：如果目標是 0 (完全平倉)，即使剩下的部位價值不到 10U，也必須強制平掉 (清掃灰塵)
+        if abs(target_pct) < 1e-6 and abs(current_qty) > 1e-6:
+            pass # 強制放行
+        elif delta_value < MIN_TRADE_VALUE:
+            return # 變動太小，跳過
+
+        # 6. 執行交易
         if delta_qty > 0:
             self.account.execute('BUY', delta_qty, price, "Rebalance Buy")
         elif delta_qty < 0:

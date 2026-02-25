@@ -32,6 +32,7 @@ class ResearchEnvironment:
         )
         
         self.df_is = full_df.reset_index(drop=True)
+        #full_df.to_csv("回測數據_full_df.csv", index=False)  # 儲存完整的加工後數據，方便除錯
         print(f"[Research] 數據準備完成: {len(self.df_is)} 筆")
 
     def _load_strategy(self, filepath):

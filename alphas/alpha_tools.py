@@ -13,6 +13,21 @@ def get_tiered_position(raw_signal, th_weak=0.5, pos_weak=0.5, th_strong=0.8, po
     elif raw_signal <= -th_weak: return -pos_weak
     else: return 0.0
 
+def get_tiered_position_long_only(raw_signal, th_weak=0.5, pos_weak=0.5, th_strong=0.8, pos_strong=1.0):
+    """將連續訊號轉換為階梯式的目標倉位"""
+    if raw_signal >= th_strong: return pos_strong
+    elif raw_signal >= th_weak: return pos_weak
+    elif raw_signal <= -th_strong: return 0
+    elif raw_signal <= -th_weak: return 0
+    else: return 0.0
+
+def get_tiered_position_2(raw_signal, th_weak=0.5, pos_weak=0.5, th_strong=0.55, pos_strong=1.0):
+    """將連續訊號轉換為階梯式的目標倉位"""
+    if raw_signal >= th_strong: return 0.99
+    elif raw_signal >= th_weak: return 0
+    elif raw_signal <= -th_strong: return -0.99
+    elif raw_signal <= -th_weak: return 0
+    else: return 0.0
 # 2. 時間序列指標加工 (Vectorized)
 
 def add_sma(df, column='close', window=20, out_name='dyn_sma'):
