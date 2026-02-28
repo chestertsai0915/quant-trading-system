@@ -73,7 +73,7 @@ class ResearchEnvironment:
         if len(equity_curve) < 2: return -999.0
 
         equity = pd.Series([r['equity'] for r in equity_curve])
-        pct = equity.pct_change().dropna()
+        pct = equity.pct_change().fillna(0)
         
         if pct.std() == 0: return 0.0
         

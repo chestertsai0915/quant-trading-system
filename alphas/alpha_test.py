@@ -21,7 +21,7 @@ class Strategy(BaseAlpha):
     
     default_params = {
         "mad_ma_window": 25,
-        "quanti_window": 150,
+        "quanti_window": 100,
         "weiht1": 0.2,
         
         # 2. 把特徵變成參數！(這裡寫預設值)

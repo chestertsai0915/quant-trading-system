@@ -116,7 +116,7 @@ def main():
     if MODE == "grid":
         best_params, best_score = run_grid_search(env, search_space)
     elif MODE == "optuna":
-        best_params, best_score = run_optuna_search(env, search_space, n_trials=200, use_genetic=True)
+        best_params, best_score = run_optuna_search(env, search_space, n_trials=250, use_genetic=True)
 
     elapsed = time.time() - start_time
     print("\n" + "="*60)

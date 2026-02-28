@@ -15,7 +15,7 @@ def get_current_price(symbol):
         ticker = client.ticker_price(symbol=symbol)
         return float(ticker['price'])
     except Exception as e:
-        print(f"⚠️ 無法取得最新價格: {e}")
+        print(f" 無法取得最新價格: {e}")
         return None
 
 def analyze_strategy(df, strategy_name, current_price):
@@ -92,16 +92,16 @@ def analyze_strategy(df, strategy_name, current_price):
     net_pnl = realized_pnl + unrealized_pnl - total_fees
     
     print(f"\n{'='*40}")
-    print(f"🚀 策略: {strategy_name}")
+    print(f" 策略: {strategy_name}")
     print(f"{'='*40}")
-    print(f"💰 總損益 (Net PnL): {net_pnl:.4f} USDT")
+    print(f" 總損益 (Net PnL): {net_pnl:.4f} USDT")
     print(f"----------------------------------------")
-    print(f"📉 已實現損益: {realized_pnl:.4f}")
-    print(f"📈 未實現損益: {unrealized_pnl:.4f} (持倉: {current_qty:.3f})")
-    print(f"💸 交易手續費: {total_fees:.4f}")
+    print(f" 已實現損益: {realized_pnl:.4f}")
+    print(f" 未實現損益: {unrealized_pnl:.4f} (持倉: {current_qty:.3f})")
+    print(f" 交易手續費: {total_fees:.4f}")
     print(f"----------------------------------------")
-    print(f"📊 交易次數: {total_trades}")
-    print(f"🏆 勝率: {win_rate:.1f}% ({wins}勝 {losses}敗)")
+    print(f" 交易次數: {total_trades}")
+    print(f" 勝率: {win_rate:.1f}% ({wins}勝 {losses}敗)")
     if current_qty > 0:
         print(f"⚡ 目前持倉均價: {avg_entry:.2f} | 現價: {current_price}")
 
@@ -114,11 +114,11 @@ def main():
     try:
         df = pd.read_sql_query(query, conn)
     except Exception as e:
-        print(f"❌ 讀取資料庫失敗: {e}")
+        print(f" 讀取資料庫失敗: {e}")
         return
 
     if df.empty:
-        print("❌ 資料庫是空的，還沒有交易紀錄。")
+        print(" 資料庫是空的，還沒有交易紀錄。")
         return
 
     # 取得最新價格
