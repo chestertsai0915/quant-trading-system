@@ -73,7 +73,7 @@ def plot_equity_vs_benchmark(db_path=r"D:\investment\trading_data.db"):
     plt.plot(df.index, df['benchmark_return'], label=f'Benchmark Asset (Ret: {bench_ret:.2%}, MDD: {bench_max_dd:.2%})', color='#ff7f0e', alpha=0.7, linestyle='--')
     
     # 圖表美化設定 (將相關性加入標題)
-    plt.title(f'Multi-Strategy Portfolio vs Benchmark\n(Correlation: {correlation:.2f})', fontsize=16, fontweight='bold')
+    plt.title(f'Multi-Strategy Portfolio vs Benchmark)', fontsize=16, fontweight='bold')
     plt.xlabel('Date / Time', fontsize=12)
     plt.ylabel('Cumulative Return (1.0 = Initial Investment)', fontsize=12)
     
