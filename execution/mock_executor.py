@@ -3,94 +3,96 @@ import uuid
 import time
 
 class MockExecutor:
-    def __init__(self):
-        # 在記憶體中模擬帳本
-        # 格式: {'BTCUSDT': 0.0, 'ETHUSDT': 0.0}
-        self.positions = {} 
-        logging.info(" [Mock Mode] 模擬執行器已啟動，所有訂單均為虛擬。")
+    def __init__(self, initial_balance=100000.0):
+        # 真正的模擬帳本
+        self.wallet_balance = initial_balance
+        self.positions = {}      # 紀錄各幣種持倉數量
+        self.avg_prices = {}     # 紀錄各幣種開倉均價
+        self.last_price = {}     # 紀錄各幣種最新市價 (算浮盈用)
+        self.fee_rate = 0.0005   # 模擬萬分之五 (0.05%) 的手續費
+        logging.info(f" [Mock Mode] 具備記帳能力的模擬執行器已啟動，初始資金: {self.wallet_balance} U")
+
+    def set_mark_price(self, symbol, price):
+        """ 讓外部 (如回測器) 即時更新當下價格，以精準計算未實現損益 """
+        self.last_price[symbol] = price
 
     def get_current_position(self, symbol):
-        """
-        模擬查詢持倉
-        """
-        pos = self.positions.get(symbol, 0.0)
-        # logging.info(f" [Mock] 查詢持倉 {symbol}: {pos}")
-        return pos
+        return self.positions.get(symbol, 0.0)
+
     def get_account_info(self):
-        """
-        模擬回傳帳戶資訊，讓 PortfolioManager 有錢可以算
-        """
-        return {
-            'totalWalletBalance': 100000.0,  # 假裝有 10 萬 U
-            'totalMarginBalance': 100000.0,
-            'availableBalance': 100000.0
-        }
-    def execute_order(self, symbol, side, quantity, reduce_only=False):
-        """
-        模擬下單
-        """
-        logging.info(f" [Mock] 收到訂單請求: {side} {quantity} {symbol} (ReduceOnly={reduce_only})")
-        
-        # 模擬網路延遲
-        time.sleep(0.5)
-        
-        # 更新本地虛擬持倉
-        current_pos = self.positions.get(symbol, 0.0)
-        
-        if side == 'BUY':
-            self.positions[symbol] = current_pos + quantity
-        elif side == 'SELL':
-            # 如果是 reduce_only (平倉)，確保不會賣過頭變成做空
-            if reduce_only:
-                new_pos = max(0, current_pos - quantity)
-                self.positions[symbol] = new_pos
-            else:
-                self.positions[symbol] = current_pos - quantity
+        """ 動態計算最新資金與未實現損益 (Unrealized PnL) """
+        unrealized_pnl = 0.0
+        for sym, pos in self.positions.items():
+            if pos != 0 and sym in self.last_price:
+                mark_price = self.last_price[sym]
+                avg_price = self.avg_prices.get(sym, 0.0)
+                if pos > 0:
+                    unrealized_pnl += (mark_price - avg_price) * pos
+                elif pos < 0:
+                    unrealized_pnl += (avg_price - mark_price) * abs(pos)
 
-        # 模擬幣安回傳的訂單格式
-        fake_order = {
-            'orderId': str(uuid.uuid4())[:8], # 隨機產生一個 ID
-            'symbol': symbol,
-            'status': 'FILLED',
-            'origQty': quantity,
-            'side': side,
-            'type': 'MARKET'
-        }
-        
-        logging.info(f" [Mock] 訂單成交！虛擬持倉變更為: {self.positions[symbol]}")
-        return fake_order
+        # 總權益 = 錢包真實餘額 + 未實現浮盈
+        margin_balance = self.wallet_balance + unrealized_pnl
 
-    def get_position_details(self, symbol):
-        # 模擬回傳詳細結構
-        amt = self.positions.get(symbol, 0.0)
         return {
-            'amt': amt,
-            'entryPrice': 93000.0, # 假裝的
-            'unRealizedProfit': 0.0,
-            'leverage': 1
+            'totalWalletBalance': self.wallet_balance,
+            'totalMarginBalance': margin_balance,
+            'availableBalance': self.wallet_balance
         }
-        
+
     def execute_order(self, symbol, side, quantity, reduce_only=False, market_price=None):
         logging.info(f" [Mock] 收到訂單: {side} {quantity} {symbol}")
-        time.sleep(0.2)
         
-        # 決定成交價：如果有傳入市價就用市價，否則用預設的 93000
-        fill_price = market_price if market_price else self.mock_price
+        # 1. 決定成交價，並更新最新價格快取
+        fill_price = market_price if market_price else self.last_price.get(symbol, 93000.0)
+        self.last_price[symbol] = fill_price
 
-        # 1. 更新虛擬持倉
         current_pos = self.positions.get(symbol, 0.0)
-        if side == 'BUY':
-            self.positions[symbol] = current_pos + quantity
-        elif side == 'SELL':
-            if reduce_only:
-                self.positions[symbol] = max(0, current_pos - quantity)
-            else:
-                self.positions[symbol] = current_pos - quantity
+        avg_price = self.avg_prices.get(symbol, 0.0)
 
-        # 2. 計算虛擬成交金額 (使用傳進來的市價)
+        # 2. 扣除手續費
         notional_value = quantity * fill_price
+        fee = notional_value * self.fee_rate
+        self.wallet_balance -= fee
 
-        # 3. 回傳
+        # 3. 處理部位增減與 Realized PnL
+        if side == 'BUY':
+            if current_pos < 0: # 平空
+                cover_qty = min(quantity, abs(current_pos))
+                realized_pnl = (avg_price - fill_price) * cover_qty
+                self.wallet_balance += realized_pnl
+                
+                new_pos = current_pos + quantity
+                if new_pos > 0: # 翻多
+                    self.avg_prices[symbol] = fill_price
+                elif new_pos == 0:
+                    self.avg_prices[symbol] = 0.0
+                self.positions[symbol] = new_pos
+            else: # 加多
+                new_cost = (current_pos * avg_price) + (quantity * fill_price)
+                new_pos = current_pos + quantity
+                self.avg_prices[symbol] = new_cost / new_pos if new_pos > 0 else 0
+                self.positions[symbol] = new_pos
+
+        elif side == 'SELL':
+            if current_pos > 0: # 平多
+                close_qty = min(quantity, current_pos)
+                realized_pnl = (fill_price - avg_price) * close_qty
+                self.wallet_balance += realized_pnl
+                
+                new_pos = current_pos - quantity
+                if new_pos < 0: # 翻空
+                    self.avg_prices[symbol] = fill_price
+                elif new_pos == 0:
+                    self.avg_prices[symbol] = 0.0
+                self.positions[symbol] = new_pos
+            else: # 加空
+                current_abs = abs(current_pos)
+                new_cost = (current_abs * avg_price) + (quantity * fill_price)
+                new_pos = current_pos - quantity
+                self.avg_prices[symbol] = new_cost / abs(new_pos) if abs(new_pos) > 0 else 0
+                self.positions[symbol] = new_pos
+
         return {
             'orderId': str(uuid.uuid4())[:8],
             'symbol': symbol,
@@ -100,24 +102,23 @@ class MockExecutor:
             'side': side,
             'type': 'MARKET'
         }
-   
+
+    def get_position_details(self, symbol):
+        return {
+            'amt': self.positions.get(symbol, 0.0),
+            'entryPrice': self.avg_prices.get(symbol, 0.0),
+            'unRealizedProfit': 0.0, 
+            'leverage': 1
+        }
+
     def fetch_order_status(self, symbol, order_id):
-        # 模擬盤：直接假設已經全部成交
-        # 在這裡我們需要知道之前的下單資訊，為了簡化，
-        # 我們假設模擬盤總是瞬間成交，所以回傳一個 "完美的成交單"
-        
-        # 這裡有個小技巧：MockExecutor 要稍微改一下，把最後一筆訂單存起來
-        # 但為了不改動太大，我們這裡直接回傳一個 "假設成交" 的數據
-        
         return {
             'orderId': str(order_id),
             'status': 'FILLED',
-            'executedQty': 0.002, # 這裡如果是動態的會更好，但在 main 裡面我們會處理
-            'avgPrice': 93000.0,  # 模擬價格
+            'executedQty': 0.002,
+            'avgPrice': self.last_price.get(symbol, 93000.0),
             'notional': 186.0
         }
     
     def set_leverage(self, symbol, leverage):
-        # 模擬盤什麼都不用做，假裝設定成功就好
-        logging.info(f" [CONFIG] (Mock) 成功設定 {symbol} 槓桿為 {leverage}x")
         return {'symbol': symbol, 'leverage': leverage}

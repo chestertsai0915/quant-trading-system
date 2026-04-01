@@ -23,6 +23,7 @@ class TradingBot:
         # 2. 初始化三大經理
         self.data_manager = DataManager(self.data_client, self.db, self.symbol, self.interval)
         self.strategy_manager = StrategyManager(strategy_names)
+        
         self.trade_manager = TradeManager(self.trade_client, self.db, self.config, self.symbol, self.is_paper)
         
         send_tg_msg(f"**機器人啟動**\nSymbol: {self.symbol}\nMode: {self.mode}")
