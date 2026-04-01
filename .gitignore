@@ -27,3 +27,6 @@ Dockerfile
 
 # text files
 *.txt
+
+# logs
+*.log
