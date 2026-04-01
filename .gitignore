@@ -20,3 +20,10 @@ logs/
 # database
 *.db
 .DS_Store
+
+# docker
+.dockerignore
+Dockerfile
+
+# text files
+*.txt
