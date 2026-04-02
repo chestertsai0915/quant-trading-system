@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
-def plot_equity_vs_benchmark(db_path=r"D:\investment\trading_data.db"):
+def plot_equity_vs_benchmark(db_path=r"D:\trading_data.db"):
     print(f" 正在讀取資料庫 {db_path} 中的快照數據...")
     
     # 1. 連接資料庫並讀取數據
@@ -31,7 +31,7 @@ def plot_equity_vs_benchmark(db_path=r"D:\investment\trading_data.db"):
     
     # 計算真實總權益 = 現金餘額 + 未實現損益
     df['total_equity'] = df['total_balance'] + df['unrealized_pnl']
-    
+    df = df[df['total_equity'] > 0]
     # 3. 計算歸一化報酬率 (基期設為 1.0，方便放在同一個刻度比較)
     initial_equity = df['total_equity'].iloc[0]
     initial_price = df['btc_price'].iloc[0]
@@ -73,7 +73,7 @@ def plot_equity_vs_benchmark(db_path=r"D:\investment\trading_data.db"):
     plt.plot(df.index, df['benchmark_return'], label=f'Benchmark Asset (Ret: {bench_ret:.2%}, MDD: {bench_max_dd:.2%})', color='#ff7f0e', alpha=0.7, linestyle='--')
     
     # 圖表美化設定 (將相關性加入標題)
-    plt.title(f'Multi-Strategy Portfolio vs Benchmark)', fontsize=16, fontweight='bold')
+    plt.title(f'Multi-Strategy Portfolio vs Benchmark (Corr: {correlation:.2f})', fontsize=16, fontweight='bold')
     plt.xlabel('Date / Time', fontsize=12)
     plt.ylabel('Cumulative Return (1.0 = Initial Investment)', fontsize=12)
     
@@ -87,11 +87,27 @@ def plot_equity_vs_benchmark(db_path=r"D:\investment\trading_data.db"):
     # 填充回撤區域 (視覺化虧損期)
     plt.fill_between(df.index, df['equity_return'], df['equity_peak'], color='red', alpha=0.1, label='Drawdown')
     
-    # 儲存與顯示
-    output_filename = 'portfolio_performance.png'
+    # 儲存與顯示圖表
+    output_png = 'portfolio_performance.png'
     plt.tight_layout()
-    plt.savefig(output_filename, dpi=300)
-    print(f" 圖表已成功儲存為 {output_filename}")
+    plt.savefig(output_png, dpi=300)
+    print(f" 圖表已成功儲存為 {output_png}")
+
+    # ==========================================
+    # 7. 匯出 CSV 檔案
+    # ==========================================
+    output_csv = 'portfolio_performance.csv'
+    
+    # 篩選我們想保留在 CSV 中的重點欄位 (去掉計算過程產生的中繼暫存欄位)
+    export_cols = [
+        'total_balance', 'unrealized_pnl', 'total_equity', 'btc_price',
+        'equity_return', 'benchmark_return', 'drawdown', 'bench_drawdown'
+    ]
+    
+    # 將 DataFrame 存成 CSV。
+    # 設定 encoding='utf-8-sig' 可以確保 Windows/Excel 打開時不會產生亂碼
+    df[export_cols].to_csv(output_csv, encoding='utf-8-sig')
+    print(f" 歷史數據已成功匯出為 {output_csv}")
     
     try:
         plt.show()
